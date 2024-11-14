@@ -16,12 +16,112 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  /* background: var(--background); */
   font-family: Arial, Helvetica, sans-serif;
+  background-color: #f2f2f2;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+/* top head sec css start */
+
+
+.second-head-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.second-head {
+  background: #fff;
+  padding: 34px 0;
+}
+
+
+/* home hero BG */
+
+section.hero {
+  position: relative;
+}
+
+section.hero:after {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  right: 110px;
+  bottom: -10px;
+  background: url(../assets/images/breakfast-hero-img.png);
+  background-position: center;
+  background-size: cover;
+}
+section.hero:before {
+  content: '';
+  position: absolute;
+  width: 240px;
+  height: 300px;
+  left: 0px;
+  top: 0;
+  background: url(../assets/images/buns.png);
+  background-position: center;
+  background-size: cover;
+}
+
+.left-sidetext-pattern {
+  position: relative;
+}
+.left-sidetext-pattern:after {
+  content: '';
+    position: absolute;
+    width: 200px;
+    left: -4px;
+    top: 0;
+    background: url(/_next/static/media/Left-side-big-Text.c4d711bc.png);
+    background-position: center;
+    background-size: cover;
+    height: 1200px;
+    z-index: -1;
+}
+.fresh-health {
+  position: relative;
+}
+.three-sections:after {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 100%;
+  top: 0;
+  background: url(/_next/static/media/bg-dots.d0748ba8.png);
+  background-position: center;
+  background-size: cover;
+  transform: translateX(-50%);
+  left: 50%;
+  z-index: -1;
+}
+.fresh-health:before {
+  content: '';
+    position: absolute;
+    width: 330px;
+    height: 100%;
+    top: 90px;
+    left: 0px;
+    background: url(/_next/static/media/greencircle.c25edb15.png);
+    background-position: center right;
+    background-size: contain;
+    z-index: -1;
+    background-repeat: no-repeat;
+}
+.fresh-health:after {
+  content: '';
+  position: absolute;
+  width: 330px;
+  height: 100%;
+  top: 0px;
+  right: 0px;
+  background: url(/_next/static/media/freash-healthbg.4674d441.png);
+  z-index: -1;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
