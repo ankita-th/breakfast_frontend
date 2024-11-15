@@ -7,6 +7,7 @@
   --foreground: #171717;
   --primary-color: #4baf50;
   --primary-hover-color: #338351;
+  --secondary-color: #c1c1c1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -60,5 +61,11 @@ body {
   }
   .active-tab {
     @apply text-white bg-[var(--primary-color)] hover:bg-[var(--primary-hover-color)] hover:text-white;
+  }
+  .label {
+    @apply text-sm font-semibold mb-1;
+  }
+  .auth-input {
+    @apply px-4 py-3 bg-gray-100 focus:bg-transparent w-full text-sm outline-[#333] rounded-lg transition-all;
   }
 }

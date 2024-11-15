@@ -1,7 +1,7 @@
 "use client";
 import AuthRedirectSection from "@/_components/_common/AuthRedirectSection";
 import CommonButton from "@/_components/_common/CommonButton";
-import AutFormTitleSection from "@/_components/AutFormTitleSection";
+import AuthFormTitleSection from "@/_components/AuthFormTitleSection";
 import CommonTextInput from "@/_form-fields/CommonTextInput";
 import { requiredValidation } from "@/_validations/validations";
 import { useRouter } from "next/navigation";
@@ -46,7 +46,7 @@ const Page = () => {
   };
   return (
     <div className="login-form-container">
-      <AutFormTitleSection title={"Sign Up!"} />
+      <AuthFormTitleSection title={"Sign Up!"} />
       <TabSection
         activeTab={activeTab}
         handleTabChange={handleTabChange}

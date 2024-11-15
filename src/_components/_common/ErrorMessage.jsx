@@ -1,13 +1,7 @@
 import React from "react";
 
-const ErrorMessage = ({ fieldName, errors }) => {
-  return (
-    <>
-      {errors?.[fieldName] && (
-        <p className="text-red-500">{errors?.[fieldName]?.message}</p>
-      )}
-    </>
-  );
+const ErrorMessage = ({ errors }) => {
+  return <>{errors && <p className="text-red-500">{errors}</p>}</>;
 };
 
 export default ErrorMessage;

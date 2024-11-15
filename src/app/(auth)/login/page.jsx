@@ -11,8 +11,9 @@ import { manageUserAuthorization } from "@/_utils/helpers";
 import { toastMessages } from "@/_utils/toastMessage";
 import { requiredValidation } from "@/_validations/validations";
 import { CLOSED_EYE, OPEN_EYE } from "../../../../public/images/SvgIcons";
-import AutFormTitleSection from "@/_components/AutFormTitleSection";
+import AuthFormTitleSection from "@/_components/AuthFormTitleSection";
 import { URLS } from "@/app/_constant/UrlConstant";
+import { LoginValidations } from "@/_validations/authValidations";
 
 const Login = () => {
   const router = useRouter();
@@ -42,7 +43,7 @@ const Login = () => {
   };
   return (
     <div className="login-form-container">
-      <AutFormTitleSection title={"Login!"} />
+      <AuthFormTitleSection title={"Login!"} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-5 rounded-none shadow-lg w-full"
@@ -52,7 +53,7 @@ const Login = () => {
           formConfig={formConfig}
           type="text"
           placeholder="Enter Email"
-          rules={requiredValidation("Email")}
+          rules={LoginValidations["email"]}
           label="Username or email address"
         />
         <CommonTextInput

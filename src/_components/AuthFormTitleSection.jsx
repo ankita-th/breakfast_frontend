@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const AutFormTitleSection = ({
+const AuthFormTitleSection = ({
   title,
   subTitle = (
     <>
@@ -24,10 +24,10 @@ const AutFormTitleSection = ({
       </div>
       <div className="md:text-[14px]">
         <h2 className="text-center text-[27px] font-bold mt-2">{title}</h2>
-        <p className="text-lg text-center font-normal mt-0 mb-5">{subTitle}</p>
+        <p className="text-lg text-center font-light mt-0 mb-5">{subTitle}</p>
       </div>
     </div>
   );
 };
 
-export default AutFormTitleSection;
+export default AuthFormTitleSection;

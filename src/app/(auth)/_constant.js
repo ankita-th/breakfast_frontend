@@ -38,3 +38,9 @@ export const INDIVIDUAL = "Individual";
 export const COMPANY = "Company";
 
 export const TABS = [INDIVIDUAL, COMPANY];
+
+export const FORGOT_PASSWORD_STEP = {
+  OTP: "OTP",
+  CHANGE_PASSWORD: "CHANGE_PASSWORD",
+  FORGOT_PASSWORD: "FORGOT_PASSWORD",
+};
