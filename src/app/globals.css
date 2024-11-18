@@ -5,6 +5,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary-color: #4baf50;
+  --primary-hover-color: #338351;
+  --secondary-color: #c1c1c1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,6 +31,47 @@ body {
 }
 /* top head sec css start */
 
+
+@layer components {
+  .primary-text-color {
+    @apply text-[#4BAF50];
+  }
+  .auth-background {
+    @apply bg-[url('/images/auth-bg.png')] bg-no-repeat bg-cover bg-center bg-[#F2F2F2] h-screen overflow-auto;
+  }
+
+  .login-form-container {
+    @apply max-w-[584px] w-full min-h-[84vh] flex flex-col items-center justify-center mx-auto;
+  }
+
+  .auth-btn {
+    @apply bg-[var(--primary-color)] w-full py-3 text-white text-[16px] font-medium rounded-lg mt-7;
+  }
+
+  .login-copyright {
+    @apply flex justify-between items-center border-t border-black pt-5 relative w-full max-w-[800px] mt-5 pb-5 md:flex-col md:gap-2 md:bottom-0 md:items-center md:justify-center;
+  }
+
+  .login-copyright-li {
+    @apply sm:text-[14px] sm:flex-wrap sm:whitespace-nowrap;
+  }
+  .career-social-icon {
+    @apply flex gap-4 mb-3.5 md:flex md:items-center md:justify-center;
+  }
+
+  .tab-block {
+    @apply text-gray-600 font-semibold text-center bg-white text-[15px] py-1 rounded-lg px-8 cursor-pointer hover:bg-[var(--primary-hover-color)] hover:text-white transition-all;
+  }
+  .active-tab {
+    @apply text-white bg-[var(--primary-color)] hover:bg-[var(--primary-hover-color)] hover:text-white;
+  }
+  .label {
+    @apply text-sm font-semibold mb-1;
+  }
+  .auth-input {
+    @apply px-4 py-3 bg-gray-100 focus:bg-transparent w-full text-sm outline-[#333] rounded-lg transition-all;
+  }
+}
 
 .second-head-flex {
   display: flex;
