@@ -38,7 +38,7 @@ const Page = () => {
             </h2>
             <h1 class="text-3xl md:text-4xl font-bold text-gray-800 text-center leading-tight font-spartan text-[50.6px] font-extrabold leading-[56.67px] max-w-[680px]">
               <span class="text-green-600">Start Your Day</span> with Fresh,
-              Healthy Breakfast Baskets
+              Healthy Breakfast Baskets 
               <span class="text-green-600"> Delivered to Your Door</span>
             </h1>
             <p class="text-gray-600 mt-4 text-center max-w-lg">
