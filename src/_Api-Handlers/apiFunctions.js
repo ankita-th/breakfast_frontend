@@ -1,3 +1,4 @@
+import { INSTANCE } from "@/app/_constant/UrlConstant";
 import { authAxios, authorizeAxios } from "./apiConfig";
 
 export const METHODS = {

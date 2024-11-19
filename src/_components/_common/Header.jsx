@@ -1,5 +1,5 @@
 import { SwedenFlagIcon } from "@/Assets/Icons/Svg";
-import { LOGO } from "@/assets/Images";
+import { LOGO } from "@/Assets/Images";
 import Image from "next/image";
 import React from "react";
 
@@ -9,7 +9,7 @@ const Header = () => {
       <section className="p-4 w-full bg-[#F5F5F5]">
         <div className="max-w-screen-xl w-full px-4 mx-auto">
           <div className=" flex justify-between items-center">
-            <div className="head-clender-sec flex gap-2 text-base font-normal">
+            <div className="head-calender-sec flex gap-2 text-base font-normal">
               <svg
                 width="22"
                 height="22"

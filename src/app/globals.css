@@ -71,6 +71,9 @@ body {
   .auth-input {
     @apply px-4 py-3 bg-gray-100 focus:bg-transparent w-full text-sm outline-[#333] rounded-lg transition-all;
   }
+ /* .container{
+  @apply 
+ } */
 }
 
 .second-head-flex {

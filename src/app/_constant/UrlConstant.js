@@ -3,3 +3,9 @@ export const URLS = {
   REGISTER: "/register",
   FORGET_PASSWORD: "/forget-password",
 };
+
+export const INSTANCE = {
+  auth : "auth",
+  authorize: "authorize",
+  multiPartFormInstance: "multiPartFormInstance"
+}
