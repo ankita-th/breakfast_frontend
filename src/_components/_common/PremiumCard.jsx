@@ -20,11 +20,10 @@ const PremiumCard = ({ PREMIUM_CARD_DATA, page }) => {
     <div>
       <section>
         <div className="max-w-screen-xl w-full px-4 ">
-          <div className="grid-cols-4 grid gap-[15px] mt-[80px]">
+          <div className="grid-cols-3 grid gap-[15px]">
             {PREMIUM_CARD_DATA.map((item) => (
-              <div className="premium_product_card p-[10px] bg-white rounded-[10px]">
+              <div className="p-2.5 bg-white rounded-[10px]">
                 <Image
-                  className="premium_product_cardimg"
                   src={item.logo_img}
                   alt="breadImg"
                 />
