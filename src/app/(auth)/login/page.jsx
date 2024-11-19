@@ -3,7 +3,7 @@ import AuthRedirectSection from "@/_components/_common/AuthRedirectSection";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import CommonButton from "@/_components/_common/CommonButton";
-import { login } from "@/_Api-Handlers/apiFunctions";
+import { callApi, login } from "@/_Api-Handlers/apiFunctions";
 import { useRouter } from "next/navigation";
 import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 import CommonTextInput from "@/_form-fields/CommonTextInput";
@@ -25,13 +25,22 @@ const Login = () => {
   };
   const onSubmit = (values) => {
     login(values)
+    callApi({
+      endPoint:"/login/",
+      method:"POST",
+      instanceType:INSTANCE.auth,
+      payload:{
+        email:values.email,
+        password:values.password
+      }
+    })
       .then((res) => {
         manageUserAuthorization({
           action: "add",
           token: res?.data?.access,
           refreshToken: res?.data?.refresh,
         });
-
+        console.log(res,"results")
         toastMessages("User logged in successfully", successType);
         router.push("/home");
       })
@@ -89,7 +98,7 @@ const Login = () => {
         <CommonButton type="submit" className="auth-btn" text="Login" />
         <div className="h-[70px] md:h-[20px]"></div>
         <AuthRedirectSection
-          text="Don't have an acount? "
+          text="Don't have an account? "
           linkText="Sign up"
           linkUrl={URLS.REGISTER}
           className="primary-text-color text-[16px] font-bold text-center"

@@ -22,6 +22,8 @@ const Page = () => {
     setShowPassword((prev) => !prev);
   };
   const onSubmit = (values) => {
+    console.log(values,"values")
+  
     login(values)
       .then((res) => {
         manageUserAuthorization({
