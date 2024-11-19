@@ -2,8 +2,10 @@ import { SwedenFlagIcon } from "@/Assets/Icons/Svg";
 import { LOGO } from "@/Assets/Images";
 import Image from "next/image";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
-function Header() {
+const Header =()=>{
+  const { t } = useTranslation()
   return (
     <div>
       <section className="p-4 w-full bg-[#F5F5F5]">
@@ -34,7 +36,7 @@ function Header() {
             </div>
             <div>
               <h5 className="text-[13px] text-black font-semibold">
-                GRAB 10% Discount on your first purchase use{" "}
+                {t("grab")}
                 <span className="text-custom-green">FLAT10</span>
               </h5>
             </div>
