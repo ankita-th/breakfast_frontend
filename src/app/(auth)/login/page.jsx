@@ -3,7 +3,7 @@ import AuthRedirectSection from "@/_components/_common/AuthRedirectSection";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import CommonButton from "@/_components/_common/CommonButton";
-import { callApi, login } from "@/_Api-Handlers/apiFunctions";
+import { callApi, login, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { useRouter } from "next/navigation";
 import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 import CommonTextInput from "@/_form-fields/CommonTextInput";
@@ -12,7 +12,7 @@ import { toastMessages } from "@/_utils/toastMessage";
 import { requiredValidation } from "@/_validations/validations";
 import { CLOSED_EYE, OPEN_EYE } from "../../../../public/images/SvgIcons";
 import AuthFormTitleSection from "@/_components/AuthFormTitleSection";
-import { URLS } from "@/app/_constant/UrlConstant";
+import { INSTANCE, URLS } from "@/app/_constant/UrlConstant";
 import { LoginValidations } from "@/_validations/authValidations";
 
 const Login = () => {
@@ -24,27 +24,28 @@ const Login = () => {
     setShowPassword((prev) => !prev);
   };
   const onSubmit = (values) => {
-    login(values)
+    // login(values)
     callApi({
       endPoint:"/login/",
-      method:"POST",
-      instanceType:INSTANCE.auth,
+      method: METHODS.post,
+      instanceType: INSTANCE.auth,
       payload:{
         email:values.email,
         password:values.password
       }
     })
       .then((res) => {
-        manageUserAuthorization({
-          action: "add",
-          token: res?.data?.access,
-          refreshToken: res?.data?.refresh,
-        });
+        // manageUserAuthorization({
+        //   action: "add",
+        //   token: res?.data?.access,
+        //   refreshToken: res?.data?.refresh,
+        // });
         console.log(res,"results")
         toastMessages("User logged in successfully", successType);
         router.push("/home");
       })
       .catch((err) => {
+        console.log(err,"error")
         toastMessages(
           err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
         );

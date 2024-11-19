@@ -24,7 +24,7 @@ const Page = () => {
   const onSubmit = (values) => {
     console.log(values,"values")
   
-    login(values)
+    // login(values)
       .then((res) => {
         manageUserAuthorization({
           action: "add",
