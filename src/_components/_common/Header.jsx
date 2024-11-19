@@ -78,7 +78,7 @@ const Header = () => {
                 <div className="relative w-[300px]">
                   <label
                     className="bg-[#F5F5F5] px-[46px] py-[11px] rounded-full absolute right-[-1px] text-[13px] font-semibold"
-                    for="fname"
+                    htmlFor="fname"
                   >
                     Search
                   </label>
