@@ -1,30 +1,31 @@
 import Image from "next/image";
 import React from "react";
-import bakeryPatternImg from "../../../Assets/Images/bakery_pattern 2.png";
-import bakeryPatternImg1 from "../../../Assets/Images/bakery_pattern 1.png";
-import serviceCardImg from "../../../Assets/Images/service card1.svg";
-import serviceCardImg1 from "../../../Assets/Images/service card1.svg";
-import serviceCardImg2 from "../../../Assets/Images/service card1.svg";
-import breadImg from "../../../Assets/Images/breadimg.jpg";
-import freshHealthImg from "../../../Assets/Images/fresh-health.png";
-import yesCheckImg from "../../../Assets/Images/yes-check.png";
-import arrowImg from "../../../Assets/Images/arrow.svg";
-import headinglineImg from "../../../Assets/images/headingline.png";
-import vegetable1Img from "../../../Assets/images/vegetable1.png";
-import vegetable2Img from "../../../Assets/images/vegetable2.png";
-import vegetable3Img from "../../../Assets/images/vegetable3.png";
-import vegetable4Img from "../../../Assets/images/vegetable4.png";
-import vegetable5Img from "../../../Assets/images/vegetable5.png";
-import heartImg from "../../../Assets/images/heart.svg";
-import shoppingcartImg from "../../../Assets/images/shopping-cart.svg";
-import gradientclockImg from "../../../Assets/images/Gradientclock.png";
-import breakfastHeroImg from "../../../Assets/images/breakfast-hero-img.png";
-import organicProduct1Img from "../../../Assets/images/organic-product1.png";
-import review1Img from "../../../Assets/images/review1.png";
-import review2Img from "../../../Assets/images/review2.png";
-import review3Img from "../../../Assets/images/review3.png";
-import review4Img from "../../../Assets/images/review4.png";
-import productImg from "../../../Assets/images/dough.png";
+import bakeryPatternImg from "../../../assets/Images/bakery_pattern 2.png";
+import bakeryPatternImg1 from "../../../assets/Images/bakery_pattern 1.png";
+import serviceCardImg from "../../../assets/Images/service card1.svg";
+import serviceCardImg1 from "../../../assets/Images/service card1.svg";
+import serviceCardImg2 from "../../../assets/Images/service card1.svg";
+import breadImg from "../../../assets/Images/breadimg.jpg";
+import freshHealthImg from "../../../assets/Images/fresh-health.png";
+import yesCheckImg from "../../../assets/Images/yes-check.png";
+import arrowImg from "../../../assets/Images/arrow.svg";
+import headinglineImg from "../../../assets/images/headingline.png";
+import vegetable1Img from "../../../assets/images/vegetable1.png";
+import vegetable2Img from "../../../assets/images/vegetable2.png";
+import vegetable3Img from "../../../assets/images/vegetable3.png";
+import vegetable4Img from "../../../assets/images/vegetable4.png";
+import vegetable5Img from "../../../assets/images/vegetable5.png";
+import heartImg from "../../../assets/images/heart.svg";
+import shoppingcartImg from "../../../assets/images/shopping-cart.svg";
+import gradientclockImg from "../../../assets/images/Gradientclock.png";
+import breakfastHeroImg from "../../../assets/images/breakfast-hero-img.png";
+import organicProduct1Img from "../../../assets/images/organic-product1.png";
+import review1Img from "../../../assets/images/review1.png";
+import review2Img from "../../../assets/images/review2.png";
+import review3Img from "../../../assets/images/review3.png";
+import review4Img from "../../../assets/images/review4.png";
+import productImg from "../../../assets/images/dough.png";
+import { T } from "@/_utils/LanguageTranslator";
 
 const Page = () => {
   return (
@@ -33,7 +34,7 @@ const Page = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div class="flex flex-col items-center py-10 px-6">
             <h2 class="mb-2 font-spartan text-[20px] text-black font-bold leading-[22.4px]">
-              Your Perfect Morning Starts Here
+              {T.your_perfect_morning_start}
             </h2>
             <h1 class="text-3xl md:text-4xl font-bold text-gray-800 text-center leading-tight font-spartan text-[50.6px] font-extrabold leading-[56.67px] max-w-[680px]">
               <span class="text-green-600">Start Your Day</span> with Fresh,

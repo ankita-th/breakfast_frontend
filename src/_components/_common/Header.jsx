@@ -1,11 +1,9 @@
 import { SwedenFlagIcon } from "@/Assets/Icons/Svg";
-import { LOGO } from "@/Assets/Images";
+import { LOGO } from "@/assets/Images";
 import Image from "next/image";
 import React from "react";
-import { useTranslation } from "react-i18next";
 
-const Header =()=>{
-  const { t } = useTranslation()
+const Header = () => {
   return (
     <div>
       <section className="p-4 w-full bg-[#F5F5F5]">
@@ -24,8 +22,8 @@ const Header =()=>{
                   fill="black"
                 />
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
+                  fillRule="evenodd"
                   d="M6.4164 1.60449C6.59874 1.60449 6.77361 1.67693 6.90254 1.80586C7.03147 1.93479 7.1039 2.10966 7.1039 2.29199V2.99141C7.71073 2.97949 8.37898 2.97949 9.11415 2.97949H12.8844C13.6205 2.97949 14.2887 2.97949 14.8956 2.99141V2.29199C14.8956 2.10966 14.968 1.93479 15.0969 1.80586C15.2259 1.67693 15.4007 1.60449 15.5831 1.60449C15.7654 1.60449 15.9403 1.67693 16.0692 1.80586C16.1981 1.93479 16.2706 2.10966 16.2706 2.29199V3.05008C16.5089 3.06841 16.7347 3.09163 16.948 3.11974C18.0223 3.26458 18.8922 3.56891 19.5788 4.25458C20.2645 4.94116 20.5688 5.81108 20.7137 6.88541C20.8539 7.93041 20.8539 9.26416 20.8539 10.949V12.885C20.8539 14.5698 20.8539 15.9045 20.7137 16.9486C20.5688 18.0229 20.2645 18.8928 19.5788 19.5794C18.8922 20.2651 18.0223 20.5694 16.948 20.7142C15.903 20.8545 14.5692 20.8545 12.8844 20.8545H9.11598C7.43115 20.8545 6.09648 20.8545 5.0524 20.7142C3.97807 20.5694 3.10815 20.2651 2.42157 19.5794C1.7359 18.8928 1.43157 18.0229 1.28673 16.9486C1.14648 15.9036 1.14648 14.5698 1.14648 12.885V10.949C1.14648 9.26416 1.14648 7.92949 1.28673 6.88541C1.43157 5.81108 1.7359 4.94116 2.42157 4.25458C3.10815 3.56891 3.97807 3.26458 5.0524 3.11974C5.26629 3.09163 5.4921 3.06841 5.72982 3.05008V2.29199C5.72982 2.10981 5.80212 1.93509 5.93086 1.80618C6.05959 1.67728 6.23422 1.60474 6.4164 1.60449ZM5.2339 4.48283C4.31265 4.60658 3.78098 4.83941 3.39323 5.22716C3.00548 5.61491 2.77265 6.14658 2.6489 7.06783C2.62812 7.22366 2.6104 7.38835 2.59573 7.56191H19.4037C19.3891 7.38835 19.3713 7.22335 19.3506 7.06691C19.2268 6.14566 18.994 5.61399 18.6062 5.22624C18.2185 4.83849 17.6868 4.60566 16.7647 4.48191C15.8232 4.35541 14.5812 4.35358 12.8331 4.35358H9.1664C7.41832 4.35358 6.17715 4.35633 5.2339 4.48283ZM2.52057 11.0003C2.52057 10.2175 2.52057 9.53641 2.53248 8.93783H19.467C19.4789 9.53641 19.4789 10.2175 19.4789 11.0003V12.8337C19.4789 14.5817 19.4771 15.8238 19.3506 16.7662C19.2268 17.6874 18.994 18.2191 18.6062 18.6068C18.2185 18.9946 17.6868 19.2274 16.7647 19.3512C15.8232 19.4777 14.5812 19.4795 12.8331 19.4795H9.1664C7.41832 19.4795 6.17715 19.4777 5.2339 19.3512C4.31265 19.2274 3.78098 18.9946 3.39323 18.6068C3.00548 18.2191 2.77265 17.6874 2.6489 16.7652C2.5224 15.8238 2.52057 14.5817 2.52057 12.8337V11.0003Z"
                   fill="black"
                 />
@@ -36,7 +34,7 @@ const Header =()=>{
             </div>
             <div>
               <h5 className="text-[13px] text-black font-semibold">
-                {t("grab")}
+                GRAB 10% Discount on your first purchase use
                 <span className="text-custom-green">FLAT10</span>
               </h5>
             </div>
@@ -112,8 +110,8 @@ const Header =()=>{
                       y2="25.6958"
                       gradientUnits="userSpaceOnUse"
                     >
-                      <stop stop-color="#92C64E" />
-                      <stop offset="1" stop-color="#4BAF50" />
+                      <stop stopColor="#92C64E" />
+                      <stop offset="1" stopColor="#4BAF50" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -131,35 +129,35 @@ const Header =()=>{
         </div>
       </section>
       <section>
-        <nav class="bg-gray-900 text-white flex items-center justify-between px-6 py-4">
+        <nav className="bg-gray-900 text-white flex items-center justify-between px-6 py-4">
           <div className="max-w-screen-xl w-full px-4 mx-auto flex justify-between items-center">
-            <button class="flex items-center bg-gradient-to-r from-[#92C64E] to-[#4BAF50] text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition">
-              <span class="mr-2">☰</span> All Categories
+            <button className="flex items-center bg-gradient-to-r from-[#92C64E] to-[#4BAF50] text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition">
+              <span className="mr-2">☰</span> All Categories
             </button>
-            <div class="flex items-center space-x-4">
-              <div class="hidden md:flex space-x-8 text-sm font-semibold">
-                <a href="#" class="hover:text-gray-300">
+            <div className="flex items-center space-x-4">
+              <div className="hidden md:flex space-x-8 text-sm font-semibold">
+                <a href="#" className="hover:text-gray-300">
                   About
                 </a>
-                <a href="#" class="hover:text-gray-300">
+                <a href="#" className="hover:text-gray-300">
                   Products
                 </a>
-                <a href="#" class="hover:text-gray-300">
+                <a href="#" className="hover:text-gray-300">
                   Baskets
                 </a>
-                <a href="#" class="hover:text-gray-300">
+                <a href="#" className="hover:text-gray-300">
                   Contact
                 </a>
               </div>
             </div>
 
-            <div class="flex items-center space-x-4">
-              <div class="flex items-center space-x-2">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
                 <span>{SwedenFlagIcon}</span>
                 <span>SW</span>
               </div>
 
-              <div class="flex items-center space-x-2">
+              <div className="flex items-center space-x-2">
                 <span>
                   <svg
                     width="13"
@@ -177,8 +175,8 @@ const Header =()=>{
                 <span>My Account</span>
               </div>
 
-              <div class="flex items-center space-x-4">
-                <button class="relative">
+              <div className="flex items-center space-x-4">
+                <button className="relative">
                   <span>
                     <svg
                       className="w-[40.19px] h-[40.56px] bg-[#575757] p-[13px] rounded-[10px]"
@@ -194,12 +192,12 @@ const Header =()=>{
                       />
                     </svg>
                   </span>
-                  <span class="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     2
                   </span>
                 </button>
 
-                <button class="relative">
+                <button className="relative">
                   <span>
                     <svg
                       className="w-[40.19px] h-[40.56px] bg-[#575757] p-[13px] rounded-[10px]"
@@ -215,7 +213,7 @@ const Header =()=>{
                       />
                     </svg>
                   </span>
-                  <span class="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     2
                   </span>
                 </button>
@@ -226,6 +224,6 @@ const Header =()=>{
       </section>
     </div>
   );
-}
+};
 
 export default Header;
