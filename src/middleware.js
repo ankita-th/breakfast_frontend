@@ -7,7 +7,6 @@ const SHARED_ROUTES = ["/about-us", "/blog", "/home"];
 export function middleware(req) {
   const token = req.cookies.get("authToken");
   const { pathname } = req.nextUrl;
-  console.log(pathname, "pathname");
   if (pathname == "/") {
     return NextResponse.redirect(new URL("/home", req.url));
   }

@@ -8,22 +8,19 @@ export const SERVICE_CARD = [
     logo_img: serviceCardImg,
     heading: "Fresh from ",
     subHeading: "Nutrition",
-    description:
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit,sed diam nonummy",
+    description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit,sed diam nonummy",
   },
   {
     logo_img: serviceCardImg1,
     heading: "Premium ",
     subHeading: "Quality",
-    description:
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit,sed diam nonummy",
+    description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit,sed diam nonummy",
   },
   {
     logo_img: serviceCardImg2,
     heading: "100% ",
     subHeading: "Natural Product",
-    description:
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit,sed diam nonummy",
+    description:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit,sed diam nonummy",
   },
 ];
 
@@ -116,3 +113,4 @@ export const PRODUCT_DATA = [
         new_price: "$20.00",
       },
   ];
+  export const ADDRESS_CARD_DATA = ["Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden","Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden","Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden","Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden"]

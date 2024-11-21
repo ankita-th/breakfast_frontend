@@ -6,6 +6,8 @@ import shoppingcartImg from "../../Assets/images/shopping-cart.svg";
 import arrowImg from "../../Assets/Images/arrow.svg";
 import React, { useState } from "react";
 import { CART, CART1 } from "../../../public/images/SvgIcons";
+import ItemCounter from "./ItemCounter";
+import Badge from "./Badge";
 
 const PremiumCard = ({ PREMIUM_CARD_DATA, page }) => {
   const [count, setCount] = useState(0);
@@ -20,14 +22,14 @@ const PremiumCard = ({ PREMIUM_CARD_DATA, page }) => {
     <div>
       <section>
         <div className="max-w-screen-xl w-full px-4 ">
-          <div className="grid-cols-4 grid gap-[15px] mt-[80px]">
+          <div className="grid-cols-3 text-black grid gap-[15px]">
             {PREMIUM_CARD_DATA.map((item) => (
-              <div className="premium_product_card p-[10px] bg-white rounded-[10px]">
-                <Image
-                  className="premium_product_cardimg"
-                  src={item.logo_img}
-                  alt="breadImg"
-                />
+              <div className="p-2.5 bg-white rounded-[10px]">
+                <div className="flex">
+                <Badge badgeName={"Fresh"} bgColor={"green"} />
+                <Badge badgeName={"Delivery in two days"} bgColor={"red"} />
+                </div>
+                <Image src={item.logo_img} alt="breadImg" />
                 <h5 className="text-[18px] font-bold text-center text-black mt-[15px]">
                   Brown Bread
                 </h5>
@@ -56,27 +58,19 @@ const PremiumCard = ({ PREMIUM_CARD_DATA, page }) => {
                     </a>
                   </div>
                 ) : (
-                  // <div className="flex items-center justify-center gap-4 bg-white p-4 rounded-lg shadow-md">
-                  <div className="flex items-center justify-center gap-2">
-                  <span
-                    className="text-black cursor-pointer text-2xl w-10 h-10 flex items-center justify-center"
-                    onClick={handleDecrease}
-                  >
-                    -
-                  </span>
-                  <span className="text-black text-xl w-10 h-10 flex items-center justify-center">
-                    {count}
-                  </span>
-                  <span
-                    className="text-black cursor-pointer text-2xl w-10 h-10 flex items-center justify-center"
-                    onClick={handleIncrease}
-                  >
-                    +
-                  </span>
-                  <span className="text-black w-10 h-10 flex items-center justify-center">{CART}</span>
-                  <span className="text-black w-10 h-10 flex items-center justify-center">{CART1}</span>
-                </div>
-                
+                  <div className="flex">
+                    <ItemCounter
+                      count={count}
+                      handleDecrease={handleDecrease}
+                      handleIncrease={handleIncrease}
+                    />
+                    <span className="text-black w-10 h-10 flex items-center justify-center">
+                      {CART}
+                    </span>
+                    <span className="text-black w-10 h-10 flex items-center justify-center">
+                      {CART1}
+                    </span>
+                  </div>
                 )}
               </div>
             ))}
