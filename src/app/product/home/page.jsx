@@ -26,8 +26,13 @@ import review3Img from '../../../assets/images/review (3).png'
 import review4Img from '../../../assets/images/review (4).png'
 import organicProduct1Img from '../../../assets/images/organic-product1.png'
 import productImg from '../../../assets/images/dough.png'
-
-
+import footer1Img from '../../../assets/images/email2.png'
+import footer2Img from '../../../assets/images/phone.png'
+import footer3Img from '../../../assets/images/address.png'
+import breakfastSocial1 from '../../../assets/images/breakfast-social1.png'
+import breakfastSocial2 from '../../../assets/images/breakfast-social2.png'
+import breakfastSocial3 from '../../../assets/images/breakfast-social3.png'
+import footerPayImg from '../../../assets/images/footer-payicon.png'
 
 export default function Products() {
     return (<div className='left-sidetext-pattern'>
@@ -140,8 +145,6 @@ export default function Products() {
                 </div>
             </nav>
         </section>
-
-
         <section className='hero h-screen relative'>
             <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
                 <div class="flex flex-col items-center py-10 px-6">
@@ -360,7 +363,7 @@ export default function Products() {
                 </div>
             </div>
         </section>
-        <section className='py-[60px]'>
+        <section className='py-[80px]'>
             <div className='max-w-screen-xl w-full px-4 mx-auto'>
                 <div>
                     <h4 className='text-center text-[45px] font-bold'><b>Nutrition </b> Organic Product</h4>
@@ -368,17 +371,16 @@ export default function Products() {
                 </div>
                 <div className='flex gap-[20px] mx-auto items-center mt-[50px]'>
                     <div className='relative w-[49%] mb-[10px]'>
-                        <Image className='' src={organicProduct1Img} />
+                        <Image className='max-w-[570px] w-full' src={organicProduct1Img} />
                         <h6 className='absolute bottom-[60px] right-[-48px] rotate-[270deg]'><b>Nutrition </b> Products </h6>
                     </div>
                     <div className='relative w-[49%] mb-[10px]'>
-                        <Image className='' src={organicProduct1Img} />
+                        <Image className='max-w-[570px] w-full' src={organicProduct1Img} />
                         <h6 className='absolute bottom-[70px] right-[-58px] rotate-[270deg]'><b>High </b> Protein Products</h6>
                     </div>
                 </div>
             </div>
         </section>
-
         <section className='bg-[#92C64E] py-[60px]'>
             <div className='max-w-screen-xl w-full px-4 mx-auto'>
                 <div className='grid-cols-4 grid'>
@@ -652,5 +654,89 @@ export default function Products() {
 
             </div>
         </section>
+        <footer className='bg-black text-gray-200 py-10'>
+            <div className='max-w-screen-xl w-full px-4 mx-auto'>
+                <div className='flex flex-col md:flex-row justify-between text-center md:text-left space-y-8 md:space-y-0'>
+                    
+                    {/* <!-- Contact Info --> */}
+                    <div className='flex flex-col space-y-4'>
+                        <div className='flex items-center space-x-2'>
+                            <div className=''>
+                                {/* <!-- Icon (Email) --> */}
+                                <Image className='h-20 w-20 object-contain bg-[#292529] rounded-full p-[20px]' src={footer1Img} />
+                            </div>
+                            <div>
+                                <h4 className='text-[18px] font-extrabold'>Email:</h4>
+                                <h4 className='text-lg font-normal text-gray-400'>info@</h4>
+                            </div>
+                        </div>
+                        <div className='flex items-center space-x-2'>
+                            <div className=''>
+                                {/* <!-- Icon (Phone) --> */}
+                                <Image className='h-20 w-20 object-contain bg-[#292529] rounded-full p-[20px]' src={footer2Img} />
+                            </div>
+                            <div>
+                                <h4 className='text-[18px] font-extrabold'>Phone</h4>
+                                <h4 className='text-lg font-normal text-gray-400'>666 888 888</h4>
+                            </div>
+                        </div>
+                        <div className='flex items-center space-x-2'>
+                            <div className=''>
+                                {/* <!-- Icon (Address) --> */}
+                                <Image className='h-20 w-20 object-contain bg-[#292529] rounded-full p-[20px]' src={footer3Img} />
+                            </div>
+                            <div>
+                                <h4 className='text-[18px] font-extrabold'>Address</h4>
+                                <h4 className='text-lg font-normal text-gray-400'>88 road, borklyn street, USA</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* <!-- Company Info --> */}
+                    <div className='text-center max-w-[230px]'>
+                        <h2 className='text-lg font-semibold mb-[30px]'>brödkorgen.se</h2>
+                        <p className='text-base font-normal text-gray-400 mb-[30px]'>There are many variations of passages of lorem ipsum available.</p>
+                        <div className='flex space-x-4 justify-center'>
+                            {/* <!-- Social Icons --> */}
+                            <a href="#" className='bg-[#4B4B4B] w-[3rem] h-[3rem] p-[14px] rounded-full flex justify-center items-center'>
+                                <Image className='w-[30px]' src={breakfastSocial1} />
+                            </a>
+                            <a href="#" className='bg-[#4B4B4B] w-[3rem] h-[3rem] p-[14px] rounded-full flex justify-center items-center'>
+                                <Image className='w-[30px]' src={breakfastSocial2} />
+                            </a>
+                            <a href="#" className='bg-[#4B4B4B] w-[3rem] h-[3rem] p-[14px] rounded-full flex justify-center items-center'>
+                                <Image className='w-[30px]' src={breakfastSocial3} />
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* <!-- Customer Service Links --> */}
+                    <div class="flex flex-col items-center md:items-start space-y-2">
+                        <h2 class="text-lg font-semibold">Customer Service</h2>
+                        <ul className='grid grid-cols-2 gap-3.5'>
+                            <li><a href="#" className='text-gray-400 transition duration-400 ease-in-out hover:text-white'>Contact Us</a></li>
+                            <li><a href="#" className='text-gray-400 transition duration-400 ease-in-out hover:text-white'>Track Your Order</a></li>
+                            <li><a href="#" className='text-gray-400 transition duration-400 ease-in-out hover:text-white'>Returns Policy</a></li>
+                            <li><a href="#" className='text-gray-400 transition duration-400 ease-in-out hover:text-white'>Delivery Information</a></li>
+                            <li><a href="#" className='text-gray-400 transition duration-400 ease-in-out hover:text-white'>Loyalty Program</a></li>
+                            <li><a href="#" className='text-gray-400 transition duration-400 ease-in-out hover:text-white'>Help & FAQ</a></li>
+                            <li><a href="#" className='text-gray-400 transition duration-400 ease-in-out hover:text-white'>Warranty & Repair</a></li>
+                            <li><a href="#" className='text-gray-400 transition duration-400 ease-in-out hover:text-white'>My Account</a></li>
+                            <li><a href="#" className='text-gray-400 transition duration-400 ease-in-out hover:text-white'>Shopping Cart</a></li>
+                        </ul>   
+                    </div>
+                </div>
+
+                {/* <!-- Footer Bottom --> */}
+                <div class="flex flex-col md:flex-row justify-between items-center mt-8 border-t border-gray-700 pt-4">
+                    <p class="text-sm text-gray-400">&copy; Copyright 2024 brödkorgen.se</p>
+                    <div class="flex space-x-4 mt-4 md:mt-0">
+                        {/* <!-- Payment Icons --> */}
+                        <Image className='w-[250px]' src={footerPayImg} />
+                    </div>
+                </div>
+            </div>
+        </footer>
+
     </div>)
 }
