@@ -33,7 +33,8 @@ import { T } from "@/_utils/LanguageTranslator";
 
 const Page = () => {
   return (
-    <div className="left-sidetext-pattern">
+    <div className="hero-bg-img">
+      <div className="left-sidetext-pattern">
       <section className="hero h-screen relative">
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div class="flex flex-col items-center py-10 px-6">
@@ -41,9 +42,9 @@ const Page = () => {
               {T.your_perfect_morning_start}
             </h2>
             <h1 class="text-3xl md:text-4xl font-bold text-gray-800 text-center leading-tight font-spartan text-[50.6px] font-extrabold leading-[56.67px] max-w-[680px]">
-              <span class="text-green-600">{T.start_your_day}</span>{T.fresh},
+              <span class="text-green-600">{T.start_your_day} </span>{T.fresh},
               {T.healthy_breakfast_baskets}
-              <span class="text-green-600">{T.delivered_to_your_door}</span>
+              <span class="text-green-600"> {T.delivered_to_your_door}</span>
             </h1>
             <p class="text-gray-600 mt-4 text-center max-w-lg">
               {T.nutritious_basket}
@@ -55,7 +56,7 @@ const Page = () => {
                 placeholder="Search Zipcode"
                 class="w-full md:flex-1 p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded-[50px]"
               />
-              <button class="w-full md:w-auto bg-gray-800 text-black font-semibold py-3 px-6 hover:bg-gray-900 transition rounded-[50px] absolute right-0">
+              <button class="w-full md:w-auto bg-gray-800 text-black font-semibold py-3 px-6 hover:bg-gray-900 transition rounded-[50px] absolute right-0 text-white">
                 {T.search}
               </button>
             </div>
@@ -70,7 +71,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <Image
             className="text-transparent absolute right-0 max-w-[330px] w-full z-[-1] h-auto"
             src={bakeryPatternImg}
@@ -81,7 +82,7 @@ const Page = () => {
             src={bakeryPatternImg1}
             alt="bakeryImg"
           />
-        </div>
+        </div> */}
       </section>
       <section className="home-services py-[60px]">
         <div className="max-w-screen-xl w-full px-4 mx-auto">
@@ -785,58 +786,64 @@ const Page = () => {
               </div>
             </div>
           </div>
+          <button type='button' className='flex mx-auto mb-[60px] gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]' >View All <span>
+                            <Image className='bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]' src={arrowImg} />
+                        </span>
+                        </button>
         </div>
       </section>
-      <section className="bg-[#92C64E] py-[60px]">
-        <div className="max-w-screen-xl w-full px-4 mx-auto">
-          <div className="grid-cols-4 grid">
-            <div className="flex gap-[15px] items-center">
-              <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
-                <Image className="w-[60px]" src={review1Img} alt="reviewImg" />
+      <div className="overflow-hidden py-6">
+        <section className="bg-[] before:absolute before:top-0 before:left-0 before:content-[''] before:w-full before:h-full before:bg-[#92C64E] before:z-[-1] z-[1] before:-rotate-2 py-[60px] relative">
+          <div className="max-w-screen-xl w-full px-4 mx-auto">
+            <div className="grid-cols-4 grid">
+              <div className="flex gap-[15px] items-center">
+                <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
+                  <Image className="w-[60px]" src={review1Img} alt="reviewImg" />
+                </div>
+                <div>
+                  <h6 className="text-[40px] font-extrabold text-white">1,544</h6>
+                  <p className="text-[#E2E2E2] text-[20px] font-medium">
+                    {T.satisfied_clients}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">1,544</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                  {T.satisfied_clients}
-                </p>
+              <div className="flex gap-[15px] items-center">
+                <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
+                  <Image className="w-[60px]" src={review2Img} alt="reviewImg" />
+                </div>
+                <div>
+                  <h6 className="text-[40px] font-extrabold text-white">678</h6>
+                  <p className="text-[#E2E2E2] text-[20px] font-medium">
+                  {T.expert_team}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex gap-[15px] items-center">
-              <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
-                <Image className="w-[60px]" src={review2Img} alt="reviewImg" />
+              <div className="flex gap-[15px] items-center">
+                <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
+                  <Image className="w-[60px]" src={review3Img} alt="reviewImg" />
+                </div>
+                <div>
+                  <h6 className="text-[40px] font-extrabold text-white">285</h6>
+                  <p className="text-[#E2E2E2] text-[20px] font-medium">
+                    {T.activate_products}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">678</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                 {T.expert_team}
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-[15px] items-center">
-              <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
-                <Image className="w-[60px]" src={review3Img} alt="reviewImg" />
-              </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">285</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                  {T.activate_products}
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-[15px] items-center">
-              <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
-                <Image className="w-[60px]" src={review4Img} alt="reviewImg" />
-              </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">27</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                 {T.awards_winning}
-                </p>
+              <div className="flex gap-[15px] items-center">
+                <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
+                  <Image className="w-[60px]" src={review4Img} alt="reviewImg" />
+                </div>
+                <div>
+                  <h6 className="text-[40px] font-extrabold text-white">27</h6>
+                  <p className="text-[#E2E2E2] text-[20px] font-medium">
+                  {T.awards_winning}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
       <section className="py-[60px]">
         <div className="max-w-screen-xl w-full px-4 mx-auto">
           <div className="flex items-center">
@@ -876,6 +883,7 @@ const Page = () => {
           </div>
         </div>
       </section>
+    </div>
     </div>
   );
 };

@@ -215,4 +215,9 @@ section.hero:before {
 .slick-next {
   right: 10px !important; /* Adjust as needed */
 }
+.hero-bg-img{
+  background-image: url(../assets/images/Home-Page-background.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
