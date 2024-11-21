@@ -4,9 +4,19 @@ import { SwedenFlagIcon } from "@/Assets/Icons/Svg";
 import { LOGO } from "@/Assets/Images";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Header = () => {
+  const [profileStatus,setProfileStatus] = useState()
+  const token = localStorage.getItem("token")
+  useEffect(()=>{
+    if(token){
+      setProfileStatus("My Account")
+    }else{
+      setProfileStatus("Login")
+    }
+  },[token])
+ 
   const router = useRouter()
   const handleAllCategories = () => {
     router.push("/products");
@@ -141,11 +151,14 @@ const Header = () => {
             <button className="flex items-center bg-gradient-to-r from-[#92C64E] to-[#4BAF50] text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition">
               <span className="mr-2" onClick={handleAllCategories}>
                 ☰
-              </span>{" "}
+              </span>
               All Categories
             </button>
             <div className="flex items-center space-x-4">
               <div className="hidden md:flex space-x-8 text-sm font-semibold">
+              <a href="#" className="hover:text-gray-300">
+                  Home
+                </a>
                 <a href="#" className="hover:text-gray-300">
                   About
                 </a>
@@ -181,8 +194,8 @@ const Header = () => {
                       fill="white"
                     />
                   </svg>
-                </span>{" "}
-                <span>My Account</span>
+                </span>
+                <span>{profileStatus}</span>
               </div>
 
               <div className="flex items-center space-x-4">

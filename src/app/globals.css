@@ -18,7 +18,7 @@
 }
 
 body {
-  color: var(--foreground);
+  /* color: var(--foreground); */
   /* background: var(--background); */
   font-family: Arial, Helvetica, sans-serif;
   background-color: #f2f2f2;
@@ -27,10 +27,10 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+    color: black;
   }
 }
 /* top head sec css start */
-
 
 @layer components {
   .primary-text-color {
@@ -71,9 +71,18 @@ body {
   .auth-input {
     @apply px-4 py-3 bg-gray-100 focus:bg-transparent w-full text-sm outline-[#333] rounded-lg transition-all;
   }
- /* .container{
-  @apply 
- } */
+  .common-btn {
+    @apply py-2 font-medium bg-green-400 text-white rounded-full focus:outline-none;
+  }
+  .common-card {
+    @apply rounded-lg shadow-sm border border-gray-300 p-8 max-w-screen-md;
+  }
+  .common-small-text{
+    @apply text-xs text-gray-500
+  }
+  .main-container{
+    @apply flex flex-col items-center
+  }
 }
 
 .second-head-flex {
@@ -84,9 +93,8 @@ body {
 .second-head {
   background: #fff;
   padding: 34px 0;
-  color:black
+  color: black;
 }
-
 
 /* home hero BG */
 
@@ -95,7 +103,7 @@ section.hero {
 }
 
 section.hero:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 300px;
   height: 300px;
@@ -106,7 +114,7 @@ section.hero:after {
   background-size: cover;
 }
 section.hero:before {
-  content: '';
+  content: "";
   position: absolute;
   width: 240px;
   height: 300px;
@@ -121,22 +129,22 @@ section.hero:before {
   position: relative;
 }
 .left-sidetext-pattern:after {
-  content: '';
-    position: absolute;
-    width: 200px;
-    left: -4px;
-    top: 0;
-    background: url(/_next/static/media/Left-side-big-Text.c4d711bc.png);
-    background-position: center;
-    background-size: cover;
-    height: 1200px;
-    z-index: -1;
+  content: "";
+  position: absolute;
+  width: 200px;
+  left: -4px;
+  top: 0;
+  background: url(/_next/static/media/Left-side-big-Text.c4d711bc.png);
+  background-position: center;
+  background-size: cover;
+  height: 1200px;
+  z-index: -1;
 }
 .fresh-health {
   position: relative;
 }
 .three-sections:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 300px;
   height: 100%;
@@ -149,20 +157,20 @@ section.hero:before {
   z-index: -1;
 }
 .fresh-health:before {
-  content: '';
-    position: absolute;
-    width: 330px;
-    height: 100%;
-    top: 90px;
-    left: 0px;
-    background: url(/_next/static/media/greencircle.c25edb15.png);
-    background-position: center right;
-    background-size: contain;
-    z-index: -1;
-    background-repeat: no-repeat;
+  content: "";
+  position: absolute;
+  width: 330px;
+  height: 100%;
+  top: 90px;
+  left: 0px;
+  background: url(/_next/static/media/greencircle.c25edb15.png);
+  background-position: center right;
+  background-size: contain;
+  z-index: -1;
+  background-repeat: no-repeat;
 }
 .fresh-health:after {
-  content: '';
+  content: "";
   position: absolute;
   width: 330px;
   height: 100%;
@@ -173,3 +181,38 @@ section.hero:before {
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+/* Targeting the slick-prev and slick-next classes to change their colors */
+/* Ensure arrows are above the images */
+.slick-prev, 
+.slick-next {
+  position: absolute;
+  top: 50%;
+  z-index: 10; /* Make sure they are above the image */
+  background-color: white; /* Optional: add background */
+  border-radius: 50%;
+  color: black;
+  font-size: 30px; /* Size of the arrows */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Optional: Remove default arrow icons and customize */
+.slick-prev:before,
+.slick-next:before {
+  content: ''; /* Remove the default icons */
+  font-size: 30px; /* You can adjust this to increase the arrow size */
+  color: black !important; /* Change arrow color */
+}
+
+/* Arrow positioning */
+.slick-prev {
+  left: 10px !important; /* Adjust as needed */
+}
+
+.slick-next {
+  right: 10px !important; /* Adjust as needed */
+}
+

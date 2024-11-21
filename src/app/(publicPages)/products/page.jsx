@@ -9,6 +9,7 @@ import PremiumCard from "@/_components/_common/PremiumCard";
 import { PRODUCT_DATA } from "@/app/_constant/Constant";
 import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { INSTANCE } from "@/app/_constant/UrlConstant";
+import ItemCategory from "@/_components/_common/ItemCategory";
 
 const Page = () => {
   useEffect(() => {
@@ -21,14 +22,18 @@ const Page = () => {
       },
     });
   }, []);
+
+  const handleItemCategory = () => {
+    console.log("Item Category");
+  };
+
   return (
     <div className="bg-gray-50">
       <div className="flex">
         <Sidebar />
         <main className="flex-1 px-8">
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-6"> */}
-            <PremiumCard PREMIUM_CARD_DATA={PRODUCT_DATA} />
-          {/* </div> */}
+          <ItemCategory handleClick={handleItemCategory} />
+          <PremiumCard PREMIUM_CARD_DATA={PRODUCT_DATA} />
         </main>
         <Basket />
       </div>
