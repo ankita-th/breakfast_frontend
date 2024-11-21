@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   ADDRESS_ICON,
   EMAIL_ICON,
-  // EMAIL_ICON,
   FACEBOOK_ICON,
   LAYER_ICONS,
   LINKEDIN_ICON,
