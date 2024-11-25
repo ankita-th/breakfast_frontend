@@ -26,6 +26,7 @@ import review2Img from "../../../Assets/images/review2.png";
 import review3Img from "../../../Assets/images/review3.png";
 import review4Img from "../../../Assets/images/review4.png";
 import productImg from "../../../Assets/images/dough.png";
+import subtractImg from "../../../Assets/images/Subtract.svg";
 import { PREMIUM_CARD, SERVICE_CARD } from "@/app/_constant/Constant";
 import PremiumCard from "@/_components/_common/PremiumCard";
 import ItemCounter from "@/_components/_common/ItemCounter";
@@ -33,7 +34,8 @@ import { T } from "@/_utils/LanguageTranslator";
 
 const Page = () => {
   return (
-    <div className="left-sidetext-pattern">
+    <div className="hero-bg-img">
+      <div className="left-sidetext-pattern">
       <section className="hero h-screen relative">
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div class="flex flex-col items-center py-10 px-6">
@@ -41,9 +43,9 @@ const Page = () => {
               {T.your_perfect_morning_start}
             </h2>
             <h1 class="text-3xl md:text-4xl font-bold text-gray-800 text-center leading-tight font-spartan text-[50.6px] font-extrabold leading-[56.67px] max-w-[680px]">
-              <span class="text-green-600">{T.start_your_day}</span>{T.fresh},
+              <span class="text-green-600">{T.start_your_day} </span>{T.fresh},
               {T.healthy_breakfast_baskets}
-              <span class="text-green-600">{T.delivered_to_your_door}</span>
+              <span class="text-green-600"> {T.delivered_to_your_door}</span>
             </h1>
             <p class="text-gray-600 mt-4 text-center max-w-lg">
               {T.nutritious_basket}
@@ -55,7 +57,7 @@ const Page = () => {
                 placeholder="Search Zipcode"
                 class="w-full md:flex-1 p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded-[50px]"
               />
-              <button class="w-full md:w-auto bg-gray-800 text-black font-semibold py-3 px-6 hover:bg-gray-900 transition rounded-[50px] absolute right-0">
+              <button class="w-full md:w-auto bg-gray-800 text-black font-semibold py-3 px-6 hover:bg-gray-900 transition rounded-[50px] absolute right-0 text-white">
                 {T.search}
               </button>
             </div>
@@ -70,7 +72,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <Image
             className="text-transparent absolute right-0 max-w-[330px] w-full z-[-1] h-auto"
             src={bakeryPatternImg}
@@ -81,7 +83,7 @@ const Page = () => {
             src={bakeryPatternImg1}
             alt="bakeryImg"
           />
-        </div>
+        </div> */}
       </section>
       <section className="home-services py-[60px]">
         <div className="max-w-screen-xl w-full px-4 mx-auto">
@@ -99,7 +101,7 @@ const Page = () => {
                     <b>{item?.subHeading}</b>
                   </p>
                 </h6>
-                <p className="font-normal text-[17px] text-[#525252] text-center text-black">
+                <p className="font-normal text-[17px] text-[#828282] text-center">
                   {item?.description}
                 </p>
               </div>
@@ -108,7 +110,7 @@ const Page = () => {
         </div>
       </section>
       <div className="three-sections relative">
-        <section className="fresh-health py-[60px]">
+        <section className="fresh-health py-[60px] relative z-0">
           <div className="max-w-screen-xl w-full px-4 mx-auto">
             <div className="grid-cols-2 grid items-center">
               <div>
@@ -117,6 +119,12 @@ const Page = () => {
                   src={freshHealthImg}
                   alt="freshImg"
                 />
+                <Image
+                  className="absolute top-[130px] left-0 z-[-1] w-[350px]"
+                  src={subtractImg}
+                  alt="freshImg"
+                />
+
               </div>
               <div className="px-[40px]">
                 <h6 className="text-[#62A403] text-[19px] font-medium mb-[15px]">
@@ -370,11 +378,11 @@ const Page = () => {
           </div>
 
           <div class="grid grid-cols-2 gap-6 mt-20">
-            <div class="pl-[200px] mb-10">
+            <div class="pl-[200px] mb-10 md:pl-[100px]">
               <div class="bg-white rounded-lg shadow-md p-4 w-full relative pl-[120px]">
                 <Image
                   src={productImg}
-                  className="text-transparent absolute left-[-130px] max-w-[240px]"
+                  className="text-transparent absolute left-[-130px] max-w-[240px] md:max-w-[180px] md:left-[-100px] md:top-[45px]"
                   alt="productImg"
                 />
                 <span class="bg-gradient-to-r from-[#92C64E] to-[#4BAF50]  text-xs px-2 py-1 rounded-full text-white">
@@ -460,36 +468,30 @@ const Page = () => {
                 </div>
               </div>
             </div>
-            <div class="pl-[200px] mb-10">
+            <div class="pl-[200px] mb-10 md:pl-[100px]">
               <div class="bg-white rounded-lg shadow-md p-4 w-full relative pl-[120px]">
                 <Image
                   src={productImg}
-                  className="text-transparent absolute left-[-130px] max-w-[240px]"
-                  alt="productImage"
+                  className="text-transparent absolute left-[-130px] max-w-[240px] md:max-w-[180px] md:left-[-100px] md:top-[45px]"
+                  alt="productImg"
                 />
-                {/* <!-- Category Tag -->    */}
                 <span class="bg-gradient-to-r from-[#92C64E] to-[#4BAF50]  text-xs px-2 py-1 rounded-full text-white">
                   {T.fresh}
                 </span>
 
-                {/* <!-- Product Title --> */}
                 <h2 class="text-2xl font-bold text-black mt-2">{T.brown_bread}</h2>
 
-                {/* <!-- Price --> */}
                 <div class="text-green-600 text-xl font-semibold mt-1">
                   $80.00
                   <span class="text-sm font-normal text-gray-500">{T.unit}</span>
                 </div>
 
-                {/* <!-- Description --> */}
                 <p class="text-gray-500 mt-2">
-                  {T.great_height}
+                 {T.great_height}
                 </p>
 
-                {/* <!-- Rating --> */}
                 <div class="flex items-center mt-2">
                   <div class="flex text-yellow-500">
-                    {/* <!-- Star Ratings --> */}
                     <svg
                       class="w-5 h-5"
                       fill="currentColor"
@@ -528,20 +530,8 @@ const Page = () => {
                   </div>
                   <span class="text-gray-500 text-sm ml-2">(01)</span>
                 </div>
-
-                {/* <!-- Bottom Section with Quantity and Buttons --> */}
                 <div class="flex items-center justify-between mt-4">
-                  {/* <!-- Quantity Selector --> */}
-                  <div class="flex items-center space-x-2">
-                    <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600">
-                      -
-                    </button>
-                    <span class="text-gray-700">1</span>
-                    <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600">
-                      +
-                    </button>
-                  </div>
-
+                  <ItemCounter />
                   {/* <!-- Icons for Favorite and Cart --> */}
                   <div class="flex space-x-2">
                     <a
@@ -568,36 +558,30 @@ const Page = () => {
                 </div>
               </div>
             </div>
-            <div class="pl-[200px] mb-10">
+            <div class="pl-[200px] mb-10 md:pl-[100px]">
               <div class="bg-white rounded-lg shadow-md p-4 w-full relative pl-[120px]">
                 <Image
                   src={productImg}
-                  className="text-transparent absolute left-[-130px] max-w-[240px]"
+                  className="text-transparent absolute left-[-130px] max-w-[240px] md:max-w-[180px] md:left-[-100px] md:top-[45px]"
                   alt="productImg"
                 />
-                {/* <!-- Category Tag -->    */}
                 <span class="bg-gradient-to-r from-[#92C64E] to-[#4BAF50]  text-xs px-2 py-1 rounded-full text-white">
                   {T.fresh}
                 </span>
 
-                {/* <!-- Product Title --> */}
                 <h2 class="text-2xl font-bold text-black mt-2">{T.brown_bread}</h2>
 
-                {/* <!-- Price --> */}
                 <div class="text-green-600 text-xl font-semibold mt-1">
                   $80.00
                   <span class="text-sm font-normal text-gray-500">{T.unit}</span>
                 </div>
 
-                {/* <!-- Description --> */}
                 <p class="text-gray-500 mt-2">
                  {T.great_height}
                 </p>
 
-                {/* <!-- Rating --> */}
                 <div class="flex items-center mt-2">
                   <div class="flex text-yellow-500">
-                    {/* <!-- Star Ratings --> */}
                     <svg
                       class="w-5 h-5"
                       fill="currentColor"
@@ -636,20 +620,8 @@ const Page = () => {
                   </div>
                   <span class="text-gray-500 text-sm ml-2">(01)</span>
                 </div>
-
-                {/* <!-- Bottom Section with Quantity and Buttons --> */}
                 <div class="flex items-center justify-between mt-4">
-                  {/* <!-- Quantity Selector --> */}
-                  <div class="flex items-center space-x-2">
-                    <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600">
-                      -
-                    </button>
-                    <span class="text-gray-700">1</span>
-                    <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600">
-                      +
-                    </button>
-                  </div>
-
+                  <ItemCounter />
                   {/* <!-- Icons for Favorite and Cart --> */}
                   <div class="flex space-x-2">
                     <a
@@ -659,7 +631,7 @@ const Page = () => {
                       <Image
                         className="w-full h-full"
                         src={heartImg}
-                        alt="heartLogo"
+                        alt="heartImg"
                       />
                     </a>
                     <a
@@ -676,36 +648,30 @@ const Page = () => {
                 </div>
               </div>
             </div>
-            <div class="pl-[200px] mb-10">
+            <div class="pl-[200px] mb-10 md:pl-[100px]">
               <div class="bg-white rounded-lg shadow-md p-4 w-full relative pl-[120px]">
                 <Image
                   src={productImg}
-                  className="text-transparent absolute left-[-130px] max-w-[240px]"
+                  className="text-transparent absolute left-[-130px] max-w-[240px] md:max-w-[180px] md:left-[-100px] md:top-[45px]"
                   alt="productImg"
                 />
-                {/* <!-- Category Tag -->    */}
                 <span class="bg-gradient-to-r from-[#92C64E] to-[#4BAF50]  text-xs px-2 py-1 rounded-full text-white">
                   {T.fresh}
                 </span>
 
-                {/* <!-- Product Title --> */}
                 <h2 class="text-2xl font-bold text-black mt-2">{T.brown_bread}</h2>
 
-                {/* <!-- Price --> */}
                 <div class="text-green-600 text-xl font-semibold mt-1">
                   $80.00
                   <span class="text-sm font-normal text-gray-500">{T.unit}</span>
                 </div>
 
-                {/* <!-- Description --> */}
                 <p class="text-gray-500 mt-2">
-                  {T.great_height}
+                 {T.great_height}
                 </p>
 
-                {/* <!-- Rating --> */}
                 <div class="flex items-center mt-2">
                   <div class="flex text-yellow-500">
-                    {/* <!-- Star Ratings --> */}
                     <svg
                       class="w-5 h-5"
                       fill="currentColor"
@@ -744,20 +710,8 @@ const Page = () => {
                   </div>
                   <span class="text-gray-500 text-sm ml-2">(01)</span>
                 </div>
-
-                {/* <!-- Bottom Section with Quantity and Buttons --> */}
                 <div class="flex items-center justify-between mt-4">
-                  {/* <!-- Quantity Selector --> */}
-                  <div class="flex items-center space-x-2">
-                    <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600">
-                      -
-                    </button>
-                    <span class="text-gray-700">1</span>
-                    <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-600">
-                      +
-                    </button>
-                  </div>
-
+                  <ItemCounter />
                   {/* <!-- Icons for Favorite and Cart --> */}
                   <div class="flex space-x-2">
                     <a
@@ -767,7 +721,7 @@ const Page = () => {
                       <Image
                         className="w-full h-full"
                         src={heartImg}
-                        alt="heartLogo"
+                        alt="heartImg"
                       />
                     </a>
                     <a
@@ -785,58 +739,65 @@ const Page = () => {
               </div>
             </div>
           </div>
+          <button type='button' className='flex mx-auto mb-[60px] gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]' >View All 
+            <span>
+                <Image className='bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]' src={arrowImg} />
+            </span>
+          </button>
         </div>
       </section>
-      <section className="bg-[#92C64E] py-[60px]">
-        <div className="max-w-screen-xl w-full px-4 mx-auto">
-          <div className="grid-cols-4 grid">
-            <div className="flex gap-[15px] items-center">
-              <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
-                <Image className="w-[60px]" src={review1Img} alt="reviewImg" />
+      <div className="overflow-hidden py-6">
+        <section className="before:absolute before:top-0 before:left-0 before:content-[''] before:w-full before:h-full before:bg-[#92C64E] before:z-[-1] z-[1] before:-rotate-2 py-[60px] relative">
+          <div className="max-w-screen-xl w-full px-4 mx-auto">
+            <div className="grid-cols-4 grid">
+              <div className="flex gap-[15px] items-center">
+                <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center md:w-[80px] md:h-[80px]">
+                  <Image className="w-[60px] md:w-[40px]" src={review1Img} alt="reviewImg" />
+                </div>
+                <div>
+                  <h6 className="text-[40px] font-extrabold text-white md:text-[32px]">1,544</h6>
+                  <p className="text-[#E2E2E2] text-[20px] font-medium md:text-[17px]">
+                    {T.satisfied_clients}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">1,544</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                  {T.satisfied_clients}
-                </p>
+              <div className="flex gap-[15px] items-center">
+                <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center md:w-[80px] md:h-[80px]">
+                  <Image className="w-[60px] md:w-[40px]" src={review2Img} alt="reviewImg" />
+                </div>
+                <div>
+                  <h6 className="text-[40px] font-extrabold text-white md:text-[32px]">678</h6>
+                  <p className="text-[#E2E2E2] text-[20px] font-medium md:text-[17px]">
+                  {T.expert_team}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex gap-[15px] items-center">
-              <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
-                <Image className="w-[60px]" src={review2Img} alt="reviewImg" />
+              <div className="flex gap-[15px] items-center">
+                <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center md:w-[80px] md:h-[80px]">
+                  <Image className="w-[60px] md:w-[40px]" src={review3Img} alt="reviewImg" />
+                </div>
+                <div>
+                  <h6 className="text-[40px] font-extrabold text-white md:text-[32px]">285</h6>
+                  <p className="text-[#E2E2E2] text-[20px] font-medium md:text-[17px]">
+                    {T.activate_products}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">678</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                 {T.expert_team}
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-[15px] items-center">
-              <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
-                <Image className="w-[60px]" src={review3Img} alt="reviewImg" />
-              </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">285</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                  {T.activate_products}
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-[15px] items-center">
-              <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
-                <Image className="w-[60px]" src={review4Img} alt="reviewImg" />
-              </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">27</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                 {T.awards_winning}
-                </p>
+              <div className="flex gap-[15px] items-center">
+                <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center md:w-[80px] md:h-[80px]">
+                  <Image className="w-[60px] md:w-[40px]" src={review4Img} alt="reviewImg" />
+                </div>
+                <div>
+                  <h6 className="text-[40px] font-extrabold text-white md:text-[32px]">27</h6>
+                  <p className="text-[#E2E2E2] text-[20px] font-medium md:text-[17px]">
+                  {T.awards_winning}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
       <section className="py-[60px]">
         <div className="max-w-screen-xl w-full px-4 mx-auto">
           <div className="flex items-center">
@@ -844,10 +805,10 @@ const Page = () => {
               <p className="text-[#4FB050] text-[15px] font-medium">
                 {T.dont_miss_deals}
               </p>
-              <h6 className="text-[#F4F4F4] font-extrabold text-[40px] leading-[45px]">
+              <h6 className="text-[#F4F4F4] font-extrabold text-[40px] leading-[45px] md:text-[32px]">
                 {T.exclusive}
               </h6>
-              <h6 className="text-[#F4F4F4] font-extrabold text-[40px] leading-[45px]">
+              <h6 className="text-[#F4F4F4] font-extrabold text-[40px] leading-[45px] md:text-[32px]">
                 {T.offers}
               </h6>
               <p className="text-[#4FB050] text-[15px] font-medium mt-[20px]">
@@ -876,6 +837,7 @@ const Page = () => {
           </div>
         </div>
       </section>
+    </div>
     </div>
   );
 };

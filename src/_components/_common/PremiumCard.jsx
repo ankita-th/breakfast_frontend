@@ -21,8 +21,8 @@ const PremiumCard = ({ PREMIUM_CARD_DATA, page }) => {
   return (
     <div>
       <section>
-        <div className="max-w-screen-xl w-full px-4 ">
-          <div className="grid-cols-3 text-black grid gap-[15px]">
+        <div className="max-w-screen-xl w-full px-4 mx-auto">
+          <div className="grid-cols-4 text-black grid gap-[15px]">
             {PREMIUM_CARD_DATA.map((item) => (
               <div className="p-2.5 bg-white rounded-[10px]">
                 <div className="flex">
