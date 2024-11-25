@@ -1,7 +1,6 @@
 import React from "react";
 
 const Badge = ({ badgeName, bgColor }) => {
-    console.log(bgColor,"bgColor")
   return (
     <div>
       <span

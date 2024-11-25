@@ -1,7 +1,11 @@
-import serviceCardImg from "../../Assets/Images/service card1.svg";
-import serviceCardImg1 from "../../Assets/Images/service card2.svg";
-import serviceCardImg2 from "../../Assets/Images/service card3.svg";
-import breadImg from "../../Assets/Images/breadimg.jpg";
+import serviceCardImg from "../../Assets/images/service card1.svg";
+import serviceCardImg1 from "../../Assets/images/service card2.svg";
+import serviceCardImg2 from "../../Assets/images/service card3.svg";
+import breadImg from "../../Assets/images/breadimg.jpg";
+import productImg from "../../Assets/images/dough.png";
+import heartImg from "../../Assets/images/heart.svg";
+import shoppingcartImg from "../../Assets/images/shopping-cart.svg";
+
 
 export const SERVICE_CARD = [
   {
@@ -27,25 +31,25 @@ export const SERVICE_CARD = [
 export const PREMIUM_CARD = [
   {
     logo_img: breadImg,
-    title: "Brown Bread",
+    title: "Eggs",
     old_price: "$70.00",
     new_price: "$60.00",
   },
   {
     logo_img: breadImg,
-    title: "Eggs",
+    title: "Muffins",
     old_price: "$80.00",
     new_price: "$45.00",
   },
   {
     logo_img: breadImg,
-    title: "White Bread",
+    title: "Bread",
     old_price: "$70.00",
     new_price: "$50.00",
   },
   {
     logo_img: breadImg,
-    title: "Chocolate Muffins",
+    title: "Chocolate",
     old_price: "$30.00",
     new_price: "$20.00",
   },
@@ -114,3 +118,42 @@ export const PRODUCT_DATA = [
       },
   ];
   export const ADDRESS_CARD_DATA = ["Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden","Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden","Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden","Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden"]
+
+  export const ARRIVAL_CARDS = [
+    {
+      logo_img : productImg,
+      item_status:"fresh",
+      item_name:"brown_bread",
+      price:"$80.00",
+      description : "great_height",
+      heartImg: heartImg,
+      shoppingcartImg:shoppingcartImg
+    },
+    {
+      logo_img : productImg,
+      item_status:"fresh",
+      item_name:"brown_bread",
+      price:"$80.00",
+      description : "great_height",
+      heartImg:heartImg,
+      shoppingcartImg:shoppingcartImg
+    },
+    {
+      logo_img : productImg,
+      item_status:"fresh",
+      item_name:"brown_bread",
+      price:"$80.00",
+      description : "great_height",
+      heartImg:heartImg,
+      shoppingcartImg:shoppingcartImg
+    },
+    {
+      logo_img : productImg,
+      item_status:"fresh",
+      item_name:"brown_bread",
+      price:"$80.00",
+      description : "great_height",
+      heartImg:heartImg,
+      shoppingcartImg: shoppingcartImg
+    }
+  ]

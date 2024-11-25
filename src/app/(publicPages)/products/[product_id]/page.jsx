@@ -1,30 +1,55 @@
-"use client"
+"use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import productImg from "../../../../Assets/images/croissant-image.png";
+import item4 from "../../../../Assets/images/item4.png";
+
 import ExclusiveOfferBanner from "@/_components/_common/ExclusiveOfferBanner";
 import Button from "@/_components/_common/Button";
 import CategoryCarousel from "@/_components/_common/Slider";
 import ItemCounter from "@/_components/_common/ItemCounter";
+import { useRouter } from "next/router";
+import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
+import { INSTANCE } from "@/app/_constant/UrlConstant";
+import { toastMessages } from "@/_utils/toastMessage";
+import { usePathname } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { productListing, setProductListing } from "@/Redux/productDetailsSlice";
 
 const Page = () => {
-  const [count,setCount] = useState()
-  const handleIncrease=()=>{
+  const pathname = usePathname();
+  const dispatch = useDispatch()
+  const product_id = pathname.split("/")[2]
+  const {productListing} = useSelector(state => state.product)
 
-  }
-  const handleDecrease=()=>{
-
-  }
+  useEffect(() => {
+    if (product_id) {
+      callApi({
+        endPoint: `/products/${product_id}`,
+        method: METHODS.get,
+        instanceType: INSTANCE.authorize,
+        params: {
+          id: "3",
+        },
+      })
+        .then((res) => {
+          dispatch(setProductListing(res.data))
+        })
+        .catch((err) => {
+          toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
+        });
+    }
+  }, []);
   return (
     <div className="p-8 m-8">
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="lg:w-1/2">
           {/* <Image
-            src={productImg}
+            src={itemDetails?.images[0]?.image}
             alt="Croissant"
             className="rounded-lg w-full lg:w-1/2"
           /> */}
-          <CategoryCarousel/>
+          <CategoryCarousel />
         </div>
 
         <div className="lg:w-1/2">
@@ -34,7 +59,7 @@ const Page = () => {
             <span className="underline">Croissant</span>
           </div>
           <div className="flex ">
-            <h1 className="text-2xl font-bold mb-2">Croissant</h1>
+            {/* <h1 className="text-2xl font-bold mb-2">{itemDetails?.name}</h1> */}
             <span>⭐⭐⭐⭐⭐</span>
             <span>(01)</span>
           </div>
@@ -49,7 +74,11 @@ const Page = () => {
           <span className="common-small-text text-black">
             (Inclusive of all taxes)
           </span>
-          <ItemCounter count={count} handleIncrease={handleIncrease} handleDecrease={handleDecrease}/>
+          {/* <ItemCounter
+            count={itemCount}
+            handleIncrease={handleIncrease}
+            handleDecrease={handleDecrease}
+          /> */}
           <div className="flex items-center gap-4 mt-4">
             <button className="px-4 py-2 bg-green-500 text-white rounded">
               Add to Basket
@@ -97,7 +126,7 @@ const Page = () => {
       </div>
 
       <div className="w-24">
-        <Image src={productImg} alt="Croissant" className="rounded-lg w-full" />
+        <Image src={item4} alt="Croissant" className="rounded-lg w-full" />
       </div>
       <div className="mt-6">
         <h2 className="text-lg font-bold">Product Details</h2>

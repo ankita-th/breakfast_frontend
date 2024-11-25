@@ -5,17 +5,16 @@ import item4 from "../././Assets/images/item4.png";
 import item5 from "../././Assets/images/item5.png";
 import item6 from "../././Assets/images/item6.png";
 import item7 from "../././Assets/images/item7.png";
-import productImg from "../././Assets/images/breakfast-hero-img.png"
 
 export const DEFAULT_ERROR_MESSAGE = "Something went wrong";
 export const SIDE_BAR_OPTIONS = [
-  "all",
-  "fruits",
-  "dairy",
-  "breakfast",
-  "munchies",
+  "All",
+  "Fruits",
+  "Dairy",
+  "Breakfast",
+  "Munchies",
   "Cold drinks & Juices",
-  "toppings",
+  "Toppings",
   "Coffee & Health Drink",
   "Bakery & Biscuits",
   "Sweet Tooth",
@@ -56,26 +55,53 @@ export const ITEM_CATEGORY = [
 export const IMAGE_CATEGORY = [
   {
     name: "Product",
-    image: productImg,
+    image: item4,
   },
   {
     name: "Product",
-    image: productImg,
+    image: item4,
   },
   {
     name: "Product",
-    image: productImg,
+    image: item4,
   },
   {
     name: "Product",
-    image: productImg,
+    image: item4,
   },
-//  {
-//     name: "Product",
-//     image: productImg,
-//   },
-//   {
-//     name: "Product",
-//     image: productImg,
-//   },
+  //  {
+  //     name: "Product",
+  //     image: productImg,
+  //   },
+  //   {
+  //     name: "Product",
+  //     image: productImg,
+  //   },
 ];
+export const HEADER_NAV_OPTIONS = [
+  {
+    name: "Home",
+    url: "home",
+  },
+  {
+    name: "About",
+    url: "about",
+  },
+  {
+    name: "Products",
+    url: "products",
+  },
+  {
+    name: "Baskets",
+    url: "baskets",
+  },
+  {
+    name: "Contact",
+    url: "contact",
+  },
+];
+
+export const BUTTON_TYPE = {
+  button: "button",
+  submit: "submit",
+};

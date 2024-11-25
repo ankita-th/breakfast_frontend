@@ -8,13 +8,17 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CLOSED_EYE, OPEN_EYE } from "../../../../public/images/SvgIcons";
-import { URLS } from "@/app/_constant/UrlConstant";
+import { INSTANCE, URLS } from "@/app/_constant/UrlConstant";
 import TabSection from "@/_components/_common/TabSection";
 import { INDIVIDUAL, TABS } from "../_constant";
+import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
+import { BUTTON_TYPE } from "@/_constants/constant";
+import { toastMessages } from "@/_utils/toastMessage";
 
 const Page = () => {
   const router = useRouter();
   const formConfig = useForm();
+  const [loader, setLoader] = useState();
   const { handleSubmit, reset } = formConfig;
   const [showPassword, setShowPassword] = useState(false);
   const [activeTab, setActiveTab] = useState(INDIVIDUAL);
@@ -22,23 +26,29 @@ const Page = () => {
     setShowPassword((prev) => !prev);
   };
   const onSubmit = (values) => {
-    console.log(values,"values")
-  
-    // login(values)
+    setLoader(true);
+    callApi({
+      endPoint: "/register/",
+      method: METHODS.post,
+      instanceType: INSTANCE.auth,
+      payload: {
+        email: values.email,
+        role: activeTab,
+        first_name: values?.first_name,
+        last_name: values?.last_name,
+      },
+    })
       .then((res) => {
-        manageUserAuthorization({
-          action: "add",
-          token: res?.data?.access,
-          refreshToken: res?.data?.refresh,
-        });
-
+        setLoader(false);
         toastMessages("User logged in successfully", successType);
         router.push("/home");
       })
       .catch((err) => {
+        console.log(err, "error");
         toastMessages(
-          err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
+          err?.response?.data?.detail || DEFAULT_ERROR_MESSAGE
         );
+        setLoader(false);
       });
   };
 
@@ -59,17 +69,27 @@ const Page = () => {
         className="bg-white p-5 rounded-none shadow-lg w-full"
       >
         <CommonTextInput
-          fieldName={activeTab === INDIVIDUAL ? "name" : "company_name"}
+          fieldName={activeTab === INDIVIDUAL ? "first_name" : "company_name"}
           formConfig={formConfig}
           type="text"
           placeholder={
-            activeTab === INDIVIDUAL ? "E.g. John Doe" : "E.g. Microsoft"
+            activeTab === INDIVIDUAL ? "E.g. John" : "E.g. Microsoft"
           }
           rules={requiredValidation(
-            activeTab === INDIVIDUAL ? "Name" : "Company Name"
+            activeTab === INDIVIDUAL ? "First Name" : "Company Name"
           )}
-          label={activeTab === INDIVIDUAL ? "Full Name" : "Company Name"}
+          label={activeTab === INDIVIDUAL ? "First Name" : "Company Name"}
         />
+        {activeTab === INDIVIDUAL && (
+          <CommonTextInput
+            fieldName={"last_name"}
+            formConfig={formConfig}
+            type="text"
+            placeholder={"E.g. Doe"}
+            rules={requiredValidation("Last Name")}
+            label={"Last Name"}
+          />
+        )}
         <CommonTextInput
           fieldName={activeTab === INDIVIDUAL ? "email" : "company_email"}
           formConfig={formConfig}
@@ -112,7 +132,13 @@ const Page = () => {
           onIconClick={toggleShowPassword}
           icon={showPassword ? CLOSED_EYE : OPEN_EYE}
         />
-        <CommonButton type="submit" className="auth-btn" text="Login" />
+        <CommonButton
+          type={BUTTON_TYPE.submit}
+          className="auth-btn"
+          text="Register"
+          loader={loader}
+          disabled={loader}
+        />
         <div className="h-[70px] md:h-[20px]"></div>
         <AuthRedirectSection
           text="Already Have An Account? "

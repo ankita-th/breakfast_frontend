@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import CommonButton from "@/_components/_common/CommonButton";
 import { callApi, login, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { useRouter } from "next/navigation";
-import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
+import { BUTTON_TYPE, DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 import CommonTextInput from "@/_form-fields/CommonTextInput";
 import { manageUserAuthorization } from "@/_utils/helpers";
 import { toastMessages } from "@/_utils/toastMessage";
@@ -18,12 +18,14 @@ import { LoginValidations } from "@/_validations/authValidations";
 const Login = () => {
   const router = useRouter();
   const formConfig = useForm();
+  const [loader ,setLoader] = useState(false)
   const { handleSubmit } = formConfig;
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
   const onSubmit = (values) => {
+    setLoader(true)
     // login(values)
     callApi({
       endPoint:"/login/",
@@ -41,6 +43,7 @@ const Login = () => {
         //   refreshToken: res?.data?.refresh,
         // });
         console.log(res,"results")
+        setLoader(false)
         toastMessages("User logged in successfully", successType);
         router.push("/home");
       })
@@ -49,6 +52,7 @@ const Login = () => {
         toastMessages(
           err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
         );
+        setLoader(false)
       });
   };
   return (
@@ -78,14 +82,14 @@ const Login = () => {
           icon={showPassword ? CLOSED_EYE : OPEN_EYE}
         />
         <div className="text-[16px] font-normal ml-1 flex justify-between items-baseline">
-          <div class="text-[16px] font-normal ml-1 sm:flex-col">
+          <div className="text-[16px] font-normal ml-1 sm:flex-col">
             <input
-              class="form-check-input"
+              className="form-check-input"
               type="checkbox"
               value=""
               id="flexCheckDefault"
             />
-            <label class="text-[16px] font-normal ml-1" for="flexCheckDefault">
+            <label className="text-[16px] font-normal ml-1" for="flexCheckDefault">
               Remember Me
             </label>
           </div>
@@ -96,7 +100,7 @@ const Login = () => {
             className="text-right primary-text-color text-[16px] font-normal"
           />
         </div>
-        <CommonButton type="submit" className="auth-btn" text="Login" />
+        <CommonButton type={BUTTON_TYPE.submit} className="auth-btn" text="Login"  loader={loader} disabled={loader}/>
         <div className="h-[70px] md:h-[20px]"></div>
         <AuthRedirectSection
           text="Don't have an account? "
