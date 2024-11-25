@@ -91,7 +91,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-600 mt-8 pt-4 flex flex-col md:flex-row justify-between items-center border-opacity-50 text-sm text-gray-400">
+        <div className="max-w-6xl mx-auto pt-4 flex flex-col md:flex-row justify-between items-center border-opacity-50 text-sm text-gray-400">
           <span>&copy; copyright 2024.</span>
           <span className="flex space-x-4 mt-2 md:mt-0">{LAYER_ICONS}</span>
         </div>

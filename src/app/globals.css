@@ -92,7 +92,7 @@ body {
 }
 .second-head {
   background: #fff;
-  padding: 34px 0;
+  padding: 15px 0;
   color: black;
 }
 
@@ -221,3 +221,15 @@ section.hero:before {
   background-repeat: no-repeat;
 }
 
+@media screen and (max-width: 1024px)  {
+  section.hero:after {
+    width: 250px;
+    height: 250px;
+    right: 30px;
+  }
+}
+@media screen and (max-width: 768px) {
+  section.hero:before {
+    display: none;
+  }
+}
