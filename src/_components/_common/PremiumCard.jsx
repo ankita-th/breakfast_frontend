@@ -22,18 +22,18 @@ const PremiumCard = ({ PREMIUM_CARD_DATA, page }) => {
     <div>
       <section>
         <div className="max-w-screen-xl w-full px-4 mx-auto">
-          <div className="grid-cols-4 text-black grid gap-[15px]">
+          <div className="grid-cols-4 text-black grid gap-[15px] product-card-mob">
             {PREMIUM_CARD_DATA.map((item) => (
               <div className="p-2.5 bg-white rounded-[10px]">
-                <div className="flex">
+                {/* <div className="flex">
                 <Badge badgeName={"Fresh"} bgColor={"green"} />
                 <Badge badgeName={"Delivery in two days"} bgColor={"red"} />
-                </div>
+                </div> */}
                 <Image src={item.logo_img} alt="breadImg" />
                 <h5 className="text-[18px] font-bold text-center text-black mt-[15px]">
                   Brown Bread
                 </h5>
-                <p className="text-[12px] text-[#9299A3] font-bold py-[15px] text-center">
+                <p className="text-[12px] text-[#9299A3] font-bold py-[15px] text-center md:pt-[0px]">
                   <del>{item.old_price}</del>
                   <span className="text-[#55B250] font-bold">
                     {item.new_price}

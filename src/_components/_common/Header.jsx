@@ -23,8 +23,8 @@ const Header = () => {
   };
   return (
     <div>
-      <section className="p-4 w-full bg-[#F5F5F5]">
-        <div className="max-w-screen-xl w-full px-4 mx-auto">
+      <section className="p-4 w-full bg-[#F5F5F5] mob-dnone">
+        <div className="max-w-screen-xl w-full px-0 mx-auto">
           <div className=" flex justify-between items-center">
             <div className="head-calender-sec flex gap-2 text-base font-normal">
               <svg
@@ -85,7 +85,7 @@ const Header = () => {
             />
             <div>
               <form>
-                <div className="relative w-[300px]">
+                <div className="relative w-[300px] header-search-mob">
                   <label
                     className="bg-[#F5F5F5] px-[46px] py-[11px] rounded-full absolute right-[-1px] text-[13px] font-semibold"
                     htmlFor="fname"
@@ -101,7 +101,7 @@ const Header = () => {
                 </div>
               </form>
             </div>
-            <div className="flex items-center gap-[10px] text-[13px] font-bold text-[#3E4B5F]">
+            <div className="flex items-center gap-[10px] text-[13px] font-bold text-[#3E4B5F] call-free-mob">
               <div>
                 <svg
                   width="41"
@@ -148,7 +148,7 @@ const Header = () => {
       <section>
         <nav className="bg-gray-900 text-white flex items-center justify-between px-6 py-4">
           <div className="max-w-screen-xl w-full px-4 mx-auto flex justify-between items-center">
-            <button className="flex items-center bg-gradient-to-r from-[#92C64E] to-[#4BAF50] text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition">
+            <button className="flex items-center bg-gradient-to-r from-[#92C64E] to-[#4BAF50] text-white px-4 py-2 rounded-full font-semibold hover:bg-green-600 transition all-category-btn">
               <span className="mr-2" onClick={handleAllCategories}>
                 ☰
               </span>
@@ -177,7 +177,7 @@ const Header = () => {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <span>{SwedenFlagIcon}</span>
-                <span>SW</span>
+                <span className="sw">SW</span>
               </div>
 
               <div className="flex items-center space-x-2">
@@ -195,7 +195,7 @@ const Header = () => {
                     />
                   </svg>
                 </span>
-                <span>{profileStatus}</span>
+                <span className="login-header">{profileStatus}</span>
               </div>
 
               <div className="flex items-center space-x-4">

@@ -78,14 +78,14 @@ const Login = () => {
           icon={showPassword ? CLOSED_EYE : OPEN_EYE}
         />
         <div className="text-[16px] font-normal ml-1 flex justify-between items-baseline">
-          <div class="text-[16px] font-normal ml-1 sm:flex-col">
+          <div className="text-[16px] font-normal ml-1 sm:flex-col">
             <input
-              class="form-check-input"
+              className="form-check-input"
               type="checkbox"
               value=""
               id="flexCheckDefault"
             />
-            <label class="text-[16px] font-normal ml-1" for="flexCheckDefault">
+            <label className="text-[16px] font-normal ml-1" for="flexCheckDefault">
               Remember Me
             </label>
           </div>
