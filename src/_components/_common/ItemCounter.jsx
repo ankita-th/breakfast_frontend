@@ -15,7 +15,7 @@ const ItemCounter = () => {
     setItemQuantity((count) => count - 1);
   };
 
-  
+
   return (
     <div className="flex items-center bg-[#F2F2F2] border rounded-[50px] border-gray-100 w-32 justify-center gap-1 p-[5px]">
       <Button

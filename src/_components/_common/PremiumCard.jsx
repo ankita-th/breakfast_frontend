@@ -26,7 +26,7 @@ const PremiumCard = ({
     <div>
       <section>
         <div className="max-w-screen-xl w-full px-4 mx-auto">
-          <div className="grid-cols-4 text-black grid gap-[15px]">
+          <div className="grid-cols-3 text-black grid gap-[15px]">
             {PREMIUM_CARD_DATA.map((item) => (
               <div
                 className="p-2.5 bg-white rounded-[10px]"
@@ -34,9 +34,10 @@ const PremiumCard = ({
                 onClick={() => handleItem(item.id)}
               >
                 <div className="flex">
-                  <Badge badgeName={"Fresh"} bgColor={"green"} />
-                  <Badge badgeName={"Delivery in two days"} bgColor={"red"} />
+                  <Badge badgeName={"Fresh"} bgColor={"green-600"} />
+                  <Badge badgeName={"Delivery in two days"} bgColor={"red-300"} />
                 </div>
+                {/* <Image src={"http://192.168.1.128:8005/media/product_images/images_2.jpeg"} /> */}
                 {item.images?.map((img, idx) => (
                   <div key={idx}>
                     <img
