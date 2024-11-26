@@ -1,6 +1,6 @@
 import React from "react";
 
-const Badge = ({ badgeName, bgColor , textColor }) => {
+const Badge = ({ badgeName, bgColor, textColor }) => {
   return (
     <div>
       <span
