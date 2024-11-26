@@ -15,29 +15,38 @@ const Footer = () => {
       <div className="bg-black text-white py-6 px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-0">
           <div className="border-b border-gray-600 border-opacity-50 p-6 ">
-            <div className="flex items-center gap-4">
-              <span className="bg-[#262626] text-white rounded-full p-2 flex items-center justify-center">
+            <div className="flex gap-4 items-start justify-start mb-5">
+              <span className="bg-[#262626] w-12 h-12 flex justify-center items-center rounded-[50px]">
                 {EMAIL_ICON}
               </span>
-              <h2 className="text-lg font-semibold">Email</h2>
+              <div>
+                <h2 className="text-lg font-semibold">Email</h2>
+                <p className="text-gray-300 text-sm  ">info@</p>
+              </div>
             </div>
-            <p className="text-gray-300 text-sm pl-10 ml-5 ">info@</p>
-            <div className="flex items-center gap-4">
-              <span className="bg-[#262626] text-white rounded-full p-2 flex items-center justify-center">
+            
+            <div className=" flex gap-4 items-start justify-start mb-5">
+              <span className="bg-[#262626] w-12 h-12 flex justify-center items-center rounded-[50px]">
                 {PHONE_ICON}
               </span>
+              <div>
               <h2 className="text-lg font-semibold">Phone</h2>
+              <p className="text-gray-300 text-sm">666 888 888</p>
+              </div>
             </div>
-            <p className="text-gray-300 pl-10 ml-5 text-sm">666 888 888</p>
-            <div className="flex items-center gap-4">
-              <span className="bg-[#262626] text-white rounded-full p-2 flex items-center justify-center">
+            
+            <div className=" flex gap-4 items-start justify-start mb-5">
+              <span className="bg-[#262626] w-12 h-12 flex justify-center items-center rounded-[50px]">
                 {ADDRESS_ICON}
               </span>
-              <h2 className="text-lg font-semibold">Address</h2>
+              <div>
+                <h2 className="text-lg font-semibold">Address</h2>
+                <p className="text-gray-300 text-sm">
+                88 road, Brooklyn street, USA
+              </p>
+              </div>
             </div>
-            <p className="text-gray-300 pl-10 text-sm ml-5">
-              88 road, Brooklyn street, USA
-            </p>
+            
           </div>
           <div className="border-b border-l flex items-center flex-col text-center text-sm justify-center border-gray-600 border-opacity-50 p-6 space-y-4 ">
             <p className="text-gray-400">
@@ -82,7 +91,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-600 mt-8 pt-4 flex flex-col md:flex-row justify-between items-center border-opacity-50 text-sm text-gray-400">
+        <div className="max-w-6xl mx-auto pt-4 flex flex-col md:flex-row justify-between items-center border-opacity-50 text-sm text-gray-400">
           <span>&copy; copyright 2024.</span>
           <span className="flex space-x-4 mt-2 md:mt-0">{LAYER_ICONS}</span>
         </div>
