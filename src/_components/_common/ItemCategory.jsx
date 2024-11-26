@@ -6,7 +6,7 @@ const ItemCategory = ({handleClick}) => {
   return (
     <div className="grid grid-cols-5 md:grid-cols-7 gap-4">
       {ITEM_CATEGORY?.map((item) => (
-        <div className="flex flex-col items-center bg-gray-100 rounded-full p-6 w-30 h-35 bg-[linear-gradient(1deg,_#E5E5E5_0%,_rgb(255,255,255)_100%)];
+        <div className="flex flex-col items-center rounded-full p-6 w-30 h-35 bg-gradient-to-b from-[#ffffff] to-[#E5E5E5]
 " key= {item.id} onClick={handleClick}>
           <Image
             src={item.item_img}
