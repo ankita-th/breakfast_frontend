@@ -325,10 +325,10 @@ const Page = () => {
             </div>
           </section>
           <PremiumCard
-          PREMIUM_CARD_DATA={productVariant}
-          page="home"
-          handleViewAll={handleViewAll}
-        />
+            PREMIUM_CARD_DATA={productVariant}
+            page="home"
+            handleViewAll={handleViewAll}
+          />
           {/* <PremiumCard
             PREMIUM_CARD_DATA={PREMIUM_CARD}
             itemCount={itemCount}
@@ -539,102 +539,100 @@ const Page = () => {
         /> */}
       </div>
       <section>
-          <div className="max-w-screen-xl w-full px-4 mx-auto">
-            <div className="heading">
-              <h4 className="text-center text-black text-[45px] font-bold">
-                <b>{T.new} </b> {T.arrivals_goods}
-              </h4>
-              <Image
-                className="w-[153px] mx-auto"
-                src={headinglineImg}
-                alt="organicProductImg"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-6 mt-20">
-              {ARRIVAL_CARDS.map((item, index) => {
-                return (
-                  <div className="pl-[200px] mb-10" key={index}>
-                    <div className="bg-white rounded-lg shadow-md p-4 w-full relative pl-[120px]">
-                      <Image
-                        src={item.logo_img}
-                        className="text-transparent absolute left-[-130px] max-w-[240px]"
-                        alt="productImg"
-                      />
-                      <span className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] text-xs px-2 py-1 rounded-full text-white">
-                        {item.item_status}
+        <div className="max-w-screen-xl w-full px-4 mx-auto">
+          <div className="heading">
+            <h4 className="text-center text-black text-[45px] font-bold">
+              <b>{T.new} </b> {T.arrivals_goods}
+            </h4>
+            <Image
+              className="w-[153px] mx-auto"
+              src={headinglineImg}
+              alt="organicProductImg"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-6 mt-20">
+            {ARRIVAL_CARDS.map((item, index) => {
+              return (
+                <div className="pl-[200px] mb-10" key={index}>
+                  <div className="bg-white rounded-lg shadow-md p-4 w-full relative pl-[120px]">
+                    <Image
+                      src={item.logo_img}
+                      className="text-transparent absolute left-[-130px] max-w-[240px]"
+                      alt="productImg"
+                    />
+                    <span className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] text-xs px-2 py-1 rounded-full text-white">
+                      {item.item_status}
+                    </span>
+                    <h2 className="text-2xl font-bold text-black mt-2">
+                      {item.item_name}
+                    </h2>
+                    <div className="text-green-600 text-xl font-semibold mt-1">
+                      {item.price}
+                      <span className="text-sm font-normal text-gray-500">
+                        {T.unit}
                       </span>
-                      <h2 className="text-2xl font-bold text-black mt-2">
-                        {item.item_name}
-                      </h2>
-                      <div className="text-green-600 text-xl font-semibold mt-1">
-                        {item.price}
-                        <span className="text-sm font-normal text-gray-500">
-                          {T.unit}
-                        </span>
-                        <p className="text-gray-500 mt-2">{item.description}</p>
-                        <div className="flex items-center mt-2">
-                          <div className="flex text-yellow-500">
-                            {StarFilledIcon}
-                            {StarFilledIcon}
-                            {StarFilledIcon}
-                            {StarFilledIcon}
-                            {StarIcon}
-                          </div>
-                          <span className="text-gray-500 text-sm ml-2">
-                            (01)
-                          </span>
+                      <p className="text-gray-500 mt-2">{item.description}</p>
+                      <div className="flex items-center mt-2">
+                        <div className="flex text-yellow-500">
+                          {StarFilledIcon}
+                          {StarFilledIcon}
+                          {StarFilledIcon}
+                          {StarFilledIcon}
+                          {StarIcon}
                         </div>
-                        <div className="flex items-center justify-between mt-4">
-                          <ItemCounter
-                            idx={index}
-                            count={itemCount}
-                            handleDecrease={() => handleDecrease(index)}
-                            handleIncrease={() => handleIncrease(index)}
-                          />
-                          <div className="flex space-x-2">
-                            <a
-                              href="#"
-                              className="w-10 h-10 bg-gray-100 p-2 rounded-full flex items-center justify-center"
-                              // onClick={addToWishList}
-                            >
-                              <Image
-                                className="w-full h-full"
-                                src={item.heartImg}
-                                alt="heartImg"
-                              />
-                            </a>
-                            <a
-                              href="#"
-                              className="w-10 h-10 bg-green-500 p-2 rounded-full flex items-center justify-center"
-                            >
-                              <Image
-                                className="w-full h-full text-white"
-                                src={item.shoppingcartImg}
-                                alt="shoppingImg"
-                              />
-                            </a>
-                          </div>
+                        <span className="text-gray-500 text-sm ml-2">(01)</span>
+                      </div>
+                      <div className="flex items-center justify-between mt-4">
+                        <ItemCounter
+                          idx={index}
+                          count={itemCount}
+                          handleDecrease={() => handleDecrease(index)}
+                          handleIncrease={() => handleIncrease(index)}
+                        />
+                        <div className="flex space-x-2">
+                          <a
+                            href="#"
+                            className="w-10 h-10 bg-gray-100 p-2 rounded-full flex items-center justify-center"
+                            // onClick={addToWishList}
+                          >
+                            <Image
+                              className="w-full h-full"
+                              src={item.heartImg}
+                              alt="heartImg"
+                            />
+                          </a>
+                          <a
+                            href="#"
+                            className="w-10 h-10 bg-green-500 p-2 rounded-full flex items-center justify-center"
+                          >
+                            <Image
+                              className="w-full h-full text-white"
+                              src={item.shoppingcartImg}
+                              alt="shoppingImg"
+                            />
+                          </a>
                         </div>
                       </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
-            <button
-              type="button"
-              className="flex mx-auto mb-[60px] gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
-            >
-              View All
-              <span>
-                <Image
-                  className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
-                  src={arrowImg}
-                />
-              </span>
-            </button>
+                </div>
+              );
+            })}
           </div>
-        </section>
+          <button
+            type="button"
+            className="flex mx-auto mb-[60px] gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
+          >
+            View All
+            <span>
+              <Image
+                className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
+                src={arrowImg}
+              />
+            </span>
+          </button>
+        </div>
+      </section>
       <div className="overflow-hidden py-6">
         <section className="before:absolute before:top-0 before:left-0 before:content-[''] before:w-full before:h-full before:bg-[#92C64E] before:z-[-1] z-[1] before:-rotate-2 py-[60px] relative">
           <div className="max-w-screen-xl w-full px-4 mx-auto">
