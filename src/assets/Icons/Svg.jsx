@@ -596,7 +596,7 @@ export const DummyUser = (
     />
   </svg>
 );
-export const WishList = (
+export const WishListIcon = (
   <svg
     className="w-[40.19px] h-[40.56px] bg-[#575757] p-[13px] rounded-[10px]"
     width="18"
@@ -611,7 +611,7 @@ export const WishList = (
     />
   </svg>
 );
-export const CartList = (
+export const CartListIcon = (
   <svg
     className="w-[40.19px] h-[40.56px] bg-[#575757] p-[13px] rounded-[10px]"
     width="15"

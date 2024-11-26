@@ -36,23 +36,16 @@ import { useRouter } from "next/navigation";
 // import { useCount } from "@/_ContextApi/Context";
 import { StarFilledIcon, StarIcon } from "@/Assets/Icons/Svg";
 import { useEffect, useState } from "react";
+import { setProductVariant } from "@/Redux/productDetailsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 
 const Page = () => {
-  // const {
-  //   addToCart,
-  //   addToWishList,
-  //   handleIncrease,
-  //   handleDecrease,
-  //   itemCount,
-  // } = useCount();
   const router = useRouter();
-  const[itemCount ,setItemCount] = useState(0)
-  const handleDecrease=()=>{
-    setItemCount((itemCount)=>itemCount-1)
-  }
-  const handleIncrease=()=>{
-    setItemCount((itemCount)=>itemCount+1)
-  }
+  const dispatch = useDispatch()
+  const {productVariant} = useSelector(state=>state.product)
+  console.log(productVariant,"productVariant")
+  
 
   useEffect(() => {
     callApi({
@@ -84,6 +77,27 @@ const Page = () => {
       });
   }, []);
 
+
+
+  useEffect(() => {
+    callApi({
+      endPoint: "/products",
+      method: METHODS.get,
+      params: {
+        page: "1",
+      },
+      instanceType: INSTANCE.authorize,
+    })
+      .then((res) => {
+        console.log(res.data, "res");
+        dispatch(setProductVariant(res.data.results))
+      })
+      .catch((err) => {
+        console.log(err, "error");
+        toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
+      });
+  }, []);
+
   const handleViewAll = () => {
     router.push("/products");
   };
@@ -97,10 +111,10 @@ const Page = () => {
             <h2 className="mb-2 font-spartan text-[20px] text-black font-bold leading-[22.4px]">
               {T.your_perfect_morning_start}
             </h2>
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 text-center leading-tight font-spartan text-[50.6px] font-extrabold leading-[56.67px] max-w-[680px]">
-              <span class="text-green-600">{T.start_your_day} </span>{T.fresh},
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 text-center leading-tight font-spartan text-[50.6px] font-extrabold leading-[56.67px] max-w-[680px]">
+              <span className="text-green-600">{T.start_your_day} </span>{T.fresh},
               {T.healthy_breakfast_baskets}
-              <span class="text-green-600"> {T.delivered_to_your_door}</span>
+              <span className="text-green-600"> {T.delivered_to_your_door}</span>
             </h1>
             <p className="text-gray-600 mt-4 text-center max-w-lg">
               {T.nutritious_basket}
@@ -112,7 +126,7 @@ const Page = () => {
                 placeholder="Search Zipcode"
                 className="w-full md:flex-1 p-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded-[50px]"
               />
-              <button class="w-full md:w-auto bg-gray-800 text-black font-semibold py-3 px-6 hover:bg-gray-900 transition rounded-[50px] absolute right-0 text-white">
+              <button className="w-full md:w-auto bg-gray-800 text-black font-semibold py-3 px-6 hover:bg-gray-900 transition rounded-[50px] absolute right-0 text-white">
                 {T.search}
               </button>
             </div>
@@ -302,10 +316,7 @@ const Page = () => {
           </div>
         </section>
         <PremiumCard
-          PREMIUM_CARD_DATA={PREMIUM_CARD}
-          itemCount={itemCount}
-          handleDecrease={handleDecrease}
-          handleIncrease={handleIncrease}
+          PREMIUM_CARD_DATA={productVariant}
           page="home"
           handleViewAll={handleViewAll}
         />
@@ -479,12 +490,7 @@ const Page = () => {
                         <span className="text-gray-500 text-sm ml-2">(01)</span>
                       </div>
                       <div className="flex items-center justify-between mt-4">
-                        <ItemCounter
-                          idx={index}
-                          count={itemCount}
-                          handleDecrease={()=>handleDecrease(index)}
-                          handleIncrease={()=>handleIncrease(index)}
-                        />
+                        <ItemCounter/>
                         <div className="flex space-x-2">
                           <a
                             href="#"

@@ -13,7 +13,7 @@ import TabSection from "@/_components/_common/TabSection";
 import { INDIVIDUAL, TABS } from "../_constant";
 import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { BUTTON_TYPE } from "@/_constants/constant";
-import { toastMessages } from "@/_utils/toastMessage";
+import { successType, toastMessages } from "@/_utils/toastMessage";
 
 const Page = () => {
   const router = useRouter();
@@ -33,7 +33,6 @@ const Page = () => {
       instanceType: INSTANCE.auth,
       payload: {
         email: values.email,
-        role: activeTab,
         first_name: values?.first_name,
         last_name: values?.last_name,
       },
@@ -46,7 +45,7 @@ const Page = () => {
       .catch((err) => {
         console.log(err, "error");
         toastMessages(
-          err?.response?.data?.detail || DEFAULT_ERROR_MESSAGE
+          err?.response?.data?.message.email || DEFAULT_ERROR_MESSAGE
         );
         setLoader(false);
       });
@@ -59,11 +58,11 @@ const Page = () => {
   return (
     <div className="login-form-container">
       <AuthFormTitleSection title={"Sign Up!"} />
-      <TabSection
+      {/* <TabSection
         activeTab={activeTab}
         handleTabChange={handleTabChange}
         tabs={TABS}
-      />
+      /> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-5 rounded-none shadow-lg w-full"

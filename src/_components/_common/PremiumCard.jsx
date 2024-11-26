@@ -9,6 +9,7 @@ import { CART, CART1 } from "../../../public/images/SvgIcons";
 import ItemCounter from "./ItemCounter";
 import Badge from "./Badge";
 import Button from "./Button";
+import dummyImg from "../../Assets/images/breadimg.jpg";
 // import { useCount } from "@/_ContextApi/Context";
 
 const PremiumCard = ({
@@ -17,11 +18,9 @@ const PremiumCard = ({
   handleItem,
   handleViewAll,
 }) => {
-  // const {addToCart,addToWishList,handleIncrease,handleDecrease,itemCount } = useCount();
-  console.log(PREMIUM_CARD_DATA, "PREMIUM_CARD_DATA");
   const stripHtmlTags = (str) => {
     return str?.replace(/<\/?[^>]+(>|$)/g, "");
-};
+  };
 
   return (
     <div>
@@ -29,13 +28,22 @@ const PremiumCard = ({
         <div className="max-w-screen-xl w-full px-4 mx-auto">
           <div className="grid-cols-4 text-black grid gap-[15px]">
             {PREMIUM_CARD_DATA.map((item) => (
-              <div className="p-2.5 bg-white rounded-[10px]">
+              <div
+                className="p-2.5 bg-white rounded-[10px]"
+                key={item}
+                onClick={() => handleItem(item.id)}
+              >
                 <div className="flex">
                   <Badge badgeName={"Fresh"} bgColor={"green"} />
                   <Badge badgeName={"Delivery in two days"} bgColor={"red"} />
                 </div>
-                {(item.images)?.map((img) => (
-                  <Image src={img} alt="breadImg" />
+                {item.images?.map((img, idx) => (
+                  <div key={idx}>
+                    <img
+                      src={img.image ? img.image : dummyImg}
+                      alt="breadImg"
+                    />
+                  </div>
                 ))}
                 <h5 className="text-[18px] font-bold text-center text-black mt-[15px]">
                   {item.name}
@@ -43,7 +51,7 @@ const PremiumCard = ({
                 <p className="text-[12px] text-[#9299A3] font-bold py-[15px] text-center">
                   <del>{item.old_price}</del>
                   <span className="text-[#55B250] font-bold">
-                    {stripHtmlTags(item.description)}
+                    {/* {stripHtmlTags(item.description)} */}
                   </span>
                   unit
                 </p>
@@ -72,11 +80,7 @@ const PremiumCard = ({
                   </div>
                 ) : (
                   <div className="flex">
-                    <ItemCounter
-                    // count={itemCount}
-                    // handleDecrease={handleDecrease}
-                    // handleIncrease={handleIncrease}
-                    />
+                    <ItemCounter />
                     <span className="text-black w-10 h-10 flex items-center justify-center">
                       {CART}
                     </span>
