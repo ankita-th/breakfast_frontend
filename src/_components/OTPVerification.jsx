@@ -20,7 +20,6 @@ const OTPVerification = ({ handleSubmitOTP }) => {
   };
   return (
     <div>
-      {" "}
       <p>Enter the verification code we sent to your email address. </p>
       <OTPInput
         value={otp}

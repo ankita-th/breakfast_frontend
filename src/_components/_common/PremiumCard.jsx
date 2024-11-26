@@ -3,53 +3,67 @@ import { PREMIUM_CARD } from "@/app/_constant/Constant";
 import Image from "next/image";
 import heartImg from "../../Assets/images/heart.svg";
 import shoppingcartImg from "../../Assets/images/shopping-cart.svg";
-import arrowImg from "../../Assets/Images/arrow.svg";
+import arrowImg from "../../Assets/images/arrow.svg";
 import React, { useState } from "react";
 import { CART, CART1 } from "../../../public/images/SvgIcons";
 import ItemCounter from "./ItemCounter";
 import Badge from "./Badge";
+import Button from "./Button";
+import imgBread from '../../assets/images/breadimg.jpg'
+// import { useCount } from "@/_ContextApi/Context";
 
-const PremiumCard = ({ PREMIUM_CARD_DATA, page }) => {
-  const [count, setCount] = useState(0);
+const PremiumCard = ({
+  PREMIUM_CARD_DATA,
+  page,
+  handleItem,
+  handleViewAll,
+}) => {
+  // const {addToCart,addToWishList,handleIncrease,handleDecrease,itemCount } = useCount();
+  console.log(PREMIUM_CARD_DATA, "PREMIUM_CARD_DATA");
+  const stripHtmlTags = (str) => {
+    return str?.replace(/<\/?[^>]+(>|$)/g, "");
+  };
 
-  const handleDecrease = () => {
-    setCount(count - 1);
-  };
-  const handleIncrease = () => {
-    setCount(count + 1);
-  };
   return (
     <div>
       <section>
         <div className="max-w-screen-xl w-full px-4 mx-auto">
-          <div className="grid-cols-4 text-black grid gap-[15px] product-card-mob">
+          <div className="grid-cols-3 text-black grid gap-[15px] product-card-mob">
             {PREMIUM_CARD_DATA.map((item) => (
-              <div className="p-2.5 bg-white rounded-[10px]">
-                {/* <div className="flex">
-                <Badge badgeName={"Fresh"} bgColor={"green"} />
-                <Badge badgeName={"Delivery in two days"} bgColor={"red"} />
-                </div> */}
-                <Image src={item.logo_img} alt="breadImg" />
+              <div className="p-2.5 bg-white rounded-[10px] relative">
+                <div className="flex absolute top-0">
+                  <Badge badgeName={"Fresh"} textColor={"white"} bgColor={"gradient-to-r from-[#92C64E] to-[#4BAF50]"} />
+                  <Badge badgeName={"Delivery in two days"} textColor={"[#BD6600]"} bgColor={"[#FFD99F]"} />
+                </div>
+                {(item.images)?.map((img) => (
+                  <Image src={imgBread} alt="breadImg" />
+                ))}
                 <h5 className="text-[18px] font-bold text-center text-black mt-[15px]">
-                  Brown Bread
+                  {item.name}
                 </h5>
                 <p className="text-[12px] text-[#9299A3] font-bold py-[15px] text-center md:pt-[0px]">
                   <del>{item.old_price}</del>
                   <span className="text-[#55B250] font-bold">
-                    {item.new_price}
+                    {stripHtmlTags(item.description)}
                   </span>
                   unit
                 </p>
                 {page == "home" ? (
                   <div className="flex items-center justify-center gap-[10px] mb-[30px]">
-                    <a href="#">
+                    <a
+                      href="#"
+                    // onClick={addToWishList}
+                    >
                       <Image
                         className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
                         src={heartImg}
                         alt="heartLogo"
                       />
                     </a>
-                    <a href="#">
+                    <a
+                      href="#"
+                    //  onClick={addToCart}
+                    >
                       <Image
                         className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
                         src={shoppingcartImg}
@@ -58,16 +72,16 @@ const PremiumCard = ({ PREMIUM_CARD_DATA, page }) => {
                     </a>
                   </div>
                 ) : (
-                  <div className="flex">
+                  <div className="flex gap-2.5">
                     <ItemCounter
-                      count={count}
-                      handleDecrease={handleDecrease}
-                      handleIncrease={handleIncrease}
+                    // count={itemCount}
+                    // handleDecrease={handleDecrease}
+                    // handleIncrease={handleIncrease}
                     />
-                    <span className="text-black w-10 h-10 flex items-center justify-center">
+                    <span className="text-black flex items-center justify-center">
                       {CART}
                     </span>
-                    <span className="text-black w-10 h-10 flex items-center justify-center">
+                    <span className="text-black flex items-center justify-center">
                       {CART1}
                     </span>
                   </div>
@@ -76,19 +90,19 @@ const PremiumCard = ({ PREMIUM_CARD_DATA, page }) => {
             ))}
           </div>
           <div className="flex justify-center">
-            <button
-              type="button"
+            <Button
+              btnType="button"
+              btnText="View All"
               className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
-            >
-              View All
-              <span>
+              btnClick={handleViewAll}
+              icon={
                 <Image
                   className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
                   src={arrowImg}
                   alt="arrowImg"
                 />
-              </span>
-            </button>
+              }
+            />
           </div>
         </div>
       </section>

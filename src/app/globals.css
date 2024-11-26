@@ -439,4 +439,16 @@ img.organic_img {
   .sw {
     font-size: 12px;
   }
+  .expert-mob-heading p {
+    font-size: 14px;
+  }
+}
+
+
+
+/* start Product shop page start  */
+.shoptop-card-img {
+  height: 73px;
+  width: 73px;
+  object-fit: contain;
 }

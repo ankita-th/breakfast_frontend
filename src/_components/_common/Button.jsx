@@ -11,8 +11,8 @@ const Button = ({ className, btnText, btnType, btnClick,btnLoader, disabled ,ico
         disabled={disabled}
       >
         {btnLoader && BUTTON_LOADER}
-        {icon}
         {btnText}
+        {icon}
       </button>
     </div>
   );
