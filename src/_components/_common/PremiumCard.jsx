@@ -26,10 +26,10 @@ const PremiumCard = ({
     <div>
       <section className="pt-[40px]">
         <div className="max-w-screen-xl w-full px-4 mx-auto">
-          <div className="grid-cols-3 text-black grid gap-[15px]">
+          <div className="grid-cols-3 text-black grid gap-[15px] product-card-mob">
             {PREMIUM_CARD_DATA.map((item) => (
               <div className="p-2.5 bg-white rounded-[10px] relative">
-                <div className="flex absolute top-[10px] left-[20px] right-[10px] flex justify-between items-center">
+                <div className="flex absolute top-0">
                   <Badge badgeName={"Fresh"} textColor={"white"} bgColor={"gradient-to-r from-[#92C64E] to-[#4BAF50]"} />
                   <Badge badgeName={"Delivery in two days"} textColor={"[#BD6600]"} bgColor={"[#FFD99F]"} />
                   <div>
@@ -40,7 +40,9 @@ const PremiumCard = ({
                     />
                   </div>
                 </div>
-                {/* <Image src={"http://192.168.1.128:8005/media/product_images/images_2.jpeg"} /> */}
+                {/* {(item.images)?.map((img) => (
+                  <Image src={imgBread} alt="breadImg" />
+                ))} */}
                 {item.images?.map((img, idx) => (
                   <div key={idx}>
                     <img
@@ -52,10 +54,10 @@ const PremiumCard = ({
                 <h5 className="text-[18px] font-bold text-center text-black mt-[15px]">
                   {item.name}
                 </h5>
-                <p className="text-[12px] text-[#9299A3] font-bold py-[15px] text-center">
+                <p className="text-[12px] text-[#9299A3] font-bold py-[15px] text-center md:pt-[0px]">
                   <del>{item.old_price}</del>
                   <span className="text-[#55B250] font-bold">
-                    {/* {stripHtmlTags(item.description)} */}
+                    {stripHtmlTags(item.description)}
                   </span>
                   unit
                 </p>
@@ -83,12 +85,16 @@ const PremiumCard = ({
                     </a>
                   </div>
                 ) : (
-                  <div className="flex">
-                    <ItemCounter />
-                    <span className="text-black w-10 h-10 flex items-center justify-center">
+                  <div className="flex gap-2.5">
+                    <ItemCounter
+                    // count={itemCount}
+                    // handleDecrease={handleDecrease}
+                    // handleIncrease={handleIncrease}
+                    />
+                    <span className="text-black flex items-center justify-center">
                       {CART}
                     </span>
-                    <span className="text-black w-10 h-10 flex items-center justify-center">
+                    <span className="text-black flex items-center justify-center">
                       {CART1}
                     </span>
                   </div>

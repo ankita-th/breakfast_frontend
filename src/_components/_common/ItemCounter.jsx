@@ -25,7 +25,7 @@ const ItemCounter = () => {
         -
       </span>
       <span className=" text-xl w-10 h-10 flex items-center justify-center">
-        {itemQuantity ? itemQuantity : "0"}
+        {itemQuantity ? itemQuantity : "1"}
       </span>
       <span
         className="cursor-pointer text-2xl w-10 h-10 flex-none flex items-center justify-center bg-white rounded-full p-2"
@@ -33,6 +33,7 @@ const ItemCounter = () => {
       >
         +
       </span>
+
     </div>
   );
 };
