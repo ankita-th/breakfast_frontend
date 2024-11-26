@@ -18,20 +18,22 @@ const ItemCounter = () => {
 
   return (
     <div className="flex items-center bg-[#F2F2F2] border rounded-[50px] border-gray-100 w-32 justify-center gap-1 p-[5px]">
-      <Button
-        className="cursor-pointer text-2xl w-10 h-10 flex items-center justify-center bg-white rounded-full p-4"
-        btnClick={handleDecrease}
-        btnText={"-"}
-      />
-      <Button
-        className=" text-xl w-10 h-10 flex items-center justify-center"
-        btnText={itemQuantity ? itemQuantity : "0"}
-      />
-      <Button
-        className="cursor-pointer text-2xl w-10 h-10 flex items-center justify-center bg-white rounded-full p-2"
-        btnClick={handleIncrease}
-        btnText={"+"}
-      />
+      <span
+        className="cursor-pointer text-2xl w-10 h-10 flex-none flex items-center justify-center bg-white rounded-full p-4"
+        onClick={handleDecrease}
+      >
+        -
+      </span>
+      <span className=" text-xl w-10 h-10 flex items-center justify-center">
+        {itemQuantity ? itemQuantity : "1"}
+      </span>
+      <span
+        className="cursor-pointer text-2xl w-10 h-10 flex-none flex items-center justify-center bg-white rounded-full p-2"
+        onClick={handleIncrease}
+      >
+        +
+      </span>
+
     </div>
   );
 };
