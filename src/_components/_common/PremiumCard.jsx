@@ -9,7 +9,7 @@ import { CART, CART1 } from "../../../public/images/SvgIcons";
 import ItemCounter from "./ItemCounter";
 import Badge from "./Badge";
 import Button from "./Button";
-import imgBread from '../../assets/images/breadimg.jpg'
+import dummyImg from "../../Assets/images/breadimg.jpg";
 // import { useCount } from "@/_ContextApi/Context";
 
 const PremiumCard = ({
@@ -18,8 +18,6 @@ const PremiumCard = ({
   handleItem,
   handleViewAll,
 }) => {
-  // const {addToCart,addToWishList,handleIncrease,handleDecrease,itemCount } = useCount();
-  console.log(PREMIUM_CARD_DATA, "PREMIUM_CARD_DATA");
   const stripHtmlTags = (str) => {
     return str?.replace(/<\/?[^>]+(>|$)/g, "");
   };
@@ -28,30 +26,36 @@ const PremiumCard = ({
     <div>
       <section className="pt-[40px]">
         <div className="max-w-screen-xl w-full px-4 mx-auto">
-          <div className="grid-cols-3 text-black grid gap-[15px] product-card-mob">
+          <div className="grid-cols-3 text-black grid gap-[15px]">
             {PREMIUM_CARD_DATA.map((item) => (
               <div className="p-2.5 bg-white rounded-[10px] relative">
                 <div className="flex absolute top-[10px] left-[20px] right-[10px] flex justify-between items-center">
                   <Badge badgeName={"Fresh"} textColor={"white"} bgColor={"gradient-to-r from-[#92C64E] to-[#4BAF50]"} />
                   <Badge badgeName={"Delivery in two days"} textColor={"[#BD6600]"} bgColor={"[#FFD99F]"} />
                   <div>
-                  <Image
-                        className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
-                        src={heartImg}
-                        alt="heartLogo"
-                      />
+                    <Image
+                      className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
+                      src={heartImg}
+                      alt="heartLogo"
+                    />
                   </div>
                 </div>
-                {(item.images)?.map((img) => (
-                  <Image src={imgBread} alt="breadImg" />
+                {/* <Image src={"http://192.168.1.128:8005/media/product_images/images_2.jpeg"} /> */}
+                {item.images?.map((img, idx) => (
+                  <div key={idx}>
+                    <img
+                      src={img.image ? img.image : dummyImg}
+                      alt="breadImg"
+                    />
+                  </div>
                 ))}
                 <h5 className="text-[18px] font-bold text-center text-black mt-[15px]">
                   {item.name}
                 </h5>
-                <p className="text-[12px] text-[#9299A3] font-bold py-[15px] text-center md:pt-[0px]">
+                <p className="text-[12px] text-[#9299A3] font-bold py-[15px] text-center">
                   <del>{item.old_price}</del>
                   <span className="text-[#55B250] font-bold">
-                    {stripHtmlTags(item.description)}
+                    {/* {stripHtmlTags(item.description)} */}
                   </span>
                   unit
                 </p>
@@ -79,16 +83,12 @@ const PremiumCard = ({
                     </a>
                   </div>
                 ) : (
-                  <div className="flex gap-2.5">
-                    <ItemCounter
-                    // count={itemCount}
-                    // handleDecrease={handleDecrease}
-                    // handleIncrease={handleIncrease}
-                    />
-                    <span className="text-black flex items-center justify-center">
+                  <div className="flex">
+                    <ItemCounter />
+                    <span className="text-black w-10 h-10 flex items-center justify-center">
                       {CART}
                     </span>
-                    <span className="text-black flex items-center justify-center">
+                    <span className="text-black w-10 h-10 flex items-center justify-center">
                       {CART1}
                     </span>
                   </div>

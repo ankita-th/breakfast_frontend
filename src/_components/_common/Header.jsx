@@ -5,18 +5,19 @@ import {
   CalenderImg,
   CallIcon,
   CartList,
+  CartListIcon,
   CloudImg,
   DummyUser,
   SwedenFlagIcon,
   WishList,
+  WishListIcon,
 } from "@/Assets/Icons/Svg";
 import { LOGO } from "@/Assets/Images";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const Header = () => {
-  // let { cartItemsCount, wishListCount } = useCount();
+const Header = ({}) => {
   const pathname = usePathname();
   const urlName = pathname.split("/")[1];
   const [profileStatus, setProfileStatus] = useState();
@@ -144,15 +145,15 @@ const Header = () => {
 
               <div className="flex items-center space-x-4">
                 <button className="relative">
-                  <span>{WishList}</span>
+                  <span>{WishListIcon}</span>
                   <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {/* {wishListCount} */}
+                    {/* {wishListQuantity} */}
                   </span>
                 </button>
                 <button className="relative">
-                  <span>{CartList}</span>
+                  <span>{CartListIcon}</span>
                   <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {/* {cartItemsCount} */}
+                    {/* {itemQuantity} */}
                   </span>
                 </button>
               </div>
