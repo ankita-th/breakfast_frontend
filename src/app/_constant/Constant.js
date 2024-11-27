@@ -1,10 +1,10 @@
-import serviceCardImg from "../../Assets/images/service card1.svg";
-import serviceCardImg1 from "../../Assets/images/service card2.svg";
-import serviceCardImg2 from "../../Assets/images/service card3.svg";
-import breadImg from "../../Assets/images/breadimg.jpg";
-import productImg from "../../Assets/images/dough.png";
-import heartImg from "../../Assets/images/heart.svg";
-import shoppingcartImg from "../../Assets/images/shopping-cart.svg";
+import serviceCardImg from "../../../public/images/service card1.svg";
+import serviceCardImg1 from "../../../public/images/service card2.svg";
+import serviceCardImg2 from "../../../public/images/service card3.svg";
+import breadImg from "../../../public/images/breadimg.jpg";
+import productImg from "../../../public/images/dough.png";
+import heartImg from "../../../public/images/heart.svg";
+import shoppingcartImg from "../../../public/images/shopping-cart.svg";
 
 
 export const SERVICE_CARD = [

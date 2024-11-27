@@ -35,7 +35,7 @@ export const manageUserAuthorization = ({
   } else {
     Cookies.set("token", token);
     Cookies.set("refreshToken", refreshToken);
-    localStorage.setItem("token", token);
-    localStorage.setItem("refreshToken", refreshToken);
+    // localStorage.setItem("token", token);
+    // localStorage.setItem("refreshToken", refreshToken);
   }
 };

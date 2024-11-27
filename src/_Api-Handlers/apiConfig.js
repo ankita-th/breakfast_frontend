@@ -39,7 +39,7 @@ const createAuthorizedInstance = (type) => {
     },
     function (error) {
       if (error?.response?.status === 401) {
-        localStorage.clear();
+        // localStorage.clear();
         // window.location.href = "/";
         // authAxios
         //   .post(REFRESH_TOKEN, refreshToken)

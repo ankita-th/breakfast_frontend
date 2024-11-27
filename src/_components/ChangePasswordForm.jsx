@@ -26,6 +26,8 @@ const ChangePasswordForm = () => {
     confirm_password: false,
   });
   const handleToglePassword = (type) => {
+    console.log(type,"type")
+
     setShowPass({ ...showPass, [type]: !showPass?.[type] });
   };
 

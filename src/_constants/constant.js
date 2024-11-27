@@ -1,10 +1,10 @@
-import item1 from "../././Assets/images/item1.png";
-import item2 from "../././Assets/images/item2.png";
-import item3 from "../././Assets/images/item3.png";
-import item4 from "../././Assets/images/item4.png";
-import item5 from "../././Assets/images/item5.png";
-import item6 from "../././Assets/images/item6.png";
-import item7 from "../././Assets/images/item7.png";
+import item1 from "../../././public/images/item1.png";
+import item2 from "../../././public/images/item2.png";
+import item3 from "../../././public/images/item3.png";
+import item4 from "../../././public/images/item4.png";
+import item5 from "../../././public/images/item5.png";
+import item6 from "../../././public/images/item6.png";
+import item7 from "../../././public/images/item7.png";
 
 export const DEFAULT_ERROR_MESSAGE = "Something went wrong";
 export const SIDE_BAR_OPTIONS = [

@@ -1,7 +1,7 @@
 import Image from "next/image";
-import breakfastHeroImg2 from "../../assets/Images/breakfast-hero-img2.png";
-import anarImg1 from "../../assets/Images/annar.png";
-import arrowImage from "../../assets/Images/arrow.svg";
+import breakfastHeroImg2 from "../../../public/Images/breakfast-hero-img2.png";
+import anarImg1 from "../../../public/Images/annar.png";
+import arrowImage from "../../../public/Images/arrow.svg";
 
 
 const Basket = () => {

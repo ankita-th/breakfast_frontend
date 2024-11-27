@@ -1,25 +1,25 @@
 "use client";
 import Image from "next/image";
-import bakeryPatternImg from "../../../Assets/images/bakery_pattern 2.png";
-import bakeryPatternImg1 from "../../../Assets/images/bakery_pattern 1.png";
-import freshHealthImg from "../../../Assets/images/fresh-health.png";
-import yesCheckImg from "../../../Assets/images/yes-check.png";
-import arrowImg from "../../../Assets/images/arrow.svg";
-import headinglineImg from "../../../Assets/images/headingline.png";
-import vegetable1Img from "../../../Assets/images/vegetable1.png";
-import vegetable2Img from "../../../Assets/images/vegetable2.png";
-import vegetable3Img from "../../../Assets/images/vegetable3.png";
-import vegetable4Img from "../../../Assets/images/vegetable4.png";
-import vegetable5Img from "../../../Assets/images/vegetable5.png";
-import gradientclockImg from "../../../Assets/images/Gradientclock.png";
-import breakfastHeroImg from "../../../Assets/images/breakfast-hero-img.png";
-import organicProduct1Img from "../../../Assets/images/organic-product1.png";
-import review1Img from "../../../Assets/images/review1.png";
-import review2Img from "../../../Assets/images/review2.png";
-import review3Img from "../../../Assets/images/review3.png";
-import review4Img from "../../../Assets/images/review4.png";
-import productImg from "../../../Assets/images/dough.png";
-import subtractImg from "../../../Assets/images/Subtract.svg";
+import bakeryPatternImg from "../../../../public/images/bakery_pattern 2.png";
+import bakeryPatternImg1 from "../../../../public/images/bakery_pattern 1.png";
+import freshHealthImg from "../../../../public/images/fresh-health.png";
+import yesCheckImg from "../../../../public/images/yes-check.png";
+import arrowImg from "../../../../public/images/arrow.svg";
+import headinglineImg from "../../../../public/images/headingline.png";
+import vegetable1Img from "../../../../public/images/vegetable1.png";
+import vegetable2Img from "../../../../public/images/vegetable2.png";
+import vegetable3Img from "../../../../public/images/vegetable3.png";
+import vegetable4Img from "../../../../public/images/vegetable4.png";
+import vegetable5Img from "../../../../public/images/vegetable5.png";
+import gradientclockImg from "../../../../public/images/Gradientclock.png";
+import breakfastHeroImg from "../../../../public/images/breakfast-hero-img.png";
+import organicProduct1Img from "../../../../public/images/organic-product1.png";
+import review1Img from "../../../../public/images/review1.png";
+import review2Img from "../../../../public/images/review2.png";
+import review3Img from "../../../../public/images/review3.png";
+import review4Img from "../../../../public/images/review4.png";
+import productImg from "../../../../public/images/dough.png";
+import subtractImg from "../../../../public/images/Subtract.svg";
 import {
   ARRIVAL_CARDS,
   PREMIUM_CARD,
@@ -33,18 +33,19 @@ import { INSTANCE } from "@/app/_constant/UrlConstant";
 import { toastMessages } from "@/_utils/toastMessage";
 import Button from "@/_components/_common/Button";
 import { useRouter } from "next/navigation";
-// import { useCount } from "@/_ContextApi/Context";
-import { StarFilledIcon, StarIcon } from "@/Assets/Icons/Svg";
 import { useEffect, useState } from "react";
 import { setProductVariant } from "@/Redux/productDetailsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
+import { StarFilledIcon, StarIcon } from "@/Assets/Icons/Svg";
 
 const Page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { productVariant } = useSelector((state) => state.product);
+  const [basketDetails, setBasketDetails] = useState();
   console.log(productVariant, "productVariant");
+  console.log(basketDetails, "basketDetails");
 
   const [itemCount, setItemCount] = useState(0);
   const handleDecrease = () => {
@@ -64,7 +65,8 @@ const Page = () => {
       instanceType: INSTANCE.authorize,
     })
       .then((res) => {
-        console.log(res, "res");
+        console.log(res.data, "res");
+        setBasketDetails(res.data);
       })
       .catch((err) => {
         console.log(err, "error");
@@ -108,7 +110,8 @@ const Page = () => {
   };
 
   return (
-    <div className="hero-bg-img">
+    // <div className="hero-bg-img">
+    <div>
       <div className="left-sidetext-pattern">
         <section className="hero h-screen relative">
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -339,92 +342,91 @@ const Page = () => {
           /> */}
         </div>
         <section className="healthy-breakfast py-[60px]">
-          <div className="max-w-screen-xl w-full px-4 mx-auto">
-            <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
-              <div className=" max-w-[400px] mx-auto ">
-                <h2 className="text-[24px] font-bold text-black ">
-                  {T.healthy_breakfast_baskets}
-                </h2>
+            <div className="max-w-screen-xl w-full px-4 mx-auto">
+              <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
+                <div className=" max-w-[400px] mx-auto ">
+                  <h2 className="text-[24px] font-bold text-black ">
+                    {T.healthy_breakfast_baskets}
+                  </h2>
 
-                <p className="text-[#55B250] font-bold text-[20px]  mt-[10px]">
-                  $280.00
-                </p>
+                  <p className="text-[#55B250] font-bold text-[20px]  mt-[10px]">
+                    $280.00
+                  </p>
 
-                <p className="text-[#828282] text-[15px]  mt-[10px]">
-                  {T.bf_decription}
-                </p>
-                <div className="flex items-center gap-[10px] mt-[20px]">
-                  <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
-                    <span className="text-[12px]">
+                  <p className="text-[#828282] text-[15px]  mt-[10px]">
+                    {T.bf_decription}
+                  </p>
+                  <div className="flex items-center gap-[10px] mt-[20px]">
+                    <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
+                      <span className="text-[12px]">
+                        <Image
+                          className="w-[16px] h-[16px]"
+                          src={gradientclockImg}
+                          alt="gradientImg"
+                        />
+                      </span>
+                      <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
+                        {T.grab_the_offer}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-[15px] mt-[20px]">
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        31
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.days}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        12
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.hours}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        10
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.mins}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        35
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.secs}
+                      </p>
+                    </div>
+                  </div>
+                  <Button
+                    btnType="button"
+                    className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
+                    btnText={T.add_to_cart}
+                    icon={
                       <Image
-                        className="w-[16px] h-[16px]"
-                        src={gradientclockImg}
-                        alt="gradientImg"
+                        className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
+                        src={arrowImg}
+                        alt="arrowImg"
                       />
-                    </span>
-                    <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
-                      {T.grab_the_offer}
-                    </span>
-                  </div>
+                    }
+                  />
                 </div>
-
-                <div className="flex gap-[15px] mt-[20px]">
-                  <div className="text-center">
-                    <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                      31
-                    </div>
-                    <p className="text-[12px] text-[#828282] mt-[5px]">
-                      {T.days}
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                      12
-                    </div>
-                    <p className="text-[12px] text-[#828282] mt-[5px]">
-                      {T.hours}
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                      10
-                    </div>
-                    <p className="text-[12px] text-[#828282] mt-[5px]">
-                      {T.mins}
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                      35
-                    </div>
-                    <p className="text-[12px] text-[#828282] mt-[5px]">
-                      {T.secs}
-                    </p>
-                  </div>
+                <div>
+                  <Image
+                    className="max-w-[450px] w-full mx-auto"
+                    src={breakfastHeroImg}
+                    alt="breakfastImg"
+                  />
                 </div>
-                <Button
-                  btnType="button"
-                  className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
-                  btnText={T.add_to_cart}
-                  // btnClick={addToCart}
-                  icon={
-                    <Image
-                      className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
-                      src={arrowImg}
-                      alt="arrowImg"
-                    />
-                  }
-                />
-              </div>
-              <div>
-                <Image
-                  className="max-w-[450px] w-full mx-auto"
-                  src={breakfastHeroImg}
-                  alt="breakfastImg"
-                />
               </div>
             </div>
-          </div>
         </section>
         <section className="py-[60px]">
           <div className="max-w-screen-xl w-full px-4 mx-auto">
@@ -724,40 +726,40 @@ const Page = () => {
       <section className="py-[60px] offers_sales">
         <div className="max-w-screen-xl w-full px-4 mx-auto">
           <div className="flex items-center sale-width-mob">
-            <div className="exclusive-offer bg-[url(../assets/images/offerbg.png)] bg-cover p-[40px] w-[40%] min-h-[230px] rounded-tl-[10px] rounded-bl-[10px] offer-sale-mob-padding">
-              <p className="text-[#4FB050] text-[15px] font-medium">
-                {T.dont_miss_deals}
-              </p>
-              <h6 className="text-[#F4F4F4] font-extrabold text-[40px] leading-[25px] md:text-[32px] md:leading-[45px]">
-                {T.exclusive}
-              </h6>
-              <h6 className="text-[#F4F4F4] font-extrabold text-[40px] leading-[25px] md:text-[32px] md:leading-[45px]">
-                {T.offers}
-              </h6>
-              <p className="text-[#4FB050] text-[15px] font-medium mt-[20px]">
-                {T.voucher_worth}
-              </p>
-            </div>
-            <div className="w-[60%] bg-[url(../assets/images/Clip-path-group.png)] bg-cover p-[40px] bg-[#ffe3df] min-h-[230px] rounded-tr-[10px] rounded-br-[10px]">
-              <div className="">
-                <div className="max-w-[500px] w-full flex flex-col items-center justify-center mx-auto">
-                  <input
-                    className=" p-[18px] px-[20px] rounded-full w-full"
-                    type="text"
-                    id="first_name"
-                    placeholder="Email Address"
-                    required
-                  />
-                  <button
-                    type="button"
-                    className="w-full bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[20px]"
-                  >
-                    {T.subscribe}
-                    <span></span>
-                  </button>
-                </div>
+            {/* <div className="exclusive-offer bg-[url(../../public/images/offerbg.png)] bg-cover p-[40px] w-[40%] min-h-[230px] rounded-tl-[10px] rounded-bl-[10px] offer-sale-mob-padding"> */}
+            <p className="text-[#4FB050] text-[15px] font-medium">
+              {T.dont_miss_deals}
+            </p>
+            <h6 className="text-[#F4F4F4] font-extrabold text-[40px] leading-[25px] md:text-[32px] md:leading-[45px]">
+              {T.exclusive}
+            </h6>
+            <h6 className="text-[#F4F4F4] font-extrabold text-[40px] leading-[25px] md:text-[32px] md:leading-[45px]">
+              {T.offers}
+            </h6>
+            <p className="text-[#4FB050] text-[15px] font-medium mt-[20px]">
+              {T.voucher_worth}
+            </p>
+            {/* </div> */}
+            {/* <div className="w-[60%] bg-[url(../../public/images/Clip-path-group.png)] bg-cover p-[40px] bg-[#ffe3df] min-h-[230px] rounded-tr-[10px] rounded-br-[10px]"> */}
+            <div className="">
+              <div className="max-w-[500px] w-full flex flex-col items-center justify-center mx-auto">
+                <input
+                  className=" p-[18px] px-[20px] rounded-full w-full"
+                  type="text"
+                  id="first_name"
+                  placeholder="Email Address"
+                  required
+                />
+                <button
+                  type="button"
+                  className="w-full bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[20px]"
+                >
+                  {T.subscribe}
+                  <span></span>
+                </button>
               </div>
             </div>
+            {/* </div> */}
           </div>
         </div>
       </section>

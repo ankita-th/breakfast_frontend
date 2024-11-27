@@ -21,11 +21,21 @@ const Page = () => {
   const formConfig = useForm();
   const [loader, setLoader] = useState();
   const { handleSubmit, setValue } = formConfig;
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    confirm_password: false,
+  });
   const [activeTab, setActiveTab] = useState(INDIVIDUAL);
   const [verifyMessage, setVerifyMessage] = useState(false);
-  const toggleShowPassword = () => {
-    setShowPassword((prev) => !prev);
+  // const toggleShowPassword = () => {
+  //   setShowPassword((prev) => !prev);
+  // };
+
+
+  const toggleShowPassword = (type) => {
+    console.log(type,"type")
+
+    setShowPassword({ ...showPassword, [type]: !showPassword?.[type] });
   };
   const searchParams = useSearchParams();
   const key = searchParams.get('id')
@@ -58,7 +68,7 @@ const Page = () => {
     setLoader(true);
     if (key) {
       callApi({
-        endPoint: `/complete-registration/${key}`,
+        endPoint: `/complete-registration/${key}/`,
         method: METHODS.post,
         instanceType: INSTANCE.auth,
         payload: {
@@ -166,7 +176,7 @@ const Page = () => {
           <Button
             btnText={key !==null ? "✅VERIFIED" : "VERIFY"}
             btnType={"submit"}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 text-green-500"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500"
             disabled={key !== null}
           />
         </div>
@@ -187,9 +197,9 @@ const Page = () => {
           placeholder="********"
           rules={requiredValidation["Password"]}
           label="Your password"
-          type={showPassword ? "text" : "password"}
-          onIconClick={toggleShowPassword}
-          icon={showPassword ? CLOSED_EYE : OPEN_EYE}
+          type={showPassword.password ? "text" : "password"}
+          onIconClick={()=>toggleShowPassword("password")}
+          icon={showPassword.password ? CLOSED_EYE : OPEN_EYE}
         />
         <CommonTextInput
           fieldName="confirmpassword"
@@ -198,9 +208,9 @@ const Page = () => {
           placeholder="********"
           rules={requiredValidation["Confirm Password"]}
           label="Confirm Password"
-          type={showPassword ? "text" : "password"}
-          onIconClick={toggleShowPassword}
-          icon={showPassword ? CLOSED_EYE : OPEN_EYE}
+          type={showPassword.confirm_password ? "text" : "password"}
+          onIconClick={()=>toggleShowPassword("confirm_password")}
+          icon={showPassword.confirm_password ? CLOSED_EYE : OPEN_EYE}
         />
         <CommonButton
           type={BUTTON_TYPE.submit}

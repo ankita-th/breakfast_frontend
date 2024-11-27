@@ -1,16 +1,15 @@
 "use client";
 import { PREMIUM_CARD } from "@/app/_constant/Constant";
 import Image from "next/image";
-import heartImg from "../../Assets/images/heart.svg";
-import shoppingcartImg from "../../Assets/images/shopping-cart.svg";
-import arrowImg from "../../Assets/images/arrow.svg";
+import heartImg from "../../../public/images/heart.svg";
+import shoppingcartImg from "../../../public/images/shopping-cart.svg";
+import arrowImg from "../../../public/images/arrow.svg";
 import React, { useState } from "react";
 import { CART, CART1 } from "../../../public/images/SvgIcons";
 import ItemCounter from "./ItemCounter";
 import Badge from "./Badge";
 import Button from "./Button";
-import dummyImg from "../../Assets/images/breadimg.jpg";
-// import { useCount } from "@/_ContextApi/Context";
+import dummyImg from "../../../public/images/breadimg.jpg";
 
 const PremiumCard = ({
   PREMIUM_CARD_DATA,
@@ -26,31 +25,40 @@ const PremiumCard = ({
     <div>
       <section className="pt-[20px]">
         <div className="max-w-screen-xl w-full px-0 mx-auto">
-          <div className="grid-cols-3 text-black grid gap-[15px] product-card-mob">
-            {PREMIUM_CARD_DATA.map((item) => (
-              <div className="p-2.5 bg-white rounded-[10px] relative " key={item.id} onClick={()=>handleItem(item.id)}>
+          <div
+            className={
+              page == "home"
+                ? "grid-cols-4 text-black grid gap-[15px] home-card-mob"
+                : "grid-cols-3 text-black grid gap-[15px] product-card-mob"
+            }
+          >
+            {PREMIUM_CARD_DATA?.slice(0, 4)?.map((item) => (
+              <div
+                className="p-2.5 bg-white rounded-[10px] relative "
+                key={item.id}
+                onClick={() => handleItem(item.id)}
+              >
                 <div className="flex absolute top-[10px] left-[10px] right-[10px] flex justify-between items-center whitespace-nowrap">
-                  <Badge badgeName={"Fresh"} textColor={"white"} bgColor={"gradient-to-r from-[#92C64E] to-[#4BAF50]"} />
-                  <Badge badgeName={"Delivery in two days"} textColor={"brown"} bgColor={"orange"} />
-                  <div>
-                    <Image
-                      className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
-                      src={heartImg}
-                      alt="heartLogo"
-                    />
-                  </div>
+                  <Badge
+                    badgeName={"Fresh"}
+                    textColor={"white"}
+                    bgColor={"gradient-to-r from-[#92C64E] to-[#4BAF50]"}
+                  />
+                  <Badge
+                    badgeName={"Delivery in two days"}
+                    textColor={"brown"}
+                    bgColor={"orange"}
+                  />
+                  <div></div>
                 </div>
-                {/* {(item.images)?.map((img) => (
-                ))} */}
-                <Image src={dummyImg} alt="breadImg" />
-                {/* {item.images?.map((img, idx) => (
-                  <div key={idx}>
-                    <img className="rounded-[10px]"
-                      src={img.image ? img.image : dummyImg}
-                      alt="breadImg"
-                    />
-                  </div>
-                ))} */}
+                {item.images && item.images.length > 0 ? (
+                  item.images.map((img, index) => (
+                    <img key={index} src={img.image} alt="breadImg" />
+                  ))
+                ) : (
+                  <img src="/images/breadimg.jpg" alt="breadImg" />
+                )}
+
                 <h5 className="text-[18px] font-bold text-center text-black mt-[15px]">
                   {item.name}
                 </h5>
@@ -61,11 +69,11 @@ const PremiumCard = ({
                   </span>
                   unit
                 </p>
-                {page == "home" ? (
+                {/* {page == "home" ? ( */}
                   <div className="flex items-center justify-center gap-[10px] mb-[30px]">
                     <a
                       href="#"
-                    // onClick={addToWishList}
+                      // onClick={addToWishList}
                     >
                       <Image
                         className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
@@ -75,7 +83,7 @@ const PremiumCard = ({
                     </a>
                     <a
                       href="#"
-                    //  onClick={addToCart}
+                      //  onClick={addToCart}
                     >
                       <Image
                         className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
@@ -84,15 +92,15 @@ const PremiumCard = ({
                       />
                     </a>
                   </div>
-                ) : (
+                {/* ) : ( */}
                   <div className="flex gap-2.5 justify-between">
-                   <div>
-                   <ItemCounter
-                    // count={itemCount}
-                    // handleDecrease={handleDecrease}
-                    // handleIncrease={handleIncrease}
-                    />
-                   </div>
+                    <div>
+                      <ItemCounter
+                      // count={itemCount}
+                      // handleDecrease={handleDecrease}
+                      // handleIncrease={handleIncrease}
+                      />
+                    </div>
                     <div className="flex gap-2.5">
                       <span className="text-black flex items-center justify-center">
                         {CART}
@@ -102,7 +110,7 @@ const PremiumCard = ({
                       </span>
                     </div>
                   </div>
-                )}
+                {/* )} */}
               </div>
             ))}
           </div>

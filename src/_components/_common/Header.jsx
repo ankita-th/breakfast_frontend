@@ -1,18 +1,8 @@
 "use client";
 import { HEADER_NAV_OPTIONS } from "@/_constants/constant";
-// import { useCount } from "@/_ContextApi/Context";
-import {
-  CalenderImg,
-  CallIcon,
-  CartList,
-  CartListIcon,
-  CloudImg,
-  DummyUser,
-  SwedenFlagIcon,
-  WishList,
-  WishListIcon,
-} from "@/Assets/Icons/Svg";
+import { CalenderImg, CallIcon, CartListIcon, CloudImg, DummyUser, WishListIcon } from "@/Assets/Icons/Svg";
 import { LOGO } from "@/Assets/Images";
+import { SwedenFlagIcon } from "@/Assets/SVGIcons";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -24,14 +14,14 @@ const Header = ({}) => {
   const router = useRouter();
 
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setProfileStatus("My Account");
-    } else {
-      setProfileStatus("Login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     setProfileStatus("My Account");
+  //   } else {
+  //     setProfileStatus("Login");
+  //   }
+  // }, []);
 
   const handleAllCategories = () => {
     router.push("/products");

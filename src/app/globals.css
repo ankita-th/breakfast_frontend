@@ -119,7 +119,7 @@ section.hero:after {
   height: 300px;
   right: 110px;
   bottom: -10px;
-  background: url(../assets/images/breakfast-hero-img.png);
+  background: url(../../public/images/breakfast-hero-img.png);
   background-position: center;
   background-size: cover;
 }
@@ -130,7 +130,7 @@ section.hero:before {
   height: 300px;
   left: 0px;
   top: 0;
-  background: url(../assets/images/buns.png);
+  background: url(../../public/images/buns.png);
   background-position: center;
   background-size: cover;
 }
@@ -159,7 +159,7 @@ section.hero:before {
   width: 300px;
   height: 100%;
   top: 0;
-  background: url(/_next/static/media/bg-dots.d0748ba8.png);
+  background: url(/_next/static/media/bg-dots.d0748ba8.png); 
   background-position: center;
   background-size: cover;
   transform: translateX(-50%);
@@ -225,11 +225,11 @@ section.hero:before {
 .slick-next {
   right: 10px !important; /* Adjust as needed */
 }
-.hero-bg-img{
-  background-image: url(../assets/images/Home-Page-background.jpg);
+/* .hero-bg-img{
+  background-image: url(../../public/images/Home-Page-background.jpg);
   background-size: cover;
-  background-repeat: no-repeat;
-}
+  background-repeat: no-repeat; 
+ }  */
 img.organic_img {
   max-width: 92%;
 }
@@ -379,9 +379,6 @@ img.organic_img {
     height: 140px;
     right: 0px;
   }
-  .product-card-mob {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .mob-dnone {
     display: none;
   }
@@ -466,6 +463,9 @@ img.organic_img {
   .product-card-mob {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .home-card-mob {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 @media screen and (max-width: 1200px) {
   .mob-product-sidebar {
@@ -473,11 +473,6 @@ img.organic_img {
   }
   .desktop-calc1200 {
     width: calc(100% - 240px);
-  }
-}
-@media screen and (max-width: 992px) {
-  .product-card-mob {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media screen and (max-width: 900px) {
@@ -504,11 +499,11 @@ img.organic_img {
   .product-card-mob {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
-}
-@media screen and (max-width: 576px) {
-  .product-card-mob {
+  .home-card-mob {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
+}
+@media screen and (max-width: 576px) {
   .mob-product-category {
     display: none;
   }

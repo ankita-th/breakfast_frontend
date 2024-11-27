@@ -4,7 +4,7 @@ import ExclusiveOfferBanner from "@/_components/_common/ExclusiveOfferBanner";
 import ProductCard from "@/_components/_common/ProductCard";
 import Sidebar from "@/_components/SideBar";
 import React, { useEffect, useState } from "react";
-import productImg from "../../../Assets/images/dough.png";
+// import productImg from "../../../public/images/dough.png";
 import PremiumCard from "@/_components/_common/PremiumCard";
 import { PRODUCT_DATA, SORT_BY_OPTIONS } from "@/app/_constant/Constant";
 import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
@@ -57,7 +57,7 @@ const Page = () => {
               { SORT_BY_OPTIONS?.map(({ value, label }) => <option value={value}>{label}</option>)}
             </select>
           </div>
-          <PremiumCard PREMIUM_CARD_DATA={PRODUCT_DATA} page="products" handleItem={handleItem} />
+          <PremiumCard PREMIUM_CARD_DATA={productListing} page="products" handleItem={handleItem} />
         </main>
         <Basket />
       </div>

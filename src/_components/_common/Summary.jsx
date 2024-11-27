@@ -1,5 +1,5 @@
 import Image from "next/image";
-import itmImg from "../../Assets/images/breakfast-hero-img.png";
+import itmImg from "../../public/images/breakfast-hero-img.png";
 import ItemCounter from "./ItemCounter";
 import Button from "./Button";
 

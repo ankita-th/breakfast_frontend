@@ -1,9 +1,8 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import productImg from "../../../../Assets/images/croissant-image.png";
-import item4 from "../../../../Assets/images/item4.png";
-
+import productImg from "../../../../../public/images/croissant-image.png";
+import item4 from "../../../../../public/images/item4.png";
 import ExclusiveOfferBanner from "@/_components/_common/ExclusiveOfferBanner";
 import Button from "@/_components/_common/Button";
 import CategoryCarousel from "@/_components/_common/Slider";
@@ -20,13 +19,9 @@ import { useForm } from "react-hook-form";
 
 const Page = () => {
   const pathname = usePathname();
-  const dispatch = useDispatch()
-  const product_id = pathname.split("/")[2]
-  // const searchParams = useSearchParams();
-  // const product_id = searchParams.get("search");
-  // console.log(product_id, "search");
-  const {productListing} = useSelector(state => state.product)
-  const { control,Form } = useForm()
+  const dispatch = useDispatch();
+  const product_id = pathname.split("/")[2];
+  const { productListing } = useSelector((state) => state.product);
 
   useEffect(() => {
     if (product_id) {
@@ -39,7 +34,7 @@ const Page = () => {
         },
       })
         .then((res) => {
-          dispatch(setProductListing(res.data))
+          dispatch(setProductListing(res.data));
         })
         .catch((err) => {
           toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
@@ -50,14 +45,8 @@ const Page = () => {
     <div className="p-8 m-8">
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="lg:w-1/2">
-          {/* <Image
-            src={itemDetails?.images[0]?.image}
-            alt="Croissant"
-            className="rounded-lg w-full lg:w-1/2"
-          /> */}
           <CategoryCarousel />
         </div>
-
         <div className="lg:w-1/2">
           <div className="flex gap-2">
             <span className="underline">Home</span>
@@ -95,7 +84,7 @@ const Page = () => {
           </div>
           <h1>Delivery Location</h1>
           <div className="flex space-x-1 pt-2">
-          <input className="rounded-lg" />
+            <input className="rounded-lg" />
             {/* <CommonAutoComplete 
              label={"Delivery Location"}
              name={"location"}
