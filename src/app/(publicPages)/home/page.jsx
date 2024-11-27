@@ -70,18 +70,18 @@ const Page = () => {
         console.log(err, "error");
         toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
       });
-    callApi({
-      endPoint: "/categories",
-      method: METHODS.get,
-      instanceType: INSTANCE.authorize,
-    })
-      .then((res) => {
-        console.log(res, "res");
-      })
-      .catch((err) => {
-        console.log(err, "error");
-        toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
-      });
+    // callApi({
+    //   endPoint: "/categories",
+    //   method: METHODS.get,
+    //   instanceType: INSTANCE.authorize,
+    // })
+    //   .then((res) => {
+    //     console.log(res, "res");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err, "error");
+    //     toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
+    //   });
   }, []);
 
   useEffect(() => {
@@ -628,6 +628,7 @@ const Page = () => {
               <Image
                 className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
                 src={arrowImg}
+                alt="arrowImg"
               />
             </span>
           </button>

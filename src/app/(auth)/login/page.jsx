@@ -67,14 +67,14 @@ const Login = () => {
           formConfig={formConfig}
           type="text"
           placeholder="Enter Email"
-          rules={LoginValidations["email"]}
+          rules={LoginValidations.email}
           label="Username or email address"
         />
         <CommonTextInput
           fieldName="password"
           formConfig={formConfig}
           placeholder="Enter Password"
-          rules={requiredValidation("Password")}
+          rules={LoginValidations.password}
           label="Your password"
           type={showPassword ? "text" : "password"}
           //   for adding icons

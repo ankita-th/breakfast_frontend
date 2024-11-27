@@ -10,7 +10,7 @@ const ItemCategory = ({ handleClick }) => {
           <Image
             src={item.item_img}
             className="shoptop-card-img"
-            alt={item.item_name}
+            alt={"card_image"}
             width={100}
             height={100}
           />

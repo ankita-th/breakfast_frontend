@@ -26,9 +26,9 @@ const PremiumCard = ({
     <div>
       <section className="pt-[40px]">
         <div className="max-w-screen-xl w-full px-4 mx-auto">
-          <div className="grid-cols-3 text-black grid gap-[15px] product-card-mob">
-            {PREMIUM_CARD_DATA.map((item) => (
-              <div className="p-2.5 bg-white rounded-[10px] relative">
+          <div className="grid-cols-4 text-black grid gap-[15px] product-card-mob">
+            {PREMIUM_CARD_DATA?.map((item) => (
+              <div className="p-2.5 bg-white rounded-[10px] relative" key={item.id} onClick={()=>handleItem(item.id)} >
                 <div className="flex absolute top-0">
                   <Badge badgeName={"Fresh"} textColor={"white"} bgColor={"gradient-to-r from-[#92C64E] to-[#4BAF50]"} />
                   <Badge badgeName={"Delivery in two days"} textColor={"[#BD6600]"} bgColor={"[#FFD99F]"} />
@@ -57,7 +57,7 @@ const PremiumCard = ({
                 <p className="text-[12px] text-[#9299A3] font-bold py-[15px] text-center md:pt-[0px]">
                   <del>{item.old_price}</del>
                   <span className="text-[#55B250] font-bold">
-                    {stripHtmlTags(item.description)}
+                    {/* {stripHtmlTags(item.description)} */}
                   </span>
                   unit
                 </p>

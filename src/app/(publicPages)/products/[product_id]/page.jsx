@@ -12,15 +12,21 @@ import { useRouter } from "next/router";
 import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { INSTANCE } from "@/app/_constant/UrlConstant";
 import { toastMessages } from "@/_utils/toastMessage";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { productListing, setProductListing } from "@/Redux/productDetailsSlice";
+import CommonAutoComplete from "@/_components/_common/CommonAutoComplete";
+import { useForm } from "react-hook-form";
 
 const Page = () => {
   const pathname = usePathname();
   const dispatch = useDispatch()
   const product_id = pathname.split("/")[2]
+  // const searchParams = useSearchParams();
+  // const product_id = searchParams.get("search");
+  // console.log(product_id, "search");
   const {productListing} = useSelector(state => state.product)
+  const { control,Form } = useForm()
 
   useEffect(() => {
     if (product_id) {
@@ -59,7 +65,7 @@ const Page = () => {
             <span className="underline">Croissant</span>
           </div>
           <div className="flex ">
-            {/* <h1 className="text-2xl font-bold mb-2">{itemDetails?.name}</h1> */}
+            <h1 className="text-2xl font-bold mb-2">{productListing?.name}</h1>
             <span>⭐⭐⭐⭐⭐</span>
             <span>(01)</span>
           </div>
@@ -89,7 +95,14 @@ const Page = () => {
           </div>
           <h1>Delivery Location</h1>
           <div className="flex space-x-1 pt-2">
-            <input className="rounded-lg" />
+          <input className="rounded-lg" />
+            {/* <CommonAutoComplete 
+             label={"Delivery Location"}
+             name={"location"}
+             control={control}
+             apiKey="AIzaSyCA-pKaniZ4oeXOpk34WX5CMZ116zBvy-g"
+             onPlaceSelected={(place) => console.log(place)}
+            /> */}
             <Button
               className={"common-btn w-32 rounded-md"}
               btnText={"Change"}

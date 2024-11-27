@@ -31,7 +31,7 @@ function CategoryCarousel() {
             <div className=" w-full h-96 transition-transform duration-100 ease-in-out">
               <Image
                 src={category.image}
-                alt={category.name}
+                alt={"product_image"}
                 layout="fill"
                 objectFit="contain"
                 className="transition-all duration-100 ease-in-out"

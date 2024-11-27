@@ -4,15 +4,15 @@ import Button from "./Button";
 
 const ItemCounter = () => {
   const [itemQuantity, setItemQuantity] = useState(0);
-  const [cartQuantity, setCartQuantity] = useState(0);
-  const [wishListQuantity, setWishListQuantity] = useState(0);
-  const [basketQuantity, setBasketQuantity] = useState(0);
+  // const [cartQuantity, setCartQuantity] = useState(0);
+  // const [wishListQuantity, setWishListQuantity] = useState(0);
+  // const [basketQuantity, setBasketQuantity] = useState(0);
   const handleIncrease = (e) => {
-    e.defaultPropagation();
+    // e.defaultPropagation();
     setItemQuantity((count) => count + 1);
   };
   const handleDecrease = (e) => {
-    e.defaultPropagation();
+    // e.defaultPropagation();
     setItemQuantity((count) => count - 1);
   };
 

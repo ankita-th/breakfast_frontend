@@ -41,7 +41,6 @@ const Page = () => {
   };
 
   const handleItem=(product_id)=>{
-    console.log(product_id,"id")
     router.push(`/products/${product_id}`)
   }
 

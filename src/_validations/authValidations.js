@@ -16,4 +16,5 @@ export const LoginValidations = {
   password: {
     required: "Password is required",
   },
+  
 };

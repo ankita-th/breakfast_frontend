@@ -146,15 +146,15 @@ const Header = ({}) => {
               <div className="flex items-center space-x-4">
                 <button className="relative">
                   <span>{WishListIcon}</span>
-                  <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {/* {wishListQuantity} */}
-                  </span>
+                  {/* <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {wishListQuantity}
+                  </span> */}
                 </button>
                 <button className="relative">
                   <span>{CartListIcon}</span>
-                  <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {/* {itemQuantity} */}
-                  </span>
+                  {/* <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {itemQuantity}
+                  </span> */}
                 </button>
               </div>
             </div>
