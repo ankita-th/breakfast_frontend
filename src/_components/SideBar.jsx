@@ -9,7 +9,7 @@ export default function Sidebar() {
   }
   console.log(selectedCategory,"selectedCategory")
   return (
-    <aside className="w-64 bg-[#ffffff] text-center rounded-lg">
+    <aside className="w-[15rem] bg-[#ffffff] text-center rounded-lg mob-product-category flex-none">
       {/* <h2 className="text-xl text-black font-bold mb-4">Categories</h2> */}
       <ul className="space-y-2 text-black border border-gray-300">
         {SIDE_BAR_OPTIONS.map((category) => (

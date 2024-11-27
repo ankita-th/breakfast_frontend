@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Monoton&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 :root {
   --background: #ffffff;
@@ -22,6 +25,10 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   background-color: #f2f2f2;
+}
+
+*{
+  font-family: "League Spartan", sans-serif;
 }
 
 @layer utilities {
@@ -449,9 +456,67 @@ img.organic_img {
 
 
 
-/* start Product shop page start  */
+/* start Product shop page  */
 .shoptop-card-img {
   height: 73px;
   width: 73px;
   object-fit: contain;
 }
+@media screen and (max-width: 1450px) {
+  .product-card-mob {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media screen and (max-width: 1200px) {
+  .mob-product-sidebar {
+    display: none;
+  }
+  .desktop-calc1200 {
+    width: calc(100% - 240px);
+  }
+}
+@media screen and (max-width: 992px) {
+  .product-card-mob {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media screen and (max-width: 900px) {
+  .mob-minus {
+    width: 1rem;
+    height: 1rem;
+  }
+  .mob-plus {
+    width: 1rem;
+    height: 1rem;
+  }
+  .plus-minus-card {
+    width: 6.5rem;
+  }
+  .mob-product-category {
+    width: 13rem;
+  }
+  .desktop-calc1200 {
+    width: calc(100% - 208px);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .product-card-mob {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+@media screen and (max-width: 576px) {
+  .product-card-mob {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .mob-product-category {
+    display: none;
+  }
+  .desktop-calc1200 {
+    width: calc(100%);
+  }
+}
+
+
+
+/* End product shot page */

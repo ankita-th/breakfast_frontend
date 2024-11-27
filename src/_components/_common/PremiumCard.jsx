@@ -24,14 +24,14 @@ const PremiumCard = ({
 
   return (
     <div>
-      <section className="pt-[40px]">
-        <div className="max-w-screen-xl w-full px-4 mx-auto">
-          <div className="grid-cols-4 text-black grid gap-[15px] product-card-mob">
-            {PREMIUM_CARD_DATA?.map((item) => (
-              <div className="p-2.5 bg-white rounded-[10px] relative" key={item.id} onClick={()=>handleItem(item.id)} >
-                <div className="flex absolute top-0">
+      <section className="pt-[20px]">
+        <div className="max-w-screen-xl w-full px-0 mx-auto">
+          <div className="grid-cols-3 text-black grid gap-[15px] product-card-mob">
+            {PREMIUM_CARD_DATA.map((item) => (
+              <div className="p-2.5 bg-white rounded-[10px] relative " key={item.id} onClick={()=>handleItem(item.id)}>
+                <div className="flex absolute top-[10px] left-[10px] right-[10px] flex justify-between items-center whitespace-nowrap">
                   <Badge badgeName={"Fresh"} textColor={"white"} bgColor={"gradient-to-r from-[#92C64E] to-[#4BAF50]"} />
-                  <Badge badgeName={"Delivery in two days"} textColor={"[#BD6600]"} bgColor={"[#FFD99F]"} />
+                  <Badge badgeName={"Delivery in two days"} textColor={"brown"} bgColor={"orange"} />
                   <div>
                     <Image
                       className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
@@ -41,16 +41,16 @@ const PremiumCard = ({
                   </div>
                 </div>
                 {/* {(item.images)?.map((img) => (
-                  <Image src={imgBread} alt="breadImg" />
                 ))} */}
-                {item.images?.map((img, idx) => (
+                <Image src={dummyImg} alt="breadImg" />
+                {/* {item.images?.map((img, idx) => (
                   <div key={idx}>
-                    <img
+                    <img className="rounded-[10px]"
                       src={img.image ? img.image : dummyImg}
                       alt="breadImg"
                     />
                   </div>
-                ))}
+                ))} */}
                 <h5 className="text-[18px] font-bold text-center text-black mt-[15px]">
                   {item.name}
                 </h5>
@@ -85,18 +85,22 @@ const PremiumCard = ({
                     </a>
                   </div>
                 ) : (
-                  <div className="flex gap-2.5">
-                    <ItemCounter
+                  <div className="flex gap-2.5 justify-between">
+                   <div>
+                   <ItemCounter
                     // count={itemCount}
                     // handleDecrease={handleDecrease}
                     // handleIncrease={handleIncrease}
                     />
-                    <span className="text-black flex items-center justify-center">
-                      {CART}
-                    </span>
-                    <span className="text-black flex items-center justify-center">
-                      {CART1}
-                    </span>
+                   </div>
+                    <div className="flex gap-2.5">
+                      <span className="text-black flex items-center justify-center">
+                        {CART}
+                      </span>
+                      <span className="text-black flex items-center justify-center">
+                        {CART1}
+                      </span>
+                    </div>
                   </div>
                 )}
               </div>
