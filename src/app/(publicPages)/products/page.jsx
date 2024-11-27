@@ -6,7 +6,7 @@ import Sidebar from "@/_components/SideBar";
 import React, { useEffect, useState } from "react";
 import productImg from "../../../Assets/images/dough.png";
 import PremiumCard from "@/_components/_common/PremiumCard";
-import { PRODUCT_DATA } from "@/app/_constant/Constant";
+import { PRODUCT_DATA, SORT_BY_OPTIONS } from "@/app/_constant/Constant";
 import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { INSTANCE } from "@/app/_constant/UrlConstant";
 import ItemCategory from "@/_components/_common/ItemCategory";
@@ -28,20 +28,20 @@ const Page = () => {
         page: "1",
       },
     })
-    .then((res) => {
-      dispatch(setProductListing(res.data.results))
-    })
-    .catch((err) => {
-      toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
-    });
+      .then((res) => {
+        dispatch(setProductListing(res.data.results))
+      })
+      .catch((err) => {
+        toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
+      });
   }, []);
 
   const handleItemCategory = () => {
     console.log("Item Category");
   };
 
-  const handleItem=(product_id)=>{
-    console.log(product_id,"id")
+  const handleItem = (product_id) => {
+    console.log(product_id, "id")
     router.push(`/products/${product_id}`)
   }
 
@@ -49,9 +49,15 @@ const Page = () => {
     <div className="bg-gray-50">
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 px-8">
+        <main className="px-8 w-[calc(100%-560px)] desktop-calc1200">
           <ItemCategory handleClick={handleItemCategory} />
-          <PremiumCard PREMIUM_CARD_DATA={productListing}  page="products" handleItem={handleItem}/>
+          <div className="select flex space-x-4 items-center mt-[40px]">
+            <div className="title text-[16px] font-semibold">Sort By</div>
+            <select className="border border-[#4BAF50] rounded-[5px] p-[10px] text-[#4BAF50]">
+              { SORT_BY_OPTIONS?.map(({ value, label }) => <option value={value}>{label}</option>)}
+            </select>
+          </div>
+          <PremiumCard PREMIUM_CARD_DATA={PRODUCT_DATA} page="products" handleItem={handleItem} />
         </main>
         <Basket />
       </div>

@@ -24,7 +24,7 @@ export const SERVICE_CARD = [
     logo_img: serviceCardImg2,
     heading: "100% ",
     subHeading: "Natural Product",
-    description:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit,sed diam nonummy",
+    description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit,sed diam nonummy",
   },
 ];
 
@@ -56,104 +56,109 @@ export const PREMIUM_CARD = [
 ];
 
 export const PRODUCT_DATA = [
-    {
-      logo_img: breadImg,
-      title: "Brown Bread",
-      old_price: "$70.00",
-      new_price: "$60.00",
-    },
-    {
-      logo_img: breadImg,
-      title: "Eggs",
-      old_price: "$80.00",
-      new_price: "$45.00",
-    },
-    {
-      logo_img: breadImg,
-      title: "White Bread",
-      old_price: "$70.00",
-      new_price: "$50.00",
-    },
-    {
-      logo_img: breadImg,
-      title: "Chocolate Muffins",
-      old_price: "$30.00",
-      new_price: "$20.00",
-    },
-    {
-        logo_img: breadImg,
-        title: "Eggs",
-        old_price: "$80.00",
-        new_price: "$45.00",
-      },
-      {
-        logo_img: breadImg,
-        title: "White Bread",
-        old_price: "$70.00",
-        new_price: "$50.00",
-      },
-      {
-        logo_img: breadImg,
-        title: "Chocolate Muffins",
-        old_price: "$30.00",
-        new_price: "$20.00",
-      },
-      {
-        logo_img: breadImg,
-        title: "Eggs",
-        old_price: "$80.00",
-        new_price: "$45.00",
-      },
-      {
-        logo_img: breadImg,
-        title: "White Bread",
-        old_price: "$70.00",
-        new_price: "$50.00",
-      },
-      {
-        logo_img: breadImg,
-        title: "Chocolate Muffins",
-        old_price: "$30.00",
-        new_price: "$20.00",
-      },
-  ];
-  export const ADDRESS_CARD_DATA = ["Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden","Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden","Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden","Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden"]
+  {
+    logo_img: breadImg,
+    name: "Brown Bread",
+    old_price: "$70.00",
+    new_price: "$60.00",
+  },
+  {
+    logo_img: breadImg,
+    name: "Eggs",
+    old_price: "$80.00",
+    new_price: "$45.00",
+  },
+  {
+    logo_img: breadImg,
+    name: "White Bread",
+    old_price: "$70.00",
+    new_price: "$50.00",
+  },
+  {
+    logo_img: breadImg,
+    name: "Chocolate Muffins",
+    old_price: "$30.00",
+    new_price: "$20.00",
+  },
+  {
+    logo_img: breadImg,
+    name: "Eggs",
+    old_price: "$80.00",
+    new_price: "$45.00",
+  },
+  {
+    logo_img: breadImg,
+    name: "White Bread",
+    old_price: "$70.00",
+    new_price: "$50.00",
+  },
+  {
+    logo_img: breadImg,
+    name: "Chocolate Muffins",
+    old_price: "$30.00",
+    new_price: "$20.00",
+  },
+  {
+    logo_img: breadImg,
+    name: "Eggs",
+    old_price: "$80.00",
+    new_price: "$45.00",
+  },
+  {
+    logo_img: breadImg,
+    name: "White Bread",
+    old_price: "$70.00",
+    new_price: "$50.00",
+  },
+  {
+    logo_img: breadImg,
+    name: "Chocolate Muffins",
+    old_price: "$30.00",
+    new_price: "$20.00",
+  },
+];
+export const ADDRESS_CARD_DATA = ["Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden", "Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden", "Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden", "Storgatan 45, 2 tr(2nd floor),123 45 Goteborg, Sweden"]
 
-  export const ARRIVAL_CARDS = [
-    {
-      logo_img : productImg,
-      item_status:"fresh",
-      item_name:"brown_bread",
-      price:"$80.00",
-      description : "great_height",
-      heartImg: heartImg,
-      shoppingcartImg:shoppingcartImg
-    },
-    {
-      logo_img : productImg,
-      item_status:"fresh",
-      item_name:"brown_bread",
-      price:"$80.00",
-      description : "great_height",
-      heartImg:heartImg,
-      shoppingcartImg:shoppingcartImg
-    },
-    {
-      logo_img : productImg,
-      item_status:"fresh",
-      item_name:"brown_bread",
-      price:"$80.00",
-      description : "great_height",
-      heartImg:heartImg,
-      shoppingcartImg:shoppingcartImg
-    },
-    {
-      logo_img : productImg,
-      item_status:"fresh",
-      item_name:"brown_bread",
-      price:"$80.00",
-      description : "great_height",
-      heartImg:heartImg,
-      shoppingcartImg: shoppingcartImg
-    }
-  ]
+export const ARRIVAL_CARDS = [
+  {
+    logo_img: productImg,
+    item_status: "fresh",
+    item_name: "brown_bread",
+    price: "$80.00",
+    description: "great_height",
+    heartImg: heartImg,
+    shoppingcartImg: shoppingcartImg
+  },
+  {
+    logo_img: productImg,
+    item_status: "fresh",
+    item_name: "brown_bread",
+    price: "$80.00",
+    description: "great_height",
+    heartImg: heartImg,
+    shoppingcartImg: shoppingcartImg
+  },
+  {
+    logo_img: productImg,
+    item_status: "fresh",
+    item_name: "brown_bread",
+    price: "$80.00",
+    description: "great_height",
+    heartImg: heartImg,
+    shoppingcartImg: shoppingcartImg
+  },
+  {
+    logo_img: productImg,
+    item_status: "fresh",
+    item_name: "brown_bread",
+    price: "$80.00",
+    description: "great_height",
+    heartImg: heartImg,
+    shoppingcartImg: shoppingcartImg
+  }
+]
+export const SORT_BY_OPTIONS = [
+  { value: "most_revelance", label: "Most Revelance" },
+  { value: "most_revelance", label: "Most Revelance" },
+  { value: "most_revelance", label: "Most Revelance" },
+]
