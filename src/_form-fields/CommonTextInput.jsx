@@ -10,8 +10,8 @@ const CommonTextInput = ({
   fieldName,
   formConfig,
   type = "text",
-  disabled,
-  placeholder,
+  disabled = false,
+  placeholder ="",
   className = DEFAULT_CLASS,
   label,
   icon,
@@ -59,7 +59,7 @@ const CommonTextInput = ({
             type={type}
             placeholder={placeholder}
             disabled={disabled}
-            className={disabled ? `${className} mb-2  cursor-not-allowed bg-none`: `${className} mb-2`}
+            className={disabled ? `${className} mb-2  cursor-not-allowed`: `${className} mb-2`}
             maxLength={maxLength}
           />
         )}
@@ -68,7 +68,7 @@ const CommonTextInput = ({
           className="absolute bottom-[22px] right-[17px]"
           onClick={onIconClick}
         >
-          {icon}
+          {icon }
         </div>
       </div>
       <ErrorMessage errors={errors?.[fieldName]?.message} />

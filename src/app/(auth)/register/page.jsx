@@ -27,48 +27,41 @@ const Page = () => {
   });
   const [activeTab, setActiveTab] = useState(INDIVIDUAL);
   const [verifyMessage, setVerifyMessage] = useState(false);
-  // const toggleShowPassword = () => {
-  //   setShowPassword((prev) => !prev);
-  // };
+  const searchParams = useSearchParams();
+  const key = searchParams.get("id");
 
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    const first_name = localStorage.getItem("first_name");
+    const last_name = localStorage.getItem("last_name");
+    setValue("email", email);
+    setValue("first_name", first_name);
+    setValue("last_name", last_name);
+  });
 
+  useEffect(() => {
+    if (key) {
+      callApi({
+        endPoint: `/register/${key}/`,
+        method: METHODS.get,
+        instanceType: INSTANCE.auth,
+      })
+        .then((res) => {
+          console.log(res.data.access, "res");
+        })
+        .catch((err) => {
+          toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
+        });
+    }
+  }, [key]);
   const toggleShowPassword = (type) => {
-    console.log(type,"type")
-
     setShowPassword({ ...showPassword, [type]: !showPassword?.[type] });
   };
-  const searchParams = useSearchParams();
-  const key = searchParams.get('id')
-  console.log(key, "Key");
- 
-
-
-  // const [key, setKey] = useState(null);
-
-  // useEffect(() => {
-  //   const rawQueryString = window.location.search; // Get the raw query string
-  //   const params = new URLSearchParams(rawQueryString); // Parse it
-  //   const rawKey = params.get('id'); // Access the encoded value
-  //   console.log(rawKey,"rawKey")
-  //   setKey(rawKey); // This will retain %2F
-  // }, []);
-
-
-  console.log(key,"key")
-  useEffect(()=>{
-    const email = localStorage.getItem("email")
-    const first_name = localStorage.getItem("first_name")
-    const last_name = localStorage.getItem("last_name")
-    setValue("email",email)
-    setValue("first_name",first_name)
-    setValue("last_name",last_name)
-  })
   const onSubmit = (values) => {
-    console.log(values,"values")
     setLoader(true);
     if (key) {
       callApi({
-        endPoint: `/complete-registration/${key}/`,
+        endPoint: `/signup/${key}/`,
         method: METHODS.post,
         instanceType: INSTANCE.auth,
         payload: {
@@ -78,23 +71,21 @@ const Page = () => {
         },
       })
         .then((res) => {
-          console.log(res.data.access, "res");
+          console.log(res.data, "res");
           setLoader(false);
-          localStorage.setItem("token", res.data.access);
-          localStorage.setItem("refresh_token", res.data.refresh);
+          localStorage.setItem("token", res.data.data.tokens.access);
+          localStorage.setItem("refresh_token", res.data.data.tokens.refresh);
           toastMessages("User logged in successfully", successType);
           router.push("/home");
         })
         .catch((err) => {
           console.log(err, "error");
           setLoader(false);
-          toastMessages(
-            err?.response?.data?.error || DEFAULT_ERROR_MESSAGE
-          );
+          toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
         });
     } else {
       callApi({
-        endPoint: "/register/",
+        endPoint: "/pendinguser/",
         method: METHODS.post,
         instanceType: INSTANCE.auth,
         payload: {
@@ -104,19 +95,15 @@ const Page = () => {
         },
       })
         .then((res) => {
-          console.log(res.data, "res");
           setLoader(false);
-          localStorage.setItem("email", res.data.user.email);
-          localStorage.setItem("first_name", res.data.user.first_name);
-          localStorage.setItem("last_name", res.data.user.last_name);
+          localStorage.setItem("email", res?.data?.data.email);
+          localStorage.setItem("first_name", res?.data?.data.first_name);
+          localStorage.setItem("last_name", res?.data?.data.last_name);
           setVerifyMessage(true);
-          toastMessages("User logged in successfully", successType);
+          toastMessages(res.data.message, successType);
         })
         .catch((err) => {
-          console.log(err, "error");
-          toastMessages(
-            err?.response?.data?.message.email || DEFAULT_ERROR_MESSAGE
-          );
+          toastMessages(err?.response?.data?.message || DEFAULT_ERROR_MESSAGE);
           setLoader(false);
         });
     }
@@ -150,7 +137,7 @@ const Page = () => {
         <CommonTextInput
           fieldName={"last_name"}
           formConfig={formConfig}
-          type="text" 
+          type="text"
           placeholder={"E.g. Doe"}
           rules={requiredValidation["last_name"]}
           disabled={key !== null}
@@ -174,7 +161,7 @@ const Page = () => {
           )}
 
           <Button
-            btnText={key !==null ? "✅VERIFIED" : "VERIFY"}
+            btnText={key !== null ? "✅VERIFIED" : "VERIFY"}
             btnType={"submit"}
             className="absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500"
             disabled={key !== null}
@@ -198,7 +185,7 @@ const Page = () => {
           rules={requiredValidation["Password"]}
           label="Your password"
           type={showPassword.password ? "text" : "password"}
-          onIconClick={()=>toggleShowPassword("password")}
+          onIconClick={() => toggleShowPassword("password")}
           icon={showPassword.password ? CLOSED_EYE : OPEN_EYE}
         />
         <CommonTextInput
@@ -209,7 +196,7 @@ const Page = () => {
           rules={requiredValidation["Confirm Password"]}
           label="Confirm Password"
           type={showPassword.confirm_password ? "text" : "password"}
-          onIconClick={()=>toggleShowPassword("confirm_password")}
+          onIconClick={() => toggleShowPassword("confirm_password")}
           icon={showPassword.confirm_password ? CLOSED_EYE : OPEN_EYE}
         />
         <CommonButton
@@ -217,7 +204,7 @@ const Page = () => {
           className="auth-btn"
           text="Register"
           loader={loader}
-          disabled={key == null }
+          disabled={key == null}
         />
         <div className="h-[70px] md:h-[20px]"></div>
         <AuthRedirectSection

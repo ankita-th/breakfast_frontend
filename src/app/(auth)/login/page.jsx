@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { BUTTON_TYPE, DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 import CommonTextInput from "@/_form-fields/CommonTextInput";
 import { manageUserAuthorization } from "@/_utils/helpers";
-import { toastMessages } from "@/_utils/toastMessage";
+import { successType, toastMessages } from "@/_utils/toastMessage";
 import { requiredValidation } from "@/_validations/validations";
 import { CLOSED_EYE, OPEN_EYE } from "../../../../public/images/SvgIcons";
 import AuthFormTitleSection from "@/_components/AuthFormTitleSection";
@@ -18,41 +18,37 @@ import { LoginValidations } from "@/_validations/authValidations";
 const Login = () => {
   const router = useRouter();
   const formConfig = useForm();
-  const [loader ,setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
   const { handleSubmit } = formConfig;
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
   const onSubmit = (values) => {
-    setLoader(true)
+    setLoader(true);
     // login(values)
     callApi({
-      endPoint:"/login/",
+      endPoint: "/login/",
       method: METHODS.post,
       instanceType: INSTANCE.auth,
-      payload:{
-        email:values.email,
-        password:values.password
-      }
+      payload: {
+        email: values.user_name,
+        password: values.password,
+      },
     })
       .then((res) => {
-        // manageUserAuthorization({
-        //   action: "add",
-        //   token: res?.data?.access,
-        //   refreshToken: res?.data?.refresh,
-        // });
-        console.log(res,"results")
-        setLoader(false)
+        localStorage.setItem("token", res.data.access);
+        localStorage.setItem("refresh_token", res.data.refresh);
+        setLoader(false);
         toastMessages("User logged in successfully", successType);
         router.push("/home");
       })
       .catch((err) => {
-        console.log(err,"error")
+        console.log(err, "error");
         toastMessages(
           err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
         );
-        setLoader(false)
+        setLoader(false);
       });
   };
   return (
@@ -63,13 +59,14 @@ const Login = () => {
         className="bg-white p-5 rounded-none shadow-lg w-full"
       >
         <CommonTextInput
-          fieldName="email"
+          fieldName={"user_name"}
           formConfig={formConfig}
           type="text"
-          placeholder="Enter Email"
+          placeholder="Enter username"
           rules={LoginValidations.email}
           label="Username or email address"
         />
+
         <CommonTextInput
           fieldName="password"
           formConfig={formConfig}
@@ -89,7 +86,10 @@ const Login = () => {
               value=""
               id="flexCheckDefault"
             />
-            <label className="text-[16px] font-normal ml-1" for="flexCheckDefault">
+            <label
+              className="text-[16px] font-normal ml-1"
+              htmlFor="flexCheckDefault"
+            >
               Remember Me
             </label>
           </div>
@@ -100,7 +100,13 @@ const Login = () => {
             className="text-right primary-text-color text-[16px] font-normal"
           />
         </div>
-        <CommonButton type={BUTTON_TYPE.submit} className="auth-btn" text="Login"  loader={loader} disabled={loader}/>
+        <CommonButton
+          type={BUTTON_TYPE.submit}
+          className="auth-btn"
+          text="Login"
+          loader={loader}
+          disabled={loader}
+        />
         <div className="h-[70px] md:h-[20px]"></div>
         <AuthRedirectSection
           text="Don't have an account? "

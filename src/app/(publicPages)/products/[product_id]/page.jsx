@@ -45,7 +45,7 @@ const Page = () => {
     <div className="p-8 m-8">
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="lg:w-1/2">
-          <CategoryCarousel />
+          <CategoryCarousel productListing={productListing}/>
         </div>
         <div className="lg:w-1/2">
           <div className="flex gap-2">

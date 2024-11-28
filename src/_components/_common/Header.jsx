@@ -14,14 +14,14 @@ const Header = ({}) => {
   const router = useRouter();
 
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     setProfileStatus("My Account");
-  //   } else {
-  //     setProfileStatus("Login");
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setProfileStatus("My Account");
+    } else {
+      setProfileStatus("Login");
+    }
+  }, []);
 
   const handleAllCategories = () => {
     router.push("/products");

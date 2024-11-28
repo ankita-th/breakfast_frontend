@@ -225,11 +225,11 @@ section.hero:before {
 .slick-next {
   right: 10px !important; /* Adjust as needed */
 }
-/* .hero-bg-img{
+.hero-bg-img{
   background-image: url(../../public/images/Home-Page-background.jpg);
   background-size: cover;
   background-repeat: no-repeat; 
- }  */
+ } 
 img.organic_img {
   max-width: 92%;
 }

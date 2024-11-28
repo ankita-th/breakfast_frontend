@@ -72,18 +72,18 @@ const Page = () => {
         console.log(err, "error");
         toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
       });
-    // callApi({
-    //   endPoint: "/categories",
-    //   method: METHODS.get,
-    //   instanceType: INSTANCE.authorize,
-    // })
-    //   .then((res) => {
-    //     console.log(res, "res");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err, "error");
-    //     toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
-    //   });
+    callApi({
+      endPoint: "/categories",
+      method: METHODS.get,
+      instanceType: INSTANCE.authorize,
+    })
+      .then((res) => {
+        console.log(res, "res");
+      })
+      .catch((err) => {
+        console.log(err, "error");
+        toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
+      });
   }, []);
 
   useEffect(() => {
