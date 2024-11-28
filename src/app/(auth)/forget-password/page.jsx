@@ -78,7 +78,7 @@ const Page = () => {
               formConfig={formConfig}
               type="text"
               placeholder="E.g. johndeo@yopmail.com"
-              rules={requiredValidation("Email")}
+              rules={requiredValidation["email"]}
               label="Email"
             />
             <CommonButton type="submit" text="Login" />

@@ -60,7 +60,7 @@ const ChangePasswordForm = () => {
         <div className="label">Password</div>
         <PasswordInputField
           register={register("password", {
-            ...requiredValidation("Password"),
+            ...requiredValidation["password"],
             pattern: {
               value: PASSWORD_REGEX,
               message: PASSWORD_PATTEN_ERROR,
@@ -83,7 +83,7 @@ const ChangePasswordForm = () => {
         <div className="label">Confirm Password</div>
         <PasswordInputField
           register={register("confirm_password", {
-            ...requiredValidation("Confirm password"),
+            ...requiredValidation["confirm_password"],
             validate: (value) =>
               value === watch("password") ||
               "Password and confirm password must match",
