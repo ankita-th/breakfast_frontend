@@ -3,13 +3,14 @@ import ErrorMessage from "@/_components/_common/ErrorMessage";
 import React from "react";
 
 const DEFAULT_CLASS =
-  "px-4 py-3 bg-gray-100 focus:bg-transparent w-full text-sm outline-[#333] rounded-lg transition-all";
+"px-4 py-3 bg-gray-100 focus:bg-transparent w-full text-sm outline-[#333] rounded-sm transition-all"
 
 const CommonTextInput = ({
   rules,
   fieldName,
   formConfig,
   type = "text",
+  disabled = false,
   placeholder,
   className = DEFAULT_CLASS,
   label,
@@ -39,7 +40,8 @@ const CommonTextInput = ({
             })}
             type={type}
             placeholder={placeholder}
-            className={`${className} mb-2`}
+            disabled={disabled}
+            className={disabled ? `${className} mb-2  cursor-not-allowed`: `${className} mb-2`}
             maxLength={maxLength}
           />
         ) : type === "textarea" ? (
@@ -56,7 +58,8 @@ const CommonTextInput = ({
             {...register(fieldName, rules)}
             type={type}
             placeholder={placeholder}
-            className={`${className} mb-2`}
+            disabled={disabled}
+            className={disabled ? `${className} mb-2  cursor-not-allowed`: `${className} mb-2`}
             maxLength={maxLength}
           />
         )}
@@ -65,7 +68,7 @@ const CommonTextInput = ({
           className="absolute bottom-[22px] right-[17px]"
           onClick={onIconClick}
         >
-          {icon}
+          {icon }
         </div>
       </div>
       <ErrorMessage errors={errors?.[fieldName]?.message} />

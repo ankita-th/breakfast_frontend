@@ -1,22 +1,31 @@
 import Image from "next/image";
-import itmImg from "../../Assets/images/breakfast-hero-img.png";
+import itmImg from "../../public/images/breakfast-hero-img.png";
 import ItemCounter from "./ItemCounter";
 import Button from "./Button";
 
 const Summary = () => {
+  // const {handleIncrease,handleDecrease,itemCount } = useCount();
   return (
     <div className="common-card">
       <div>
         <Image src={itmImg} alt={"logo"} width={100} height={100} />
         <p>Classic Basket</p>
         <span>$200.00</span>
-        <ItemCounter />
+        {/* <ItemCounter
+          count={itemCount}
+          handleDecrease={handleDecrease}
+          handleIncrease={handleIncrease}
+        /> */}
       </div>
       <div>
         <Image src={itmImg} alt={"logo"} width={100} height={100} />
         <p>Papaya</p>
         <span>$40.00</span>
-        <ItemCounter />
+        {/* <ItemCounter
+          count={itemCount}
+          handleDecrease={handleDecrease}
+          handleIncrease={handleIncrease}
+        /> */}
       </div>
       <div>
         <input type="checkbox" />
@@ -42,7 +51,10 @@ const Summary = () => {
           <h1>Total</h1>
           <span>$204.00</span>
         </div>
-        <Button btnText="Confirm Order" className="common-btn w-1/2 rounded-lg"/>
+        <Button
+          btnText="Confirm Order"
+          className="common-btn w-1/2 rounded-lg"
+        />
       </div>
     </div>
   );

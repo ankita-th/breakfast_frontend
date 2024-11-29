@@ -2,37 +2,33 @@ import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import ErrorMessage from "./_common/ErrorMessage";
 import CommonButton from "./_common/CommonButton";
+import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
+import { INSTANCE } from "@/app/_constant/UrlConstant";
+import { successType, toastMessages } from "@/_utils/toastMessage";
 const OTP_LENGTH = 6;
 
-const VerifyOtp = ({ handleSubmitOTP }) => {
+const VerifyOtp = ({ handleSubmitOTP ,loader,payloadValues}) => {
   const [otp, setOtpValue] = useState("");
-  const [loader, setLoader] = useState(false);
   const [showErrorMsg, setShowErrorMsg] = useState({
     show: false,
     msg: "",
   });
-  const [resendTimer, setResendTimer] = useState();
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [resendTimer, setResendTimer] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(5*60);
   const [intervalId, setIntervalId] = useState();
 
-//   useEffect(() => {
-//     if (timeLeft > 0) {
-//       const tempIntervalId = setInterval(() => {
-//         setTimeLeft((prevTime) => prevTime - 1);
-//       }, 1000);
-//     }
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const tempIntervalId = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+      setIntervalId(tempIntervalId);
+      return () => clearInterval(tempIntervalId);
+    } else {
+      setResendTimer(true); 
+    }
+  }, [timeLeft]); 
 
-//     // setIntervalId(tempIntervalId);
-//     return () => clearInterval(intervalId);
-//   }, []);
-
-//   useEffect(() => {
-//     console.log(timeLeft, "123timeleft");
-//     if (timeLeft === 0) {
-//       clearInterval(intervalId);
-//       return;
-//     }
-//   }, [timeLeft]);
 
   const handleOtpInputChange = (otp) => {
     if (isNaN(otp)) return;
@@ -49,6 +45,29 @@ const VerifyOtp = ({ handleSubmitOTP }) => {
       .toString()
       .padStart(2, "0")}`;
   };
+
+
+
+  const handleResendOtp=()=>{
+    callApi({
+      endPoint: "password/resend-otp/",
+      method: METHODS.post,
+      instanceType: INSTANCE.auth,
+      payload: {
+      email: payloadValues.emial
+      },
+    })
+      .then((res) => {
+        console.log(res, "res");
+        toastMessages(res.data.message, successType);
+        setTimeLeft(5*60)
+        setResendTimer(false)
+      })
+      .catch((err) => {
+        console.log(err, "error");
+        toastMessages(err?.response?.data?.message || DEFAULT_ERROR_MESSAGE);
+      });
+  }
   return (
     <div className="flex items-center flex-col">
       <h2 className="font-medium text-base">Enter Code</h2>
@@ -70,12 +89,14 @@ const VerifyOtp = ({ handleSubmitOTP }) => {
       <span className="primary-text-color font-semibold">
         {formatTime(timeLeft)}
       </span>
-      <h3 className="text-[var(--secondary-color)] font-medium text-base">
+      <h3 className={resendTimer? "text-[var(--secondary-color)] font-medium text-base text-green-500" : "text-[var(--secondary-color)] font-medium text-base"} onClick={resendTimer ? handleResendOtp : undefined}>
         Resend Code
       </h3>
       <CommonButton
         type="button"
         text="Submit"
+        loader={loader}
+        disabled={loader}
         onClick={() => {
           if (otp.length !== OTP_LENGTH) {
             setShowErrorMsg({ show: true, message: "Please enter OTP" });

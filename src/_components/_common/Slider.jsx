@@ -6,13 +6,13 @@ import "slick-carousel/slick/slick-theme.css";
 import { IMAGE_CATEGORY } from "@/_constants/constant";
 import Image from "next/image";
 
-function CategoryCarousel() {
+const CategoryCarousel=({image_url})=>{
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 5,
+    slidesToShow: 2,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     speed: 2000,
     autoplaySpeed: 2000,
     cssEase: "linear",
@@ -26,19 +26,19 @@ function CategoryCarousel() {
   return (
     <div className="relative w-full h-full">
       <Slider {...settings}>
-        {IMAGE_CATEGORY.map((category, index) => (
+        {image_url?.map((category, index) => (
           <div key={index} className="w-full">
-            <div className=" w-full h-96 transition-transform duration-100 ease-in-out">
-              <Image
+            <div className=" w-full h-50 transition-transform  ">
+              <img
                 src={category.image}
-                alt={category.name}
+                alt={"product_image"}
                 layout="fill"
                 objectFit="contain"
                 className="transition-all duration-100 ease-in-out"
               />
             </div>
           </div>
-        ))}
+        ))} 
       </Slider>
     </div>
   );

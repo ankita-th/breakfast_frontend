@@ -18,8 +18,8 @@ export const SwedenFlagIcon = (
     </mask>
     <g mask="url(#mask0_80_19898)">
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M0 0V14H18V0H0Z"
         fill="#3D58DB"
       />
@@ -32,16 +32,16 @@ export const SwedenFlagIcon = (
         height="14"
       >
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M0 0V14H18V0H0Z"
           fill="white"
         />
       </mask>
       <g mask="url(#mask1_80_19898)">
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M5.625 0H7.875V5.83333H18V8.16667H7.875V14H5.625V8.16667H0V5.83333H5.625V0Z"
           fill="#FECA00"
         />

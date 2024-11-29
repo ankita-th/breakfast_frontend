@@ -15,7 +15,7 @@ const AuthFormTitleSection = ({
       <div>
         <Image
           src={"/images/brod-logo.png"}
-          alt="auth logo"
+          alt="auth_logo"
           width={500}
           height={20}
           priority={false}

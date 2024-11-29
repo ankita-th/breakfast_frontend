@@ -2,7 +2,7 @@ import Image from "next/image";
 const ProductCard = ({ name, price, image, unit }) => {
   return (
     <div className="border p-4 rounded-lg shadow hover:shadow-lg">
-      <Image src={image} alt={name} className="h-32 w-full object-cover mb-4" />
+      <Image src={image} alt={"image"} className="h-32 w-full object-cover mb-4" />
       <h3 className="text-lg font-bold">{name}</h3>
       <p className="text-sm">
         {price} {unit}
