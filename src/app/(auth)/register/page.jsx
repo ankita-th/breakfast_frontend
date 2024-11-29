@@ -34,9 +34,9 @@ const Page = () => {
 
   useEffect(() => {
     if (formDetails) {
-      setValue("emial", formDetails?.email);
-      setValue("first", formDetails.first_name);
-      setValue("last", formDetails.last_name);
+      setValue("email", formDetails?.email);
+      setValue("first_name", formDetails.first_name);
+      setValue("last_name", formDetails.last_name);
     }
   }, [formDetails]);
 
@@ -90,11 +90,7 @@ const Page = () => {
         endPoint: "/pendinguser/",
         method: METHODS.post,
         instanceType: INSTANCE.auth,
-        payload: {
-          email: values.emial,
-          first_name: values?.first,
-          last_name: values?.last,
-        },
+        payload: values,
       })
         .then((res) => {
           setVerifyMessage(true);
@@ -115,50 +111,51 @@ const Page = () => {
         className="bg-white p-5 rounded-none shadow-lg w-full"
       >
         <CommonTextInput
-          fieldName={"first"}
+          fieldName={"first_name"}
           formConfig={formConfig}
           type="text"
           placeholder={"E.g. John"}
-          rules={requiredValidation.first}
+          rules={requiredValidation.first_name}
           label={"First Name"}
           disabled={key !== null}
         />
         <CommonTextInput
-          fieldName={"last"}
+          fieldName={"last_name"}
           formConfig={formConfig}
           type="text"
           placeholder={"E.g. Doe"}
-          rules={requiredValidation.last}
+          rules={requiredValidation.last_name}
           disabled={key !== null}
           label={"Last Name"}
         />
-        <div className="relative pr-14">
-          <CommonTextInput
-            fieldName={"emial"}
-            disabled={key !== null}
-            formConfig={formConfig}
-            type="text"
-            placeholder="E.g. johndeo@yopmail.com"
-            rules={requiredValidation["emial"]}
-            label={"Username or email address"}
-          />
+        <div className="pr-14">
+          <div className="relative">
+            <CommonTextInput
+              fieldName={"email"}
+              disabled={key !== null}
+              formConfig={formConfig}
+              type="text"
+              placeholder="E.g. johndeo@yopmail.com"
+              rules={requiredValidation["email"]}
+              label={"Username or email address"}
+            />
+            <Button
+              btnText={key !== null ? "✅VERIFIED" : "VERIFY"}
+              btnType="submit"
+              className={
+                "absolute right-0 top-1/2 transform -translate-y-1/2 text-green-500 underline rounded-none w-14 h-11 bg-gray-100 focus:bg-transparent mt-2"
+              }
+              // className={activeVerify==false ?"cursor-not-allowed absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500 ":"absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500"}
+              disabled={activeVerify ? false : true}
+              // btnClick={handleVerification}
+            />
+          </div>
 
           {verifyMessage && (
             <p className="text-red-500">
               {"Email verification link has been sent to your email."}
             </p>
           )}
-
-          <Button
-            btnText={key !== null ? "✅VERIFIED" : "VERIFY"}
-            btnType="submit"
-            className={
-              "absolute right-0 top-1/2 transform -translate-y-1/2 text-green-500 underline rounded-none w-14 h-11 bg-gray-100 focus:bg-transparent mt-2"
-            }
-            // className={activeVerify==false ?"cursor-not-allowed absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500 ":"absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500"}
-            disabled={activeVerify ? false : true}
-            // btnClick={handleVerification}
-          />
         </div>
 
         <CommonTextInput
@@ -167,7 +164,7 @@ const Page = () => {
           disabled={key === null}
           isNumberOnly={true}
           placeholder="E.g. 9472727712"
-          rules={requiredValidation["Phone Number"]}
+          rules={requiredValidation["phone_no"]}
           label="Phone Number"
         />
         <CommonTextInput
@@ -175,7 +172,7 @@ const Page = () => {
           formConfig={formConfig}
           disabled={key === null}
           placeholder="********"
-          rules={requiredValidation["Password"]}
+          rules={requiredValidation["password"]}
           label="Your password"
           type={showPassword.password ? "text" : "password"}
           onIconClick={() => toggleShowPassword("password")}
@@ -186,7 +183,7 @@ const Page = () => {
           formConfig={formConfig}
           disabled={key === null}
           placeholder="********"
-          rules={requiredValidation["Confirm Password"]}
+          rules={requiredValidation["confirmpassword"]}
           label="Confirm Password"
           type={showPassword.confirm_password ? "text" : "password"}
           onIconClick={() => toggleShowPassword("confirm_password")}

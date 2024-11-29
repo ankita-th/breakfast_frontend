@@ -55,8 +55,10 @@ const Page = () => {
             <div className="select flex space-x-4 items-center mt-[40px]">
               <div className="title text-[16px] font-semibold">Sort By</div>
               <select className="border border-[#4BAF50] rounded-[5px] p-[10px] text-[#4BAF50]">
-                {SORT_BY_OPTIONS?.map(({ value, label }) => (
-                  <option value={value}>{label}</option>
+                {SORT_BY_OPTIONS?.map(({ value, label }, index) => (
+                  <option value={value} key={index}>
+                    {label}
+                  </option>
                 ))}
               </select>
             </div>

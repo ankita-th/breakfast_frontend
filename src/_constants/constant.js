@@ -105,3 +105,5 @@ export const BUTTON_TYPE = {
   button: "button",
   submit: "submit",
 };
+
+export const RESEND_OTP_TIMER = 1 * 60; //In minutes
