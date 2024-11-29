@@ -93,6 +93,12 @@ body {
   .main-container{
     @apply flex flex-col items-center
   }
+  .newletter-bg{
+    @apply w-[60%] bg-[url(/images/Clip-path-group.png)] bg-cover p-[40px] bg-[#ffe3df] min-h-[230px] rounded-tr-[10px] rounded-br-[10px]
+  }
+  .exclusive-bg{
+    @apply bg-[url(/images/offerbg.png)] bg-cover p-[40px] w-[40%] min-h-[230px] rounded-tl-[10px] rounded-bl-[10px] offer-sale-mob-padding
+  }
 }
 
 .second-head-flex {

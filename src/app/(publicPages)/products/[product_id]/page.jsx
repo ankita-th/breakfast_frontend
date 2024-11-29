@@ -7,21 +7,18 @@ import ExclusiveOfferBanner from "@/_components/_common/ExclusiveOfferBanner";
 import Button from "@/_components/_common/Button";
 import CategoryCarousel from "@/_components/_common/Slider";
 import ItemCounter from "@/_components/_common/ItemCounter";
-import { useRouter } from "next/router";
 import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { INSTANCE } from "@/app/_constant/UrlConstant";
 import { toastMessages } from "@/_utils/toastMessage";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import { productListing, setProductListing } from "@/Redux/productDetailsSlice";
-import CommonAutoComplete from "@/_components/_common/CommonAutoComplete";
-import { useForm } from "react-hook-form";
+import { usePathname } from "next/navigation";
+import { useDispatch } from "react-redux";
+// import CommonAutoComplete from "@/_components/_common/CommonAutoComplete";
 
 const Page = () => {
   const pathname = usePathname();
-  const dispatch = useDispatch();
   const product_id = pathname.split("/")[2];
-  const { productListing } = useSelector((state) => state.product);
+  const [productListing, setProductListing] = useState();
+
 
   useEffect(() => {
     if (product_id) {
@@ -34,7 +31,7 @@ const Page = () => {
         },
       })
         .then((res) => {
-          dispatch(setProductListing(res.data));
+          setProductListing(res.data);
         })
         .catch((err) => {
           toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
@@ -45,7 +42,7 @@ const Page = () => {
     <div className="p-8 m-8">
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="lg:w-1/2">
-          <CategoryCarousel productListing={productListing}/>
+          <CategoryCarousel image_url={productListing?.images} />
         </div>
         <div className="lg:w-1/2">
           <div className="flex gap-2">
@@ -126,7 +123,6 @@ const Page = () => {
           </div>
         </div>
       </div>
-
       <div className="w-24">
         <Image src={item4} alt="Croissant" className="rounded-lg w-full" />
       </div>

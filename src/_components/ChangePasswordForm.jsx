@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
-import ErrorMessage from "./_common/ErrorMessage";
 import { useForm } from "react-hook-form";
 import CommonButton from "./_common/CommonButton";
 import { requiredValidation } from "@/_validations/validations";
@@ -9,9 +7,17 @@ import { CLOSED_EYE, OPEN_EYE } from "../../public/images/SvgIcons";
 import PasswordInputField from "./_common/PasswordInputField";
 import { PASSWORD_REGEX } from "@/_validations/authValidations";
 import { PASSWORD_PATTEN_ERROR } from "@/app/_constant/ErrorMessagesConstant";
+import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
+import { INSTANCE } from "@/app/_constant/UrlConstant";
+import { successType, toastMessages } from "@/_utils/toastMessage";
+import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
+import { useRouter } from "next/navigation";
 
-const ChangePasswordForm = () => {
+const ChangePasswordForm = ({ payloadValues }) => {
+  const router = useRouter();
   const formConfig = useForm();
+  const [loader, setLoader] = useState();
+
   const {
     setValue,
     handleSubmit,
@@ -26,8 +32,6 @@ const ChangePasswordForm = () => {
     confirm_password: false,
   });
   const handleToglePassword = (type) => {
-    console.log(type,"type")
-
     setShowPass({ ...showPass, [type]: !showPass?.[type] });
   };
 
@@ -51,7 +55,25 @@ const ChangePasswordForm = () => {
   };
 
   const onSubmit = (values) => {
-    console.log(values);
+    setLoader(true);
+    callApi({
+      endPoint: "/password/reset/",
+      method: METHODS.post,
+      instanceType: INSTANCE.auth,
+      payload: {
+        new_password: values.confirm_password,
+        email: payloadValues?.emial, // Corrected "emial" to "email"
+      },
+    })
+      .then((res) => {
+        toastMessages(res.data.message, successType);
+        setLoader(false);
+        router.push("/login");
+      })
+      .catch((err) => {
+        setLoader(false);
+        toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
+      });
   };
 
   return (
@@ -99,7 +121,12 @@ const ChangePasswordForm = () => {
           errors={errors?.["confirm_password"]?.message}
         />
       </div>
-      <CommonButton text="Submit" type="submit" />
+      <CommonButton
+        text="Submit"
+        type="submit"
+        loader={loader}
+        disabled={loader}
+      />
     </form>
   );
 };

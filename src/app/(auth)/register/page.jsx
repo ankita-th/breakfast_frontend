@@ -20,25 +20,27 @@ const Page = () => {
   const router = useRouter();
   const formConfig = useForm();
   const [loader, setLoader] = useState();
-  const { handleSubmit, setValue } = formConfig;
+  const { handleSubmit, setValue, watch } = formConfig;
+  const [activeVerify, setActiveVerify] = useState(true);
   const [showPassword, setShowPassword] = useState({
     password: false,
     confirm_password: false,
   });
   const [activeTab, setActiveTab] = useState(INDIVIDUAL);
+  const [formDetails, setFormDetails] = useState();
   const [verifyMessage, setVerifyMessage] = useState(false);
   const searchParams = useSearchParams();
   const key = searchParams.get("id");
 
   useEffect(() => {
-    const email = localStorage.getItem("email");
-    const first_name = localStorage.getItem("first_name");
-    const last_name = localStorage.getItem("last_name");
-    setValue("email", email);
-    setValue("first_name", first_name);
-    setValue("last_name", last_name);
-  });
+    if (formDetails) {
+      setValue("emial", formDetails?.email);
+      setValue("first", formDetails.first_name);
+      setValue("last", formDetails.last_name);
+    }
+  }, [formDetails]);
 
+  console.log(activeVerify, "activeVerify");
   useEffect(() => {
     if (key) {
       callApi({
@@ -47,18 +49,21 @@ const Page = () => {
         instanceType: INSTANCE.auth,
       })
         .then((res) => {
-          console.log(res.data.access, "res");
+          console.log(res.data.data, "res");
+          setFormDetails(res.data.data);
         })
         .catch((err) => {
           toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
         });
     }
   }, [key]);
+
   const toggleShowPassword = (type) => {
     setShowPassword({ ...showPassword, [type]: !showPassword?.[type] });
   };
+
   const onSubmit = (values) => {
-    setLoader(true);
+    setTimeout(setActiveVerify(false), 10000);
     if (key) {
       callApi({
         endPoint: `/signup/${key}/`,
@@ -71,15 +76,12 @@ const Page = () => {
         },
       })
         .then((res) => {
-          console.log(res.data, "res");
-          setLoader(false);
           localStorage.setItem("token", res.data.data.tokens.access);
           localStorage.setItem("refresh_token", res.data.data.tokens.refresh);
           toastMessages("User logged in successfully", successType);
           router.push("/home");
         })
         .catch((err) => {
-          console.log(err, "error");
           setLoader(false);
           toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
         });
@@ -89,68 +91,55 @@ const Page = () => {
         method: METHODS.post,
         instanceType: INSTANCE.auth,
         payload: {
-          email: values.email,
-          first_name: values?.first_name,
-          last_name: values?.last_name,
+          email: values.emial,
+          first_name: values?.first,
+          last_name: values?.last,
         },
       })
         .then((res) => {
-          setLoader(false);
-          localStorage.setItem("email", res?.data?.data.email);
-          localStorage.setItem("first_name", res?.data?.data.first_name);
-          localStorage.setItem("last_name", res?.data?.data.last_name);
           setVerifyMessage(true);
           toastMessages(res.data.message, successType);
         })
         .catch((err) => {
           toastMessages(err?.response?.data?.message || DEFAULT_ERROR_MESSAGE);
-          setLoader(false);
         });
     }
+    // }
   };
 
-  // const handleTabChange = (tab) => {
-  //   setActiveTab(tab);
-  //   reset();
-  // };
   return (
     <div className="login-form-container">
       <AuthFormTitleSection title={"Sign Up!"} />
-      {/* <TabSection
-        activeTab={activeTab}
-        handleTabChange={handleTabChange}
-        tabs={TABS}
-      /> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-5 rounded-none shadow-lg w-full"
       >
         <CommonTextInput
-          fieldName={"first_name"}
+          fieldName={"first"}
           formConfig={formConfig}
           type="text"
           placeholder={"E.g. John"}
-          rules={requiredValidation["first_name"]}
+          rules={requiredValidation.first}
           label={"First Name"}
           disabled={key !== null}
         />
         <CommonTextInput
-          fieldName={"last_name"}
+          fieldName={"last"}
           formConfig={formConfig}
           type="text"
           placeholder={"E.g. Doe"}
-          rules={requiredValidation["last_name"]}
+          rules={requiredValidation.last}
           disabled={key !== null}
           label={"Last Name"}
         />
-        <div className="relative">
+        <div className="relative pr-14">
           <CommonTextInput
-            fieldName={"email"}
+            fieldName={"emial"}
             disabled={key !== null}
             formConfig={formConfig}
             type="text"
             placeholder="E.g. johndeo@yopmail.com"
-            rules={requiredValidation["email"]}
+            rules={requiredValidation["emial"]}
             label={"Username or email address"}
           />
 
@@ -162,9 +151,13 @@ const Page = () => {
 
           <Button
             btnText={key !== null ? "✅VERIFIED" : "VERIFY"}
-            btnType={"submit"}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500"
-            disabled={key !== null}
+            btnType="submit"
+            className={
+              "absolute right-0 top-1/2 transform -translate-y-1/2 text-green-500 underline rounded-none w-14 h-11 bg-gray-100 focus:bg-transparent mt-2"
+            }
+            // className={activeVerify==false ?"cursor-not-allowed absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500 ":"absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500"}
+            disabled={activeVerify ? false : true}
+            // btnClick={handleVerification}
           />
         </div>
 
@@ -204,7 +197,7 @@ const Page = () => {
           className="auth-btn"
           text="Register"
           loader={loader}
-          disabled={key == null}
+          // disabled={key == null}
         />
         <div className="h-[70px] md:h-[20px]"></div>
         <AuthRedirectSection

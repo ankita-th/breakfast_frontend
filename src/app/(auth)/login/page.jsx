@@ -1,6 +1,6 @@
 "use client";
 import AuthRedirectSection from "@/_components/_common/AuthRedirectSection";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import CommonButton from "@/_components/_common/CommonButton";
 import { callApi, login, METHODS } from "@/_Api-Handlers/apiFunctions";
@@ -19,11 +19,24 @@ const Login = () => {
   const router = useRouter();
   const formConfig = useForm();
   const [loader, setLoader] = useState(false);
-  const { handleSubmit } = formConfig;
+  const [rememberMe, setRememberMe] = useState(false);
+  const { handleSubmit,setValue } = formConfig;
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
+
+
+
+  useEffect(()=>{
+    const passwrd =  localStorage.getItem("rememberedPassword")
+    const email =  localStorage.getItem("rememberedEmail")
+    setValue("user_name",email)
+    setValue("password",passwrd)
+    if(passwrd){
+      setRememberMe(true)
+    }
+  },[])
   const onSubmit = (values) => {
     setLoader(true);
     // login(values)
@@ -37,6 +50,13 @@ const Login = () => {
       },
     })
       .then((res) => {
+        if (rememberMe) {
+          localStorage.setItem("rememberedEmail", values.user_name);
+          localStorage.setItem("rememberedPassword", values.password);
+        }else{
+          localStorage.removeItem("rememberedEmail");
+          localStorage.removeItem("rememberedPassword");
+        }
         localStorage.setItem("token", res.data.access);
         localStorage.setItem("refresh_token", res.data.refresh);
         setLoader(false);
@@ -50,6 +70,10 @@ const Login = () => {
         );
         setLoader(false);
       });
+  };
+  const handleRememberMe = (e) => {
+    const isChecked = e.target.checked;
+    setRememberMe(isChecked);
   };
   return (
     <div className="login-form-container">
@@ -84,7 +108,9 @@ const Login = () => {
               className="form-check-input"
               type="checkbox"
               value=""
+              onChange={(e) => handleRememberMe(e)}
               id="flexCheckDefault"
+              checked={rememberMe}
             />
             <label
               className="text-[16px] font-normal ml-1"

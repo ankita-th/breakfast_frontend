@@ -8,42 +8,81 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CLOSED_EYE, OPEN_EYE } from "../../../../public/images/SvgIcons";
-import { URLS } from "@/app/_constant/UrlConstant";
+import { INSTANCE, URLS } from "@/app/_constant/UrlConstant";
 import { FORGOT_PASSWORD_STEP } from "../_constant";
 import VerifyOtp from "@/_components/VerifyOtp";
 import ChangePasswordForm from "@/_components/ChangePasswordForm";
+import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
+import { successType, toastMessages } from "@/_utils/toastMessage";
+import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 
 const Page = () => {
   const router = useRouter();
   const formConfig = useForm();
   const { handleSubmit } = formConfig;
+  const [loader,setLoader] = useState()
+  const [payloadValues , setPayloadValues] = useState()
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedStep, setSelectedStep] = useState(FORGOT_PASSWORD_STEP.CHANGE_PASSWORD);
+  const [selectedStep, setSelectedStep] = useState(
+    FORGOT_PASSWORD_STEP.FORGOT_PASSWORD
+  );
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
   const onSubmit = (values) => {
-    login(values)
-      .then((res) => {
-        manageUserAuthorization({
-          action: "add",
-          token: res?.data?.access,
-          refreshToken: res?.data?.refresh,
-        });
-
-        toastMessages("User logged in successfully", successType);
-        router.push("/home");
+    setLoader(true)
+    setPayloadValues(values)
+    if (selectedStep === FORGOT_PASSWORD_STEP.FORGOT_PASSWORD) {
+      callApi({
+        endPoint: "/password/forget/",
+        method: METHODS.post,
+        instanceType: INSTANCE.auth,
+        payload: {
+          email: values.emial,
+        },
       })
-      .catch((err) => {
-        toastMessages(
-          err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
-        );
-      });
+        .then((res) => {
+          console.log(res, "res");
+          toastMessages(res.data.message, successType);
+          setSelectedStep(FORGOT_PASSWORD_STEP.OTP);
+          setLoader(false)
+        })
+        .catch((err) => {
+          console.log(err, "error");
+          setLoader(false)
+          toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
+        });
+    }
   };
 
   const handleSubmitOTP = (otp) => {
-    console.log(otp, "otp");
+    setLoader(true)
+    if (selectedStep === FORGOT_PASSWORD_STEP.OTP) {
+    callApi({
+      endPoint: "/password/otp-reset/",
+      method: METHODS.post,
+      instanceType: INSTANCE.auth,
+      payload: {
+      otp: otp,
+      email: payloadValues.emial
+      },
+    })
+      .then((res) => {
+        console.log(res, "res");
+        toastMessages(res.data.message, successType);
+        setSelectedStep(FORGOT_PASSWORD_STEP.CHANGE_PASSWORD);
+        setLoader(false)
+      })
+      .catch((err) => {
+        console.log(err, "error");
+        setLoader(false)
+        toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
+      });
+    }
   };
+
+ 
+
 
   const getTitleSubTitle = () => {
     switch (selectedStep) {
@@ -74,14 +113,14 @@ const Page = () => {
         {selectedStep === FORGOT_PASSWORD_STEP.FORGOT_PASSWORD && (
           <form onSubmit={handleSubmit(onSubmit)}>
             <CommonTextInput
-              fieldName="email"
+              fieldName="emial"
               formConfig={formConfig}
               type="text"
               placeholder="E.g. johndeo@yopmail.com"
-              rules={requiredValidation["email"]}
+              rules={requiredValidation["emial"]}
               label="Email"
             />
-            <CommonButton type="submit" text="Login" />
+            <CommonButton type="submit" text="Login" loader = {loader} disabled={loader}/>
             <div className="h-[70px] md:h-[20px]"></div>
             <div className="flex primary-text-color">
               <AuthRedirectSection
@@ -99,10 +138,10 @@ const Page = () => {
           </form>
         )}
         {selectedStep === FORGOT_PASSWORD_STEP.OTP && (
-          <VerifyOtp handleSubmitOTP={handleSubmitOTP} />
+          <VerifyOtp handleSubmitOTP={handleSubmitOTP} loader = {loader} payloadValues={payloadValues} />
         )}
         {selectedStep === FORGOT_PASSWORD_STEP.CHANGE_PASSWORD && (
-          <ChangePasswordForm />
+          <ChangePasswordForm payloadValues={payloadValues}  />
         )}
       </div>
     </div>

@@ -3,7 +3,7 @@ import ErrorMessage from "@/_components/_common/ErrorMessage";
 import React from "react";
 
 const DEFAULT_CLASS =
-"px-4 py-3 bg-gray-100 focus:bg-transparent w-full text-sm outline-[#333] rounded-lg transition-all"
+"px-4 py-3 bg-gray-100 focus:bg-transparent w-full text-sm outline-[#333] rounded-sm transition-all"
 
 const CommonTextInput = ({
   rules,
@@ -11,7 +11,7 @@ const CommonTextInput = ({
   formConfig,
   type = "text",
   disabled = false,
-  placeholder ="",
+  placeholder,
   className = DEFAULT_CLASS,
   label,
   icon,

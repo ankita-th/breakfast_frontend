@@ -38,6 +38,7 @@ import { setProductVariant } from "@/Redux/productDetailsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 import { StarFilledIcon, StarIcon } from "@/Assets/Icons/Svg";
+import ExclusiveOfferBanner from "@/_components/_common/ExclusiveOfferBanner";
 
 const Page = () => {
   const router = useRouter();
@@ -691,25 +692,7 @@ const Page = () => {
                   </p>
                 </div>
               </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">678</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                  {T.expert_team}
-                </p>
-              </div>
-            </div>
-            {/* <div className="flex gap-[15px] items-center">
-              <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
-                <Image className="w-[60px]" src={review3Img} alt="reviewImg" />
-              </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">285</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                  {T.activate_products}
-                </p>
-              </div>
-            </div> */}
-            {/* <div className="flex gap-[15px] items-center">
+              <div className="flex gap-[15px] items-center">
               <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
                 <Image className="w-[60px]" src={review4Img} alt="reviewImg" />
               </div>
@@ -719,50 +702,12 @@ const Page = () => {
                   {T.awards_winning}
                 </p>
               </div>
-            </div> */}
+            </div>
+            </div>
           </div>
         </section>
       </div>
-      <section className="py-[60px] offers_sales">
-        <div className="max-w-screen-xl w-full px-4 mx-auto">
-          <div className="flex items-center sale-width-mob">
-            {/* <div className="exclusive-offer bg-[url(../../public/images/offerbg.png)] bg-cover p-[40px] w-[40%] min-h-[230px] rounded-tl-[10px] rounded-bl-[10px] offer-sale-mob-padding"> */}
-            <p className="text-[#4FB050] text-[15px] font-medium">
-              {T.dont_miss_deals}
-            </p>
-            <h6 className="text-[#F4F4F4] font-extrabold text-[40px] leading-[25px] md:text-[32px] md:leading-[45px]">
-              {T.exclusive}
-            </h6>
-            <h6 className="text-[#F4F4F4] font-extrabold text-[40px] leading-[25px] md:text-[32px] md:leading-[45px]">
-              {T.offers}
-            </h6>
-            <p className="text-[#4FB050] text-[15px] font-medium mt-[20px]">
-              {T.voucher_worth}
-            </p>
-            {/* </div> */}
-            {/* <div className="w-[60%] bg-[url(../../public/images/Clip-path-group.png)] bg-cover p-[40px] bg-[#ffe3df] min-h-[230px] rounded-tr-[10px] rounded-br-[10px]"> */}
-            <div className="">
-              <div className="max-w-[500px] w-full flex flex-col items-center justify-center mx-auto">
-                <input
-                  className=" p-[18px] px-[20px] rounded-full w-full"
-                  type="text"
-                  id="first_name"
-                  placeholder="Email Address"
-                  required
-                />
-                <button
-                  type="button"
-                  className="w-full bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[20px]"
-                >
-                  {T.subscribe}
-                  <span></span>
-                </button>
-              </div>
-            </div>
-            {/* </div> */}
-          </div>
-        </div>
-      </section>
+      <ExclusiveOfferBanner/>
     </div>
   );
 };

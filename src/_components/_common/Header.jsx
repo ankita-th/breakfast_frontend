@@ -30,8 +30,11 @@ const Header = ({}) => {
   const handleLogin = () => {
     router.push("/login");
   }
-
-
+  const handleLogout =()=>{
+    localStorage.removeItem("refresh_token")
+    localStorage.removeItem("token")
+    router.push("/login")
+  }
   return (
     <div>
       <section className="p-4 w-full bg-[#F5F5F5] mob-dnone">
@@ -130,7 +133,7 @@ const Header = ({}) => {
 
               <div className="flex items-center space-x-2">
                 <span>{DummyUser}</span>
-                <span onClick={handleLogin}>{profileStatus}</span>
+                <span onClick={profileStatus === "My Account" ? undefined : handleLogin}>{profileStatus}</span>
               </div>
 
               <div className="flex items-center space-x-4">
@@ -146,9 +149,12 @@ const Header = ({}) => {
                     {itemQuantity}
                   </span> */}
                 </button>
+               {profileStatus === "My Account" && <div className="flex items-center space-x-2">
+                <span onClick={handleLogout}>Logout</span>
+              </div>}
               </div>
-            </div>
-          </div>
+              </div>
+              </div>
         </nav>
       </section>
     </div >
