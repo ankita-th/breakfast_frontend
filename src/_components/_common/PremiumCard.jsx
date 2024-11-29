@@ -17,9 +17,7 @@ const PremiumCard = ({
   handleItem,
   handleViewAll,
 }) => {
-  const stripHtmlTags = (str) => {
-    return str?.replace(/<\/?[^>]+(>|$)/g, "");
-  };
+ 
 
   return (
     <div>

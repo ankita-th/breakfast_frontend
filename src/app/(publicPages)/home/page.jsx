@@ -36,9 +36,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { setProductVariant } from "@/Redux/productDetailsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
+import { DEFAULT_ERROR_MESSAGE, stripHtmlTags } from "@/_constants/constant";
 import { StarFilledIcon, StarIcon } from "@/Assets/Icons/Svg";
 import ExclusiveOfferBanner from "@/_components/_common/ExclusiveOfferBanner";
+import moment from "moment";
 
 const Page = () => {
   const router = useRouter();
@@ -47,6 +48,15 @@ const Page = () => {
   const [basketDetails, setBasketDetails] = useState();
   console.log(productVariant, "productVariant");
   console.log(basketDetails, "basketDetails");
+  const date = new Date();
+  console.log(date, "date");
+  // Fri Nov 29 2024 17:47:21 GMT+0530
+  // const duration = moment.duration(endDate.diff(date));
+  const currentDate = moment(date).format("YYYY-MM-DD");
+  //   Start Date: Fri Nov 01 2024 00:00:00 GMT+0000
+  // End Date: Fri Nov 29 2024 00:00:00 GMT+0000
+
+  console.log(currentDate, "currentDate");
 
   const [itemCount, setItemCount] = useState(0);
   const handleDecrease = () => {
@@ -342,93 +352,195 @@ const Page = () => {
             handleViewAll={handleViewAll}
           /> */}
         </div>
-        <section className="healthy-breakfast py-[60px]">
-            <div className="max-w-screen-xl w-full px-4 mx-auto">
-              <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
-                <div className=" max-w-[400px] mx-auto ">
-                  <h2 className="text-[24px] font-bold text-black ">
-                    {T.healthy_breakfast_baskets}
-                  </h2>
+        {/* {basketDetails?.map((item, idx) => {
+          item.offer !== null && (
+            <section className="healthy-breakfast py-[60px]">
+              <div className="max-w-screen-xl w-full px-4 mx-auto">
+                <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
+                  <div className=" max-w-[400px] mx-auto ">
+                    <h2 className="text-[24px] font-bold text-black ">
+                      {T.healthy_breakfast_baskets}
+                    </h2>
 
-                  <p className="text-[#55B250] font-bold text-[20px]  mt-[10px]">
-                    $280.00
-                  </p>
+                    <p className="text-[#55B250] font-bold text-[20px]  mt-[10px]">
+                      {item?.offer_price}
+                    </p>
 
-                  <p className="text-[#828282] text-[15px]  mt-[10px]">
-                    {T.bf_decription}
-                  </p>
-                  <div className="flex items-center gap-[10px] mt-[20px]">
-                    <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
-                      <span className="text-[12px]">
+                    <p className="text-[#828282] text-[15px]  mt-[10px]">
+                      {T.bf_decription}
+                    </p>
+                    <div className="flex items-center gap-[10px] mt-[20px]">
+                      <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
+                        <span className="text-[12px]">
+                          <Image
+                            className="w-[16px] h-[16px]"
+                            src={gradientclockImg}
+                            alt="gradientImg"
+                          />
+                        </span>
+                        <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
+                          {T.grab_the_offer}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-[15px] mt-[20px]">
+                      <div className="text-center">
+                        <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                          31
+                        </div>
+                        <p className="text-[12px] text-[#828282] mt-[5px]">
+                          {T.days}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                          12
+                        </div>
+                        <p className="text-[12px] text-[#828282] mt-[5px]">
+                          {T.hours}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                          10
+                        </div>
+                        <p className="text-[12px] text-[#828282] mt-[5px]">
+                          {T.mins}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                          35
+                        </div>
+                        <p className="text-[12px] text-[#828282] mt-[5px]">
+                          {T.secs}
+                        </p>
+                      </div>
+                    </div>
+                    <Button
+                      btnType="button"
+                      className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
+                      btnText={T.add_to_cart}
+                      icon={
                         <Image
-                          className="w-[16px] h-[16px]"
-                          src={gradientclockImg}
-                          alt="gradientImg"
+                          className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
+                          src={arrowImg}
+                          alt="arrowImg"
                         />
-                      </span>
-                      <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
-                        {T.grab_the_offer}
-                      </span>
-                    </div>
+                      }
+                    />
                   </div>
-
-                  <div className="flex gap-[15px] mt-[20px]">
-                    <div className="text-center">
-                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                        31
-                      </div>
-                      <p className="text-[12px] text-[#828282] mt-[5px]">
-                        {T.days}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                        12
-                      </div>
-                      <p className="text-[12px] text-[#828282] mt-[5px]">
-                        {T.hours}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                        10
-                      </div>
-                      <p className="text-[12px] text-[#828282] mt-[5px]">
-                        {T.mins}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                        35
-                      </div>
-                      <p className="text-[12px] text-[#828282] mt-[5px]">
-                        {T.secs}
-                      </p>
-                    </div>
+                  <div>
+                    <Image
+                      className="max-w-[450px] w-full mx-auto"
+                      src={breakfastHeroImg}
+                      alt="breakfastImg"
+                    />
                   </div>
-                  <Button
-                    btnType="button"
-                    className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
-                    btnText={T.add_to_cart}
-                    icon={
-                      <Image
-                        className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
-                        src={arrowImg}
-                        alt="arrowImg"
-                      />
-                    }
-                  />
-                </div>
-                <div>
-                  <Image
-                    className="max-w-[450px] w-full mx-auto"
-                    src={breakfastHeroImg}
-                    alt="breakfastImg"
-                  />
                 </div>
               </div>
-            </div>
-        </section>
+            </section>
+          );
+        })} */}
+
+        {basketDetails?.map((item, idx) => {
+          if (item.offer !== null) {
+            return (
+              <section key={idx} className="healthy-breakfast py-[60px]">
+                <div className="max-w-screen-xl w-full px-4 mx-auto">
+                  <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
+                    <div className="max-w-[400px] mx-auto">
+                      <h2 className="text-[24px] font-bold text-black">
+                        {T.healthy_breakfast_baskets}
+                      </h2>
+
+                      <p className="text-[#55B250] font-bold text-[20px] mt-[10px]">
+                        ${item?.offer.offer_price}
+                      </p>
+
+                      <p className="text-[#828282] text-[15px] mt-[10px]">
+                        {stripHtmlTags(item.content)}
+                        {/* {T.bf_decription} */}
+                      </p>
+
+                      <div className="flex items-center gap-[10px] mt-[20px]">
+                        <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
+                          <span className="text-[12px]">
+                            <Image
+                              className="w-[16px] h-[16px]"
+                              src={gradientclockImg}
+                              alt="gradientImg"
+                            />
+                          </span>
+                          <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
+                            {T.grab_the_offer}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-[15px] mt-[20px]">
+                        <div className="text-center">
+                          <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                            31
+                          </div>
+                          <p className="text-[12px] text-[#828282] mt-[5px]">
+                            {T.days}
+                          </p>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                            12
+                          </div>
+                          <p className="text-[12px] text-[#828282] mt-[5px]">
+                            {T.hours}
+                          </p>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                            10
+                          </div>
+                          <p className="text-[12px] text-[#828282] mt-[5px]">
+                            {T.mins}
+                          </p>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                            35
+                          </div>
+                          <p className="text-[12px] text-[#828282] mt-[5px]">
+                            {T.secs}
+                          </p>
+                        </div>
+                      </div>
+
+                      <Button
+                        btnType="button"
+                        className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
+                        btnText={T.add_to_cart}
+                        icon={
+                          <Image
+                            className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
+                            src={arrowImg}
+                            alt="arrowImg"
+                          />
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Image
+                        className="max-w-[450px] w-full mx-auto"
+                        src={breakfastHeroImg}
+                        alt="breakfastImg"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </section>
+            );
+          }
+        })}
+
         <section className="py-[60px]">
           <div className="max-w-screen-xl w-full px-4 mx-auto">
             <div>
@@ -693,21 +805,25 @@ const Page = () => {
                 </div>
               </div>
               <div className="flex gap-[15px] items-center">
-              <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
-                <Image className="w-[60px]" src={review4Img} alt="reviewImg" />
+                <div className="w-[100px] h-[100px] bg-white p-0 rounded-full flex justify-center items-center">
+                  <Image
+                    className="w-[60px]"
+                    src={review4Img}
+                    alt="reviewImg"
+                  />
+                </div>
+                <div>
+                  <h6 className="text-[40px] font-extrabold text-white">27</h6>
+                  <p className="text-[#E2E2E2] text-[20px] font-medium">
+                    {T.awards_winning}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h6 className="text-[40px] font-extrabold text-white">27</h6>
-                <p className="text-[#E2E2E2] text-[20px] font-medium">
-                  {T.awards_winning}
-                </p>
-              </div>
-            </div>
             </div>
           </div>
         </section>
       </div>
-      <ExclusiveOfferBanner/>
+      <ExclusiveOfferBanner />
     </div>
   );
 };

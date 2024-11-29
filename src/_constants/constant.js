@@ -105,3 +105,10 @@ export const BUTTON_TYPE = {
   button: "button",
   submit: "submit",
 };
+
+export const stripHtmlTags = (str) => {
+  return str?.replace(/<\/?[^>]+(>|$)/g, "");
+};
+  
+
+const date = new Date()
