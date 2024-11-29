@@ -112,3 +112,4 @@ export const stripHtmlTags = (str) => {
   
 
 const date = new Date()
+export const RESEND_OTP_TIMER = 1 * 60; //In minutes

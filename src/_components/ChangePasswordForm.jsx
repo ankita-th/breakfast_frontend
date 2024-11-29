@@ -62,7 +62,7 @@ const ChangePasswordForm = ({ payloadValues }) => {
       instanceType: INSTANCE.auth,
       payload: {
         new_password: values.confirm_password,
-        email: payloadValues?.emial, // Corrected "emial" to "email"
+        email: payloadValues?.email,
       },
     })
       .then((res) => {

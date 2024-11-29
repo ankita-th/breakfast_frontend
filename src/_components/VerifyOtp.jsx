@@ -5,30 +5,28 @@ import CommonButton from "./_common/CommonButton";
 import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { INSTANCE } from "@/app/_constant/UrlConstant";
 import { successType, toastMessages } from "@/_utils/toastMessage";
+import { RESEND_OTP_TIMER } from "@/_constants/constant";
 const OTP_LENGTH = 6;
 
-const VerifyOtp = ({ handleSubmitOTP ,loader,payloadValues}) => {
+const VerifyOtp = ({ handleSubmitOTP, loader, payloadValues }) => {
   const [otp, setOtpValue] = useState("");
   const [showErrorMsg, setShowErrorMsg] = useState({
     show: false,
     msg: "",
   });
   const [resendTimer, setResendTimer] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(5*60);
-  const [intervalId, setIntervalId] = useState();
+  const [timeLeft, setTimeLeft] = useState(RESEND_OTP_TIMER);
 
   useEffect(() => {
     if (timeLeft > 0) {
       const tempIntervalId = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
-      setIntervalId(tempIntervalId);
       return () => clearInterval(tempIntervalId);
     } else {
-      setResendTimer(true); 
+      setResendTimer(true);
     }
-  }, [timeLeft]); 
-
+  }, [timeLeft]);
 
   const handleOtpInputChange = (otp) => {
     if (isNaN(otp)) return;
@@ -46,28 +44,26 @@ const VerifyOtp = ({ handleSubmitOTP ,loader,payloadValues}) => {
       .padStart(2, "0")}`;
   };
 
-
-
-  const handleResendOtp=()=>{
+  const handleResendOtp = () => {
     callApi({
       endPoint: "password/resend-otp/",
       method: METHODS.post,
       instanceType: INSTANCE.auth,
       payload: {
-      email: payloadValues.emial
+        email: payloadValues.email,
       },
     })
       .then((res) => {
         console.log(res, "res");
         toastMessages(res.data.message, successType);
-        setTimeLeft(5*60)
-        setResendTimer(false)
+        setTimeLeft(RESEND_OTP_TIMER);
+        setResendTimer(false);
       })
       .catch((err) => {
         console.log(err, "error");
         toastMessages(err?.response?.data?.message || DEFAULT_ERROR_MESSAGE);
       });
-  }
+  };
   return (
     <div className="flex items-center flex-col">
       <h2 className="font-medium text-base">Enter Code</h2>
@@ -89,7 +85,14 @@ const VerifyOtp = ({ handleSubmitOTP ,loader,payloadValues}) => {
       <span className="primary-text-color font-semibold">
         {formatTime(timeLeft)}
       </span>
-      <h3 className={resendTimer? "text-[var(--secondary-color)] font-medium text-base text-green-500" : "text-[var(--secondary-color)] font-medium text-base"} onClick={resendTimer ? handleResendOtp : undefined}>
+      <h3
+        className={
+          resendTimer
+            ? "text-[var(--secondary-color)] font-medium text-base text-green-500 cursor-pointer"
+            : "text-[var(--secondary-color)] font-medium text-base cursor-not-allowed"
+        }
+        onClick={resendTimer ? handleResendOtp : undefined}
+      >
         Resend Code
       </h3>
       <CommonButton

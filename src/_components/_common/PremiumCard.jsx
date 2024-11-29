@@ -34,7 +34,9 @@ const PremiumCard = ({
               <div
                 className="p-2.5 bg-white rounded-[10px] relative "
                 key={item.id}
-                onClick={() => handleItem(item.id)}
+                onClick={() =>
+                  page == "home" ? undefined : handleItem(item.id)
+                }
               >
                 <div className="flex absolute top-[10px] left-[10px] right-[10px] flex justify-between items-center whitespace-nowrap">
                   <Badge
@@ -68,46 +70,46 @@ const PremiumCard = ({
                   unit
                 </p>
                 {/* {page == "home" ? ( */}
-                  <div className="flex items-center justify-center gap-[10px] mb-[30px]">
-                    <a
-                      href="#"
-                      // onClick={addToWishList}
-                    >
-                      <Image
-                        className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
-                        src={heartImg}
-                        alt="heartLogo"
-                      />
-                    </a>
-                    <a
-                      href="#"
-                      //  onClick={addToCart}
-                    >
-                      <Image
-                        className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
-                        src={shoppingcartImg}
-                        alt="shoppingImg"
-                      />
-                    </a>
-                  </div>
+                <div className="flex items-center justify-center gap-[10px] mb-[30px]">
+                  <a
+                    href="#"
+                    // onClick={addToWishList}
+                  >
+                    <Image
+                      className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
+                      src={heartImg}
+                      alt="heartLogo"
+                    />
+                  </a>
+                  <a
+                    href="#"
+                    //  onClick={addToCart}
+                  >
+                    <Image
+                      className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
+                      src={shoppingcartImg}
+                      alt="shoppingImg"
+                    />
+                  </a>
+                </div>
                 {/* ) : ( */}
-                  <div className="flex gap-2.5 justify-between">
-                    <div>
-                      <ItemCounter
-                      // count={itemCount}
-                      // handleDecrease={handleDecrease}
-                      // handleIncrease={handleIncrease}
-                      />
-                    </div>
-                    <div className="flex gap-2.5">
-                      <span className="text-black flex items-center justify-center">
-                        {CART}
-                      </span>
-                      <span className="text-black flex items-center justify-center">
-                        {CART1}
-                      </span>
-                    </div>
+                <div className="flex gap-2.5 justify-between">
+                  <div>
+                    <ItemCounter
+                    // count={itemCount}
+                    // handleDecrease={handleDecrease}
+                    // handleIncrease={handleIncrease}
+                    />
                   </div>
+                  <div className="flex gap-2.5">
+                    <span className="text-black flex items-center justify-center">
+                      {CART}
+                    </span>
+                    <span className="text-black flex items-center justify-center">
+                      {CART1}
+                    </span>
+                  </div>
+                </div>
                 {/* )} */}
               </div>
             ))}
