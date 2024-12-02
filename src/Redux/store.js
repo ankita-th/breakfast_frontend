@@ -2,9 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import { productReducer } from "./productDetailsSlice";
 import { addToWishListReducer } from "./addToWishListSlice";
 
-
-
-
 const reducers = {
   product : productReducer,
   addToWishList : addToWishListReducer

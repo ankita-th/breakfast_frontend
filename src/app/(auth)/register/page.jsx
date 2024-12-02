@@ -15,14 +15,17 @@ import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { BUTTON_TYPE, DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 import { successType, toastMessages } from "@/_utils/toastMessage";
 import Button from "@/_components/_common/Button";
+import PasswordInputField from "@/_components/_common/PasswordInputField";
+import { PASSWORD_REGEX } from "@/_validations/authValidations";
+import { PASSWORD_PATTEN_ERROR } from "@/app/_constant/ErrorMessagesConstant";
 
 const Page = () => {
   const router = useRouter();
   const formConfig = useForm();
   const [loader, setLoader] = useState();
-  const { handleSubmit, setValue, watch } = formConfig;
+  const { handleSubmit, setValue, watch,register,setError,formState: { errors } } = formConfig;
   const [activeVerify, setActiveVerify] = useState(true);
-  const [showPassword, setShowPassword] = useState({
+  const [showPass, setShowPass] = useState({
     password: false,
     confirm_password: false,
   });
@@ -31,8 +34,6 @@ const Page = () => {
   const [verifyMessage, setVerifyMessage] = useState(false);
   const searchParams = useSearchParams();
   const key = searchParams.get("id");
-
-
 
   useEffect(() => {
     if (formDetails) {
@@ -60,8 +61,28 @@ const Page = () => {
     }
   }, [key]);
 
-  const toggleShowPassword = (type) => {
-    setShowPassword({ ...showPassword, [type]: !showPassword?.[type] });
+
+  const handleChangePassword = (value, type) => {
+    const password = watch("password");
+    const confirmPassword = watch("confirm_password");
+    if (type === "password" && password !== undefined) {
+      if (value === confirmPassword) {
+        if (confirmPassword.length) {
+          clearErrors("confirm_password");
+        }
+      } else {
+        if (confirmPassword?.length) {
+          setError("confirm_password", {
+            type: "manual",
+            message: "password and confirm password must match",
+          });
+        }
+      }
+    }
+  };
+
+  const handleToglePassword = (type) => {
+    setShowPass({ ...showPass, [type]: !showPass?.[type] });
   };
 
   const onSubmit = (values) => {
@@ -74,7 +95,7 @@ const Page = () => {
         payload: {
           phone_number: values.phone_no,
           password: values?.password,
-          confirm_password: values?.confirmpassword,
+          confirm_password: values?.confirm_password,
         },
       })
         .then((res) => {
@@ -141,16 +162,13 @@ const Page = () => {
               rules={requiredValidation["email"]}
               label={"Username or email address"}
             />
-            <Button
-              btnText={key !== null ? "✅VERIFIED" : "VERIFY"}
-              btnType="submit"
+            <span
               className={
                 "absolute right-0 top-1/2 transform -translate-y-1/2 text-green-500 underline rounded-none w-14 h-11 bg-gray-100 focus:bg-transparent mt-2"
               }
-              // className={activeVerify==false ?"cursor-not-allowed absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500 ":"absolute right-0 top-1/2 transform -translate-y-1/2 underline text-green-500"}
-              disabled={activeVerify ? false : true}
-              // btnClick={handleVerification}
-            />
+            >
+              {key !== null ? "✅VERIFIED" : "VERIFY"}
+            </span>
           </div>
 
           {verifyMessage && (
@@ -160,41 +178,72 @@ const Page = () => {
           )}
         </div>
 
-        <CommonTextInput
-          fieldName="phone_no"
-          formConfig={formConfig}
-          disabled={key === null}
-          isNumberOnly={true}
-          placeholder="E.g. 9472727712"
-          rules={requiredValidation["phone_no"]}
-          label="Phone Number"
-        />
-        <CommonTextInput
+        {key !== null && (
+          <div>
+            <CommonTextInput
+              fieldName="phone_no"
+              formConfig={formConfig}
+              disabled={key === null}
+              isNumberOnly={true}
+              placeholder="E.g. 9472727712"
+              rules={requiredValidation["phone_no"]}
+              label="Phone Number"
+            />
+            {/* <CommonTextInput
           fieldName="password"
           formConfig={formConfig}
           disabled={key === null}
           placeholder="********"
           rules={requiredValidation["password"]}
+          
           label="Your password"
           type={showPassword.password ? "text" : "password"}
           onIconClick={() => toggleShowPassword("password")}
           icon={showPassword.password ? CLOSED_EYE : OPEN_EYE}
-        />
-        <CommonTextInput
-          fieldName="confirmpassword"
-          formConfig={formConfig}
-          disabled={key === null}
-          placeholder="********"
-          rules={requiredValidation["confirmpassword"]}
-          label="Confirm Password"
-          type={showPassword.confirm_password ? "text" : "password"}
-          onIconClick={() => toggleShowPassword("confirm_password")}
-          icon={showPassword.confirm_password ? CLOSED_EYE : OPEN_EYE}
-        />
+        /> */}
+         <div className="label">Password</div>
+            <PasswordInputField
+              register={register("password", {
+                ...requiredValidation["password"],
+                pattern: {
+                  value: PASSWORD_REGEX,
+                  message: PASSWORD_PATTEN_ERROR,
+                },
+                onChange: (e) => {
+                  handleChangePassword(e.target.value, "password");
+                  setValue("password", e.target.value);
+                },
+              })}
+              type={showPass?.password ? "text" : "password"}
+              placeholder={"Enter your password"}
+              toggleType={() => handleToglePassword("password")}
+              icon={showPass?.password ? CLOSED_EYE : OPEN_EYE}
+              errors={errors?.["password"]?.message}
+            />
+            <div className="label">Confirm Password</div>
+            <PasswordInputField
+              register={register("confirm_password", {
+                ...requiredValidation["confirm_password"],
+                validate: (value) =>
+                  value === watch("password") ||
+                  "Password and confirm password must match",
+                onChange: (e) => {
+                  handleChangePassword(e.target.value, "confirm_password");
+                  setValue("confirm_password", e.target.value);
+                },
+              })}
+              type={showPass?.confirm_password ? "text" : "password"}
+              placeholder={"Confirm your password"}
+              toggleType={() => handleToglePassword("confirm_password")}
+              icon={showPass?.confirm_password ? CLOSED_EYE : OPEN_EYE}
+              errors={errors?.["confirm_password"]?.message}
+            />
+          </div>
+        )}
         <CommonButton
           type={BUTTON_TYPE.submit}
           className="auth-btn"
-          text="Register"
+          text={key !== null ? "Register" : "Verify your Email"}
           loader={loader}
           // disabled={key == null}
         />

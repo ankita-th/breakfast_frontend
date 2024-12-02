@@ -48,16 +48,19 @@ const Page = () => {
   const [basketDetails, setBasketDetails] = useState();
   console.log(productVariant, "productVariant");
   console.log(basketDetails, "basketDetails");
-  const date = new Date();
-  console.log(date, "date");
-  // Fri Nov 29 2024 17:47:21 GMT+0530
-  // const duration = moment.duration(endDate.diff(date));
-  const currentDate = moment(date).format("YYYY-MM-DD");
-  //   Start Date: Fri Nov 01 2024 00:00:00 GMT+0000
-  // End Date: Fri Nov 29 2024 00:00:00 GMT+0000
 
-  console.log(currentDate, "currentDate");
-
+  const getDuration = (newDate)=>{
+    console.log(newDate.slice(0,15),"newDate")
+    const date = new Date();
+    console.log(date, "date");
+    // Fri Nov 29 2024 17:47:21 GMT+0530
+    const duration = moment.duration(endDate.diff(date));
+    const currentDate = moment(date).format("YYYY-MM-DD");
+    //   Start Date: Fri Nov 01 2024 00:00:00 GMT+0000
+    // End Date: Fri Nov 29 2024 00:00:00 GMT+0000
+    console.log(currentDate, "currentDate");
+  }
+ 
   const [itemCount, setItemCount] = useState(0);
   const handleDecrease = () => {
     setItemCount((itemCount) => itemCount - 1);
@@ -482,7 +485,7 @@ const Page = () => {
                       <div className="flex gap-[15px] mt-[20px]">
                         <div className="text-center">
                           <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                            31
+                            31 {getDuration(item.offer.end_offer)}
                           </div>
                           <p className="text-[12px] text-[#828282] mt-[5px]">
                             {T.days}

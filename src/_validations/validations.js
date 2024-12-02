@@ -20,11 +20,16 @@ export const requiredValidation = {
   },
   phone_no: {
     required: "Phone no is required",
+    pattern: {
+      value: /^(?:46|0)[\d\s\-]{7,13}$/,
+      message: "Please enter a valid Swedish phone number",
+    },
   },
+  
   password: {
     required: "Password is required",
   },
-  confirmpassword:{
+  confirm_password:{
     required: "Confirm Password is required"
   },
  
