@@ -23,7 +23,14 @@ const Page = () => {
   const router = useRouter();
   const formConfig = useForm();
   const [loader, setLoader] = useState();
-  const { handleSubmit, setValue, watch,register,setError,formState: { errors } } = formConfig;
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    register,
+    setError,
+    formState: { errors },
+  } = formConfig;
   const [activeVerify, setActiveVerify] = useState(true);
   const [showPass, setShowPass] = useState({
     password: false,
@@ -60,7 +67,6 @@ const Page = () => {
         });
     }
   }, [key]);
-
 
   const handleChangePassword = (value, type) => {
     const password = watch("password");
@@ -201,7 +207,7 @@ const Page = () => {
           onIconClick={() => toggleShowPassword("password")}
           icon={showPassword.password ? CLOSED_EYE : OPEN_EYE}
         /> */}
-         <div className="label">Password</div>
+            <div className="label">Password</div>
             <PasswordInputField
               register={register("password", {
                 ...requiredValidation["password"],

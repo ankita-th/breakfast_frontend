@@ -1,8 +1,15 @@
 "use client";
 import { HEADER_NAV_OPTIONS } from "@/_constants/constant";
-import { CalenderImg, CallIcon, CartListIcon, CloudImg, DummyUser, WishListIcon } from "@/Assets/Icons/Svg";
-import { LOGO } from "@/Assets/Images";
-import { SwedenFlagIcon } from "@/Assets/SVGIcons";
+import {
+  CalenderImg,
+  CallIcon,
+  CartListIcon,
+  CloudImg,
+  DummyUser,
+  WishListIcon,
+} from "@/assets/Icons/Svg";
+import { LOGO } from "@/assets/Images";
+import { SwedenFlagIcon } from "@/assets/SVGIcons";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -12,7 +19,6 @@ const Header = ({}) => {
   const urlName = pathname.split("/")[1];
   const [profileStatus, setProfileStatus] = useState();
   const router = useRouter();
-
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -29,12 +35,12 @@ const Header = ({}) => {
 
   const handleLogin = () => {
     router.push("/login");
-  }
-  const handleLogout =()=>{
-    localStorage.removeItem("refresh_token")
-    localStorage.removeItem("token")
-    router.push("/login")
-  }
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("token");
+    router.push("/login");
+  };
   return (
     <div>
       <section className="p-4 w-full bg-[#F5F5F5] mob-dnone">
@@ -99,8 +105,8 @@ const Header = ({}) => {
               </div>
             </div>
           </div>
-        </div >
-      </section >
+        </div>
+      </section>
       <section>
         <nav className="bg-gray-900 text-white flex items-center justify-between px-6 py-4">
           <div className="max-w-screen-xl w-full px-4 mx-auto flex justify-between items-center">
@@ -117,11 +123,15 @@ const Header = ({}) => {
                     <a
                       href={`/${option.url}`}
                       key={option.name}
-                      className={urlName == option.url ? "text-green-500" : "hover:text-gray-300"}
+                      className={
+                        urlName == option.url
+                          ? "text-green-500"
+                          : "hover:text-gray-300"
+                      }
                     >
                       {option.name}
                     </a>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -133,7 +143,13 @@ const Header = ({}) => {
 
               <div className="flex items-center space-x-2">
                 <span>{DummyUser}</span>
-                <span onClick={profileStatus === "My Account" ? undefined : handleLogin}>{profileStatus}</span>
+                <span
+                  onClick={
+                    profileStatus === "My Account" ? undefined : handleLogin
+                  }
+                >
+                  {profileStatus}
+                </span>
               </div>
 
               <div className="flex items-center space-x-4">
@@ -149,15 +165,19 @@ const Header = ({}) => {
                     {itemQuantity}
                   </span> */}
                 </button>
-               {profileStatus === "My Account" && <div className="flex items-center space-x-2">
-                <span onClick={handleLogout}>Logout</span>
-              </div>}
+                {profileStatus === "My Account" && (
+                  <div className="flex items-center space-x-2">
+                    <span className="cursor-pointer" onClick={handleLogout}>
+                      Logout
+                    </span>
+                  </div>
+                )}
               </div>
-              </div>
-              </div>
+            </div>
+          </div>
         </nav>
       </section>
-    </div >
+    </div>
   );
 };
 

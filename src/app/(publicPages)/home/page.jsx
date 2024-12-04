@@ -23,6 +23,7 @@ import subtractImg from "../../../../public/images/Subtract.svg";
 import {
   ARRIVAL_CARDS,
   PREMIUM_CARD,
+  PRODUCT_LIST,
   SERVICE_CARD,
 } from "@/app/_constant/Constant";
 import PremiumCard from "@/_components/_common/PremiumCard";
@@ -37,30 +38,32 @@ import { useEffect, useState } from "react";
 import { setProductVariant } from "@/Redux/productDetailsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { DEFAULT_ERROR_MESSAGE, stripHtmlTags } from "@/_constants/constant";
-import { StarFilledIcon, StarIcon } from "@/Assets/Icons/Svg";
+import { StarFilledIcon, StarIcon } from "@/assets/Icons/Svg";
 import ExclusiveOfferBanner from "@/_components/_common/ExclusiveOfferBanner";
 import moment from "moment";
+import ProductCard from "@/_components/_common/Card/ProductCard";
 
 const Page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { productVariant } = useSelector((state) => state.product);
+  const [premiumProduct, setPremiumProduct] = useState(PRODUCT_LIST);
   const [basketDetails, setBasketDetails] = useState();
   console.log(productVariant, "productVariant");
   console.log(basketDetails, "basketDetails");
 
-  const getDuration = (newDate)=>{
-    console.log(newDate.slice(0,15),"newDate")
-    const date = new Date();
-    console.log(date, "date");
-    // Fri Nov 29 2024 17:47:21 GMT+0530
-    const duration = moment.duration(endDate.diff(date));
-    const currentDate = moment(date).format("YYYY-MM-DD");
-    //   Start Date: Fri Nov 01 2024 00:00:00 GMT+0000
-    // End Date: Fri Nov 29 2024 00:00:00 GMT+0000
-    console.log(currentDate, "currentDate");
-  }
- 
+  // const getDuration = (newDate)=>{
+  //   console.log(newDate.slice(0,15),"newDate")
+  //   const date = new Date();
+  //   console.log(date, "date");
+  //   // Fri Nov 29 2024 17:47:21 GMT+0530
+  //   const duration = moment.duration(endDate.diff(date));
+  //   const currentDate = moment(date).format("YYYY-MM-DD");
+  //   //   Start Date: Fri Nov 01 2024 00:00:00 GMT+0000
+  //   // End Date: Fri Nov 29 2024 00:00:00 GMT+0000
+  //   console.log(currentDate, "currentDate");
+  // }
+
   const [itemCount, setItemCount] = useState(0);
   const handleDecrease = () => {
     setItemCount((itemCount) => itemCount - 1);
@@ -123,12 +126,14 @@ const Page = () => {
     router.push("/products");
   };
 
+  console.log(premiumProduct, "premiumProduct");
+
   return (
     // <div className="hero-bg-img">
     <div>
       <div className="left-sidetext-pattern">
-        <section className="hero h-screen relative">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <section className="hero min-h-screen flex items-center justify-center">
+          <div>
             <div className="flex flex-col items-center py-10 px-6">
               <h2 className="mb-2 font-spartan text-[20px] text-black font-bold leading-[22.4px]">
                 {T.your_perfect_morning_start}
@@ -271,6 +276,7 @@ const Page = () => {
               </div>
             </div>
           </section>
+          {/* Premium Product Section */}
           <section className="premium_product_section">
             <div className="max-w-screen-xl w-full px-4 mx-auto">
               <div className="premium-product py-[60px]">
@@ -340,12 +346,24 @@ const Page = () => {
                 </div>
               </div>
             </div>
+            {/* Premium Product card */}
+            <div className="pt-[20px] px-12">
+              <div className="max-w-screen-xl w-full px-0 mx-auto">
+                <div className="grid grid-cols-4 grid-flow-col gap-4 text-black">
+                  {premiumProduct?.map((item, idx) => (
+                    <ProductCard key={idx} item={item} />
+                  ))}
+                </div>
+              </div>
+            </div>
+            {/* Premium Card */}
           </section>
-          <PremiumCard
-            PREMIUM_CARD_DATA={productVariant}
+          {/* Premium Card Section */}
+          {/* <PremiumCard
+            PREMIUM_CARD_DATA={premiumProduct}
             page="home"
             handleViewAll={handleViewAll}
-          />
+          /> */}
           {/* <PremiumCard
             PREMIUM_CARD_DATA={PREMIUM_CARD}
             itemCount={itemCount}
@@ -485,7 +503,7 @@ const Page = () => {
                       <div className="flex gap-[15px] mt-[20px]">
                         <div className="text-center">
                           <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                            31 {getDuration(item.offer.end_offer)}
+                            {/* 31 {getDuration(item.offer.end_offer)} */}
                           </div>
                           <p className="text-[12px] text-[#828282] mt-[5px]">
                             {T.days}
