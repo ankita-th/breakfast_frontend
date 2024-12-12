@@ -39,3 +39,6 @@ export const manageUserAuthorization = ({
     // localStorage.setItem("refreshToken", refreshToken);
   }
 };
+
+
+export const baseURL = "http://192.168.1.128:8005/"

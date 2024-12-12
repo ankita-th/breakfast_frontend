@@ -1,18 +1,35 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { productReducer } from "./productDetailsSlice";
 import { addToWishListReducer } from "./addToWishListSlice";
+import { addToBasketReducer } from "./addToBasketSlice";
+import storage from "redux-persist/lib/storage";
+import persistReducer from "redux-persist/es/persistReducer";
+import persistStore from "redux-persist/es/persistStore";
 
-const reducers = {
-  product : productReducer,
-  addToWishList : addToWishListReducer
-}
 
+const persistConfig = {
+  key: 'root', // The key used to store the Redux state
+  storage,     // LocalStorage will be used
+  whitelist: ['addToBasket'], // Define which reducers should be persisted
+};
+
+
+
+const rootReducer = combineReducers({
+  product: productReducer,
+  addToWishList: addToWishListReducer,
+  addToBasket: addToBasketReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-    reducer: reducers,
+    reducer: persistedReducer,
     devTools: true,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
       }),
   });
+
+  export const persistor = persistStore(store);

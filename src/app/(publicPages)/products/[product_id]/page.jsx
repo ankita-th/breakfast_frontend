@@ -12,23 +12,22 @@ import { INSTANCE } from "@/app/_constant/UrlConstant";
 import { toastMessages } from "@/_utils/toastMessage";
 import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
+import SimpleSlider from "@/_components/_common/Slider";
 // import CommonAutoComplete from "@/_components/_common/CommonAutoComplete";
 
 const Page = () => {
   const pathname = usePathname();
   const product_id = pathname.split("/")[2];
   const [productListing, setProductListing] = useState();
-
+  console.log(productListing, "productListing");
+  console.log(product_id, "product_id");
 
   useEffect(() => {
     if (product_id) {
       callApi({
-        endPoint: `/products/${product_id}`,
+        endPoint: `/productslist/${product_id}`,
         method: METHODS.get,
         instanceType: INSTANCE.authorize,
-        params: {
-          id: "3",
-        },
       })
         .then((res) => {
           setProductListing(res.data);
@@ -42,7 +41,9 @@ const Page = () => {
     <div className="p-8 m-8">
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="lg:w-1/2">
-          <CategoryCarousel image_url={productListing?.images} />
+          <SimpleSlider
+           image_url={productListing?.[0]?.product_images || []} 
+          />
         </div>
         <div className="lg:w-1/2">
           <div className="flex gap-2">

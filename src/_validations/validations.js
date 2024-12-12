@@ -25,12 +25,14 @@ export const requiredValidation = {
       message: "Please enter a valid Swedish phone number",
     },
   },
-  
   password: {
     required: "Password is required",
   },
   confirm_password:{
     required: "Confirm Password is required"
   },
- 
+  old_password:{
+    required: "Old Password is required"
+  }
 };
+

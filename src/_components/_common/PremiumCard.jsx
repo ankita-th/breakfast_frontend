@@ -17,8 +17,6 @@ const PremiumCard = ({
   handleItem,
   handleViewAll,
 }) => {
- 
-
   return (
     <div>
       <section className="pt-[20px]">
@@ -45,7 +43,7 @@ const PremiumCard = ({
                     bgColor={"gradient-to-r from-[#92C64E] to-[#4BAF50]"}
                   />
                   <Badge
-                    badgeName={"Delivery in two days"}
+                    badgeName={item.delivery_day}
                     textColor={"brown"}
                     bgColor={"orange"}
                   />

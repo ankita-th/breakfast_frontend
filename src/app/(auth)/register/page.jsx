@@ -18,6 +18,7 @@ import Button from "@/_components/_common/Button";
 import PasswordInputField from "@/_components/_common/PasswordInputField";
 import { PASSWORD_REGEX } from "@/_validations/authValidations";
 import { PASSWORD_PATTEN_ERROR } from "@/app/_constant/ErrorMessagesConstant";
+import { PENDING_USER } from "@/_Api-Handlers/APIUrls";
 
 const Page = () => {
   const router = useRouter();
@@ -92,6 +93,7 @@ const Page = () => {
   };
 
   const onSubmit = (values) => {
+    setLoader(true);
     setTimeout(setActiveVerify(false), 10000);
     if (key) {
       callApi({
@@ -108,6 +110,7 @@ const Page = () => {
           localStorage.setItem("token", res.data.data.tokens.access);
           localStorage.setItem("refresh_token", res.data.data.tokens.refresh);
           toastMessages("User logged in successfully", successType);
+          setLoader(false);
           router.push("/home");
         })
         .catch((err) => {
@@ -116,16 +119,18 @@ const Page = () => {
         });
     } else {
       callApi({
-        endPoint: "/pendinguser/",
+        endPoint: PENDING_USER,
         method: METHODS.post,
         instanceType: INSTANCE.auth,
         payload: values,
       })
         .then((res) => {
           setVerifyMessage(true);
+          setLoader(false);
           toastMessages(res.data.message, successType);
         })
         .catch((err) => {
+          setLoader(false);
           toastMessages(err?.response?.data?.message || DEFAULT_ERROR_MESSAGE);
         });
     }
@@ -168,13 +173,13 @@ const Page = () => {
               rules={requiredValidation["email"]}
               label={"Username or email address"}
             />
-            <span
+            {/* <span
               className={
                 "absolute right-0 top-1/2 transform -translate-y-1/2 text-green-500 underline rounded-none w-14 h-11 bg-gray-100 focus:bg-transparent mt-2"
               }
             >
               {key !== null ? "✅VERIFIED" : "VERIFY"}
-            </span>
+            </span> */}
           </div>
 
           {verifyMessage && (

@@ -1,5 +1,12 @@
 "use client";
-import { HEADER_NAV_OPTIONS } from "@/_constants/constant";
+import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
+import { CART_LIST, WISHLIST } from "@/_Api-Handlers/APIUrls";
+import {
+  DEFAULT_ERROR_MESSAGE,
+  HEADER_NAV_OPTIONS,
+} from "@/_constants/constant";
+import { successType, toastMessages } from "@/_utils/toastMessage";
+import { INSTANCE } from "@/app/_constant/UrlConstant";
 import {
   CalenderImg,
   CallIcon,
@@ -10,20 +17,53 @@ import {
 } from "@/assets/Icons/Svg";
 import { LOGO } from "@/assets/Images";
 import { SwedenFlagIcon } from "@/assets/SVGIcons";
+import { setWishList } from "@/Redux/addToWishListSlice";
+import moment from "moment";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const Header = ({}) => {
+const Header = () => {
   const pathname = usePathname();
+  const dispatch = useDispatch();
+  const { wishList } = useSelector((state) => state.addToWishList);
   const urlName = pathname.split("/")[1];
   const [profileStatus, setProfileStatus] = useState();
   const router = useRouter();
-
+  const date = new Date();
+  const newDate = moment(date, 'ddd MMM DD YYYY HH:mm:ss [GMT]Z').format('MMMM DD, YYYY hh:mm A');
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       setProfileStatus("My Account");
+      callApi({
+        endPoint: WISHLIST,
+        method: METHODS.get,
+        instanceType: INSTANCE.authorize,
+      })
+        .then((res) => {
+          console.log(res.data.products, "dataInWishList");
+          dispatch(setWishList(res.data.products));
+          toastMessages(res.data.message, successType);
+        })
+        .catch((err) => {
+          toastMessages(err?.response?.data?.detail || DEFAULT_ERROR_MESSAGE);
+        });
+        callApi({
+          endPoint: CART_LIST,
+          method: METHODS.get,
+          instanceType: INSTANCE.authorize,
+        })
+          .then((res) => {
+            console.log(res.data.products, "dataInWishList");
+            dispatch(setWishList(res.data.products));
+            toastMessages(res.data.message, successType);
+          })
+          .catch((err) => {
+            toastMessages(err?.response?.data?.detail || DEFAULT_ERROR_MESSAGE);
+          });
     } else {
       setProfileStatus("Login");
     }
@@ -34,12 +74,24 @@ const Header = ({}) => {
   };
 
   const handleLogin = () => {
+    console.log("login");
     router.push("/login");
   };
   const handleLogout = () => {
+    console.log("logout");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("token");
     router.push("/login");
+  };
+
+  const handleMyAccount = () => {
+    console.log("my account");
+    router.push("/user-profile");
+  };
+
+  const handleWishList = () => {
+    console.log("wish list");
+    router.push("/favourites");
   };
   return (
     <div>
@@ -49,7 +101,7 @@ const Header = ({}) => {
             <div className="head-calender-sec flex gap-2 text-base font-normal">
               {CalenderImg}
               <span className="text-[13px] text-black font-semibold">
-                October 21,2024 11:09 AM
+                {newDate}
               </span>
             </div>
             <div>
@@ -145,7 +197,7 @@ const Header = ({}) => {
                 <span>{DummyUser}</span>
                 <span
                   onClick={
-                    profileStatus === "My Account" ? undefined : handleLogin
+                    profileStatus === "My Account" ? handleMyAccount : handleLogin
                   }
                 >
                   {profileStatus}
@@ -154,10 +206,10 @@ const Header = ({}) => {
 
               <div className="flex items-center space-x-4">
                 <button className="relative">
-                  <span>{WishListIcon}</span>
-                  {/* <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {wishListQuantity}
-                  </span> */}
+                  <span onClick={handleWishList}>{WishListIcon}</span>
+                  <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {wishList?.length}
+                  </span>
                 </button>
                 <button className="relative">
                   <span>{CartListIcon}</span>

@@ -45,7 +45,7 @@ export const callApi = async ({
       }
 
       case METHODS.delete: {
-        return await API_INSTANCE.delete(endPoint);
+        return await API_INSTANCE.delete(endPoint, { ...payload });
       }
 
       default:

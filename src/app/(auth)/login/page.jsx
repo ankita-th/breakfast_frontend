@@ -15,7 +15,7 @@ import AuthFormTitleSection from "@/_components/AuthFormTitleSection";
 import { INSTANCE, URLS } from "@/app/_constant/UrlConstant";
 import { LoginValidations } from "@/_validations/authValidations";
 
-const Login = () => {
+const Login = ({setShowLoginModal}) => {
   const router = useRouter();
   const formConfig = useForm();
   const [loader, setLoader] = useState(false);
@@ -27,16 +27,16 @@ const Login = () => {
   };
 
 
-
   useEffect(()=>{
     const passwrd =  localStorage.getItem("rememberedPassword")
     const email =  localStorage.getItem("rememberedEmail")
     setValue("user_name",email)
     setValue("password",passwrd)
-    if(passwrd){
+    if(passwrd || email){
       setRememberMe(true)
     }
   },[])
+
   const onSubmit = (values) => {
     setLoader(true);
     // login(values)
@@ -61,6 +61,9 @@ const Login = () => {
         localStorage.setItem("refresh_token", res.data.refresh);
         setLoader(false);
         toastMessages("User logged in successfully", successType);
+        if(setShowLoginModal){
+          setShowLoginModal(false)
+        }
         router.push("/home");
       })
       .catch((err) => {

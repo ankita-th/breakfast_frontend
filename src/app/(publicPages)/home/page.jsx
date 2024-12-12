@@ -31,53 +31,80 @@ import ItemCounter from "@/_components/_common/ItemCounter";
 import { T } from "@/_utils/LanguageTranslator";
 import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { INSTANCE } from "@/app/_constant/UrlConstant";
-import { toastMessages } from "@/_utils/toastMessage";
+import { successType, toastMessages } from "@/_utils/toastMessage";
 import Button from "@/_components/_common/Button";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { setProductVariant } from "@/Redux/productDetailsSlice";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DEFAULT_ERROR_MESSAGE, stripHtmlTags } from "@/_constants/constant";
-import { StarFilledIcon, StarIcon } from "@/assets/Icons/Svg";
+// import { StarFilledIcon, StarIcon } from "@/assets/Icons/Svg";
 import ExclusiveOfferBanner from "@/_components/_common/ExclusiveOfferBanner";
 import moment from "moment";
 import ProductCard from "@/_components/_common/Card/ProductCard";
+import { setWishList } from "@/Redux/addToWishListSlice";
+import breadImg from "../../../../public/images/breadimg.jpg";
+import {
+  BASKETS,
+  NEW_ARRIVAL_PRODUCTS,
+  PREMIUM_PRODUCTS,
+  WISHLIST,
+} from "@/_Api-Handlers/APIUrls";
+import { setSelectedBasket } from "@/Redux/addToBasketSlice";
+import AddLoginModal from "@/_components/_common/Modals/AddLoginModal";
+import { StarFilledIcon, StarIcon } from "@/Assets/Icons/Svg";
+import SimpleSlider, {
+  CarouselDefault,
+  CarouselWithContent,
+} from "@/_components/_common/Slider";
+import { baseURL } from "@/_utils/helpers";
+import Slider from "react-slick";
+// import Slider from "react-slick";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+
+// import BasketSection from "./BasketSection";
 
 const Page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { productVariant } = useSelector((state) => state.product);
-  const [premiumProduct, setPremiumProduct] = useState(PRODUCT_LIST);
   const [basketDetails, setBasketDetails] = useState();
-  console.log(productVariant, "productVariant");
+  const [premiumProducts, setPremiumProducts] = useState();
+  const [newArrivals, setNewArrivals] = useState();
+  const [like, setLike] = useState(false);
+  const [selectedId, setSelectedId] = useState();
+  const [itemCount, setItemCount] = useState(0);
+  const { selectedBasket } = useSelector((state) => state.addToBasket);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  // const token = localStorage.getItem("token");
+  // console.log(token, "token");
+  console.log(selectedBasket, "selectedBasket");
   console.log(basketDetails, "basketDetails");
+  console.log(premiumProducts, "premiumProducts");
 
-  // const getDuration = (newDate)=>{
-  //   console.log(newDate.slice(0,15),"newDate")
-  //   const date = new Date();
-  //   console.log(date, "date");
-  //   // Fri Nov 29 2024 17:47:21 GMT+0530
+  // const getDuration = (newDate) => {
+  //   const endDate = moment(newDate.slice(0, 10));
   //   const duration = moment.duration(endDate.diff(date));
-  //   const currentDate = moment(date).format("YYYY-MM-DD");
+  //   console.log(endDate, "endDate");
+  //   console.log(date, "date");
+  //   console.log(duration, "duration");
   //   //   Start Date: Fri Nov 01 2024 00:00:00 GMT+0000
   //   // End Date: Fri Nov 29 2024 00:00:00 GMT+0000
-  //   console.log(currentDate, "currentDate");
-  // }
+  // };
 
-  const [itemCount, setItemCount] = useState(0);
-  const handleDecrease = () => {
-    setItemCount((itemCount) => itemCount - 1);
-  };
-  const handleIncrease = () => {
-    setItemCount((itemCount) => itemCount + 1);
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
   useEffect(() => {
     callApi({
-      endPoint: "/baskets",
+      endPoint: BASKETS,
       method: METHODS.get,
       params: {
-        page: "1",
+        page: 1,
       },
       instanceType: INSTANCE.authorize,
     })
@@ -89,13 +116,20 @@ const Page = () => {
         console.log(err, "error");
         toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
       });
+  }, []);
+
+  useEffect(() => {
     callApi({
-      endPoint: "/categories",
+      endPoint: PREMIUM_PRODUCTS,
       method: METHODS.get,
+      // params: {
+      //   page: "1",
+      // },
       instanceType: INSTANCE.authorize,
     })
       .then((res) => {
-        console.log(res, "res");
+        console.log(res.data.results, "premium_products");
+        setPremiumProducts(res.data.results);
       })
       .catch((err) => {
         console.log(err, "error");
@@ -105,16 +139,16 @@ const Page = () => {
 
   useEffect(() => {
     callApi({
-      endPoint: "/products",
+      endPoint: NEW_ARRIVAL_PRODUCTS,
       method: METHODS.get,
-      params: {
-        page: "1",
-      },
+      // params: {
+      //   page: "1",
+      // },
       instanceType: INSTANCE.authorize,
     })
       .then((res) => {
-        console.log(res.data, "res");
-        dispatch(setProductVariant(res.data.results));
+        console.log(res.data.results, "arrival_goods");
+        setNewArrivals(res.data.results);
       })
       .catch((err) => {
         console.log(err, "error");
@@ -125,12 +159,79 @@ const Page = () => {
   const handleViewAll = () => {
     router.push("/products");
   };
+  const handleDecrease = () => {
+    setItemCount((itemCount) => itemCount - 1);
+  };
+  const handleIncrease = () => {
+    setItemCount((itemCount) => itemCount + 1);
+  };
+  const addToWishlist = (e, id, status) => {
+    console.log(status, "status");
+    console.log(id, "iddd");
+    e.stopPropagation();
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setShowLoginModal(true);
+    } else {
+      setSelectedId(id);
+      setLike(!like);
+      if (!like && status === false) {
+        callApi({
+          endPoint: WISHLIST,
+          method: METHODS.post,
+          instanceType: INSTANCE.authorize,
+          payload: {
+            product_id: id,
+          },
+        })
+          .then((res) => {
+            console.log(res, "res");
+            dispatch(setWishList(res.data.products));
+            toastMessages("Added To Wishlist", successType);
+          })
+          .catch((err) => {
+            // toastMessages(
+            //   err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
+            // );
+          });
+      } else {
+        callApi({
+          endPoint: `wishlist/${id}/delete/`,
+          method: METHODS.delete,
+          instanceType: INSTANCE.authorize,
+        })
+          .then((res) => {
+            toastMessages(res.data.message, successType);
+          })
+          .catch((err) => {
+            console.log(err, "eror");
+            toastMessages(
+              err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
+            );
+          });
+      }
+    }
+  };
 
-  console.log(premiumProduct, "premiumProduct");
+  const handleBasket = (item) => {
+    console.log(item, "item");
+    dispatch(setSelectedBasket(item));
+  };
+
+  console.log(selectedBasket, "selectedBasket");
+  console.log(basketDetails, "basketDetails");
+  const handleChoose = () => {
+    console.log("choose");
+    // if(selectedBasket.length === 0 && basketDetails.length > 0){
+    //   setSelectedBasket(basketDetails[0]))
+    //   console.log("here")
+    // }
+
+    router.push("/products");
+  };
 
   return (
-    // <div className="hero-bg-img">
-    <div>
+    <div className="hero-bg-img">
       <div className="left-sidetext-pattern">
         <section className="hero min-h-screen flex items-center justify-center">
           <div>
@@ -346,221 +447,200 @@ const Page = () => {
                 </div>
               </div>
             </div>
-            {/* Premium Product card */}
             <div className="pt-[20px] px-12">
               <div className="max-w-screen-xl w-full px-0 mx-auto">
                 <div className="grid grid-cols-4 grid-flow-col gap-4 text-black">
-                  {premiumProduct?.map((item, idx) => (
-                    <ProductCard key={idx} item={item} />
+                  {premiumProducts?.map((item, idx) => (
+                    <Fragment key={idx}>
+                      <ProductCard
+                        page={"home"}
+                        item={item}
+                        addToWishlist={addToWishlist}
+                        like={like}
+                        selectedId={selectedId}
+                      />
+                    </Fragment>
                   ))}
                 </div>
               </div>
             </div>
-            {/* Premium Card */}
           </section>
-          {/* Premium Card Section */}
-          {/* <PremiumCard
-            PREMIUM_CARD_DATA={premiumProduct}
-            page="home"
-            handleViewAll={handleViewAll}
-          /> */}
-          {/* <PremiumCard
-            PREMIUM_CARD_DATA={PREMIUM_CARD}
-            itemCount={itemCount}
-            handleDecrease={handleDecrease}
-            handleIncrease={handleIncrease}
-            page="home"
-            handleViewAll={handleViewAll}
-          /> */}
         </div>
-        {/* {basketDetails?.map((item, idx) => {
-          item.offer !== null && (
-            <section className="healthy-breakfast py-[60px]">
-              <div className="max-w-screen-xl w-full px-4 mx-auto">
-                <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
-                  <div className=" max-w-[400px] mx-auto ">
-                    <h2 className="text-[24px] font-bold text-black ">
-                      {T.healthy_breakfast_baskets}
-                    </h2>
 
-                    <p className="text-[#55B250] font-bold text-[20px]  mt-[10px]">
-                      {item?.offer_price}
-                    </p>
-
-                    <p className="text-[#828282] text-[15px]  mt-[10px]">
-                      {T.bf_decription}
-                    </p>
-                    <div className="flex items-center gap-[10px] mt-[20px]">
-                      <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
-                        <span className="text-[12px]">
-                          <Image
-                            className="w-[16px] h-[16px]"
-                            src={gradientclockImg}
-                            alt="gradientImg"
-                          />
-                        </span>
-                        <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
-                          {T.grab_the_offer}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-[15px] mt-[20px]">
-                      <div className="text-center">
-                        <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                          31
-                        </div>
-                        <p className="text-[12px] text-[#828282] mt-[5px]">
-                          {T.days}
-                        </p>
-                      </div>
-                      <div className="text-center">
-                        <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                          12
-                        </div>
-                        <p className="text-[12px] text-[#828282] mt-[5px]">
-                          {T.hours}
-                        </p>
-                      </div>
-                      <div className="text-center">
-                        <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                          10
-                        </div>
-                        <p className="text-[12px] text-[#828282] mt-[5px]">
-                          {T.mins}
-                        </p>
-                      </div>
-                      <div className="text-center">
-                        <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                          35
-                        </div>
-                        <p className="text-[12px] text-[#828282] mt-[5px]">
-                          {T.secs}
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      btnType="button"
-                      className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
-                      btnText={T.add_to_cart}
-                      icon={
+        <Slider {...settings}>
+          <section className="healthy-breakfast py-[60px]">
+            <div className="max-w-screen-xl w-full px-4 mx-auto">
+              <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
+                <div className=" max-w-[400px] mx-auto ">
+                  <h2 className="text-[24px] font-bold text-black ">
+                    {T.healthy_breakfast_baskets}
+                  </h2>
+                  <p className="text-[#55B250] font-bold text-[20px]  mt-[10px]"></p>
+                  <p className="text-[#828282] text-[15px]  mt-[10px]">
+                    {T.bf_decription}
+                  </p>
+                  <div className="flex items-center gap-[10px] mt-[20px]">
+                    <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
+                      <span className="text-[12px]">
                         <Image
-                          className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
-                          src={arrowImg}
-                          alt="arrowImg"
+                          className="w-[16px] h-[16px]"
+                          src={gradientclockImg}
+                          alt="gradientImg"
                         />
-                      }
-                    />
+                      </span>
+                      <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
+                        {T.grab_the_offer}
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <Image
-                      className="max-w-[450px] w-full mx-auto"
-                      src={breakfastHeroImg}
-                      alt="breakfastImg"
-                    />
+
+                  <div className="flex gap-[15px] mt-[20px]">
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        31
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.days}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        12
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.hours}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        10
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.mins}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        35
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.secs}
+                      </p>
+                    </div>
                   </div>
+                  <Button
+                    btnType="button"
+                    className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
+                    btnText={T.add_to_cart}
+                    icon={
+                      <Image
+                        className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
+                        src={arrowImg}
+                        alt="arrowImg"
+                      />
+                    }
+                  />
+                </div>
+                <div>
+                  <Image
+                    className="max-w-[450px] w-full mx-auto"
+                    src={breakfastHeroImg}
+                    alt="breakfastImg"
+                  />
                 </div>
               </div>
-            </section>
-          );
-        })} */}
-
-        {basketDetails?.map((item, idx) => {
-          if (item.offer !== null) {
-            return (
-              <section key={idx} className="healthy-breakfast py-[60px]">
-                <div className="max-w-screen-xl w-full px-4 mx-auto">
-                  <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
-                    <div className="max-w-[400px] mx-auto">
-                      <h2 className="text-[24px] font-bold text-black">
-                        {T.healthy_breakfast_baskets}
-                      </h2>
-
-                      <p className="text-[#55B250] font-bold text-[20px] mt-[10px]">
-                        ${item?.offer.offer_price}
-                      </p>
-
-                      <p className="text-[#828282] text-[15px] mt-[10px]">
-                        {stripHtmlTags(item.content)}
-                        {/* {T.bf_decription} */}
-                      </p>
-
-                      <div className="flex items-center gap-[10px] mt-[20px]">
-                        <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
-                          <span className="text-[12px]">
-                            <Image
-                              className="w-[16px] h-[16px]"
-                              src={gradientclockImg}
-                              alt="gradientImg"
-                            />
-                          </span>
-                          <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
-                            {T.grab_the_offer}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-[15px] mt-[20px]">
-                        <div className="text-center">
-                          <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                            {/* 31 {getDuration(item.offer.end_offer)} */}
-                          </div>
-                          <p className="text-[12px] text-[#828282] mt-[5px]">
-                            {T.days}
-                          </p>
-                        </div>
-                        <div className="text-center">
-                          <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                            12
-                          </div>
-                          <p className="text-[12px] text-[#828282] mt-[5px]">
-                            {T.hours}
-                          </p>
-                        </div>
-                        <div className="text-center">
-                          <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                            10
-                          </div>
-                          <p className="text-[12px] text-[#828282] mt-[5px]">
-                            {T.mins}
-                          </p>
-                        </div>
-                        <div className="text-center">
-                          <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                            35
-                          </div>
-                          <p className="text-[12px] text-[#828282] mt-[5px]">
-                            {T.secs}
-                          </p>
-                        </div>
-                      </div>
-
-                      <Button
-                        btnType="button"
-                        className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
-                        btnText={T.add_to_cart}
-                        icon={
-                          <Image
-                            className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
-                            src={arrowImg}
-                            alt="arrowImg"
-                          />
-                        }
-                      />
-                    </div>
-                    <div>
-                      <Image
-                        className="max-w-[450px] w-full mx-auto"
-                        src={breakfastHeroImg}
-                        alt="breakfastImg"
-                      />
+            </div>
+          </section>
+          <section className="healthy-breakfast py-[60px]">
+            <div className="max-w-screen-xl w-full px-4 mx-auto">
+              <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
+                <div className=" max-w-[400px] mx-auto ">
+                  <h2 className="text-[24px] font-bold text-black ">
+                    {T.healthy_breakfast_baskets}
+                  </h2>
+                  <p className="text-[#55B250] font-bold text-[20px]  mt-[10px]"></p>
+                  <p className="text-[#828282] text-[15px]  mt-[10px]">
+                    {T.bf_decription}
+                  </p>
+                  <div className="flex items-center gap-[10px] mt-[20px]">
+                    <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
+                      <span className="text-[12px]">
+                        <Image
+                          className="w-[16px] h-[16px]"
+                          src={gradientclockImg}
+                          alt="gradientImg"
+                        />
+                      </span>
+                      <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
+                        {T.grab_the_offer}
+                      </span>
                     </div>
                   </div>
+
+                  <div className="flex gap-[15px] mt-[20px]">
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        31
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.days}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        12
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.hours}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        10
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.mins}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                        35
+                      </div>
+                      <p className="text-[12px] text-[#828282] mt-[5px]">
+                        {T.secs}
+                      </p>
+                    </div>
+                  </div>
+                  <Button
+                    btnType="button"
+                    className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
+                    btnText={T.add_to_cart}
+                    icon={
+                      <Image
+                        className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
+                        src={arrowImg}
+                        alt="arrowImg"
+                      />
+                    }
+                  />
                 </div>
-              </section>
-            );
-          }
-        })}
+                <div>
+                  <Image
+                    className="max-w-[450px] w-full mx-auto"
+                    src={breakfastHeroImg}
+                    alt="breakfastImg"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        </Slider>
+
+        {/* {basketDetails?.map((item,idx)=>(
+           <CategoryCarousel image_url={item?.offer?.featured_image} key={idx} />
+
+
+        ))} */}
 
         <section className="py-[60px]">
           <div className="max-w-screen-xl w-full px-4 mx-auto">
@@ -598,81 +678,110 @@ const Page = () => {
             </div>
           </div>
         </section>
-        {/* <section>
-          <div className="max-w-screen-xl w-full px-4 mx-auto">
-            <div className="premium-product py-[60px]">
-              <div>
-                <h4 className="text-center text-[45px] text-black font-bold">
-                  <b>{T.choose} </b> {T.premium_product}
-                </h4>
-                <Image
-                  className="w-[153px] mx-auto"
-                  src={headinglineImg}
-                  alt="headingImg"
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="grid grid-cols-2">
+              {/* Left Content */}
+              <div className="p-12 flex flex-col justify-center">
+                <div className="space-y-2 mb-8">
+                  <h3 className="text-lg font-medium text-gray-600">
+                    Explore Our Handcrafted
+                  </h3>
+                  <h2 className="text-4xl font-bold">Breakfast Baskets</h2>
+                </div>
+
+                <div className="flex flex-col space-y-4 mb-12">
+                  {basketDetails?.map((basket, idx) => (
+                    <span
+                      className={
+                        selectedBasket?.id === basket?.id
+                          ? "w-full text-left py-2 text-green-600 font-medium"
+                          : "w-full text-left py-2 text-gray-500 hover:text-gray-700"
+                      }
+                    >
+                      {idx + 1}. {basket?.basket_name}
+                    </span>
+                  ))}
+                </div>
+                <div className="mb-8">
+                  <h2 className="text-3xl font-bold mb-4">
+                    {selectedBasket?.basket_name ||
+                      basketDetails?.[0]?.basket_name ||
+                      "Big Basket"}
+                  </h2>
+                  <div className="text-green-600 text-2xl font-bold mb-4">
+                    `$
+                    {selectedBasket?.product_price ||
+                      basketDetails?.[0]?.product_price ||
+                      "0.00"}
+                    `
+                  </div>
+                  <p className="text-gray-600 leading-relaxed">
+                    {stripHtmlTags(selectedBasket?.content)}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4 mb-8">
+                  <span className="text-sm text-gray-500">Available Space</span>
+                  <span className="w-8 h-8 rounded-full bg-green-100 text-green-600 font-medium flex items-center justify-center">
+                    {selectedBasket?.space_left ||
+                      basketDetails?.[0]?.space_left ||
+                      "4"}
+                  </span>
+                </div>
+                <Button
+                  className="w-fit px-8 py-3 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition-colors"
+                  btnClick={handleChoose}
+                  btnText={T.choose}
                 />
               </div>
-              <div>
-                <ul className="flex gap-[30px] justify-center mt-[40px]">
-                  <li className="flex flex-col justify-center items-center">
-                    <Image
-                      className="w-[63px] bg-[#EAEAEA] p-[13px] h-[63px] object-contain rounded-full"
-                      src={vegetable1Img}
-                      alt="vegImg"
-                    />
-                    <h5 className="text-[15px] font-bold text-black mt-[12px]">
-                      {T.vegetables}
-                    </h5>
-                  </li>
-                  <li className="flex flex-col justify-center items-center">
-                    <Image
-                      className="w-[63px] bg-[#EAEAEA] p-[13px] h-[63px] object-contain rounded-full"
-                      src={vegetable2Img}
-                      alt="vegImg"
-                    />
-                    <h5 className="text-[15px] font-bold  text-black mt-[12px]">
-                      {T.fruits}
-                    </h5>
-                  </li>
-                  <li className="flex flex-col justify-center items-center">
-                    <Image
-                      className="w-[63px] bg-[#EAEAEA] p-[13px] h-[63px] object-contain rounded-full"
-                      src={vegetable3Img}
-                      alt="vegImg"
-                    />
-                    <h5 className="text-[15px] font-bold  text-black mt-[12px]">
-                      {T.dairy}
-                    </h5>
-                  </li>
-                  <li className="flex flex-col justify-center items-center">
-                    <Image
-                      className="w-[63px] bg-[#EAEAEA] p-[13px] h-[63px] object-contain rounded-full"
-                      src={vegetable4Img}
-                      alt="vegImg"
-                    />
-                    <h5 className="text-[15px] font-bold text-black mt-[12px]">
-                      {T.breads}
-                    </h5>
-                  </li>
-                  <li className="flex flex-col justify-center items-center">
-                    <Image
-                      className="w-[63px] bg-[#EAEAEA] p-[13px] h-[63px] object-contain rounded-full"
-                      src={vegetable5Img}
-                      alt="vegImg"
-                    />
-                    <h5 className="text-[15px] font-bold  text-black mt-[12px]">
-                      {T.drinks}
-                    </h5>
-                  </li>
-                </ul>
+
+              {/* Right Content */}
+              <div className="relative flex items-center justify-center p-12">
+                <div className="w-[500px] h-[500px] relative">
+                  <img
+                    // src={
+                    //   selectedBasket?.featured_image
+                    //     ? `${baseURL}${selectedBasket?.featured_image}`
+                    //     : `${baseURL}${basketDetails[1]?.featured_image}`
+                    // }
+                    src={
+                      selectedBasket?.featured_image
+                        ? `${baseURL}${selectedBasket?.featured_image}`
+                        : basketDetails && basketDetails[1]
+                        ? `${baseURL}${basketDetails[1].featured_image}`
+                        : "/images/basket.png" // Add a default image path
+                    }
+                    alt="Gourmet Breakfast Basket"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
               </div>
             </div>
+            {/* Thumbnail Navigation */}
+            {basketDetails?.map((item, idx) => (
+              <div className="bg-gray-50 p-6">
+                <div className="flex justify-end items-center gap-4">
+                  <button className="w-16 h-16 rounded-lg overflow-hidden border-2 border-transparent hover:border-green-600 transition-colors">
+                    <img
+                      src={
+                        item?.featured_image
+                          ? `${baseURL}${item?.featured_image}`
+                          : "/images/basket.png"
+                      }
+                      alt="Basket 1"
+                      className="w-full h-full object-cover"
+                      onClick={() => handleBasket(item)}
+                    />
+                  </button>
+                </div>
+              </div>
+            ))}
+            <button className="ml-4 px-8 py-3 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition-colors">
+              Next
+            </button>
           </div>
-        </section>
-        <PremiumCard
-          PREMIUM_CARD_DATA={productVariant}
-          page="home"
-          handleViewAll={handleViewAll}
-        /> */}
+        </div>
       </div>
       <section>
         <div className="max-w-screen-xl w-full px-4 mx-auto">
@@ -687,27 +796,35 @@ const Page = () => {
             />
           </div>
           <div className="grid grid-cols-2 gap-6 mt-20">
-            {ARRIVAL_CARDS.map((item, index) => {
+            {newArrivals?.map((item, index) => {
+              console.log(item, "iitemm");
               return (
                 <div className="pl-[200px] mb-10" key={index}>
                   <div className="bg-white rounded-lg shadow-md p-4 w-full relative pl-[120px]">
-                    <Image
-                      src={item.logo_img}
+                    <img
+                      // src={item.product_images == [] ?   "/images/breadimg.jpg" :  `${baseURL}${item.product_images}`}
+                      src={
+                        item.product_images.length == 0
+                          ? "/images/breadimg.jpg"
+                          : `${baseURL}${item.product_images}`
+                      }
                       className="text-transparent absolute left-[-130px] max-w-[240px]"
                       alt="productImg"
                     />
                     <span className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] text-xs px-2 py-1 rounded-full text-white">
-                      {item.item_status}
+                      Fresh
                     </span>
                     <h2 className="text-2xl font-bold text-black mt-2">
-                      {item.item_name}
+                      {item.name}
                     </h2>
                     <div className="text-green-600 text-xl font-semibold mt-1">
-                      {item.price}
+                      {/* ${item?.product_detail?.variants[0]?.regular_price} */}
                       <span className="text-sm font-normal text-gray-500">
                         {T.unit}
                       </span>
-                      <p className="text-gray-500 mt-2">{item.description}</p>
+                      <p className="text-gray-500 mt-2">
+                        {stripHtmlTags(item.description)}
+                      </p>
                       <div className="flex items-center mt-2">
                         <div className="flex text-yellow-500">
                           {StarFilledIcon}
@@ -729,11 +846,16 @@ const Page = () => {
                           <a
                             href="#"
                             className="w-10 h-10 bg-gray-100 p-2 rounded-full flex items-center justify-center"
-                            // onClick={addToWishList}
+                            onClick={(e) => addToWishlist(e, item.id)}
                           >
-                            <Image
+                            <img
                               className="w-full h-full"
-                              src={item.heartImg}
+                              src={
+                                item?.is_in_wishlist === true ||
+                                (like && item.id === selectedId)
+                                  ? "/images/likedImg.svg"
+                                  : "/images/heart.svg"
+                              }
                               alt="heartImg"
                             />
                           </a>
@@ -741,9 +863,9 @@ const Page = () => {
                             href="#"
                             className="w-10 h-10 bg-green-500 p-2 rounded-full flex items-center justify-center"
                           >
-                            <Image
+                            <img
                               className="w-full h-full text-white"
-                              src={item.shoppingcartImg}
+                              src={"/images/shopping-cart.svg"}
                               alt="shoppingImg"
                             />
                           </a>
@@ -845,6 +967,13 @@ const Page = () => {
         </section>
       </div>
       <ExclusiveOfferBanner />
+      {/* <BasketSection /> */}
+      {showLoginModal && (
+        <AddLoginModal
+          closeModal={() => setShowLoginModal(false)}
+          setShowLoginModal={setShowLoginModal}
+        />
+      )}
     </div>
   );
 };
