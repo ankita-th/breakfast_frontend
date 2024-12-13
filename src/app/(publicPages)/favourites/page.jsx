@@ -5,6 +5,7 @@ import ProductCard from "@/_components/_common/Card/ProductCard";
 import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 import { successType, toastMessages } from "@/_utils/toastMessage";
 import { INSTANCE } from "@/app/_constant/UrlConstant";
+import { setWishList } from "@/Redux/addToWishListSlice";
 import React, { Fragment, useEffect, useState } from "react";
 
 function page() {
@@ -18,7 +19,7 @@ function page() {
     })
       .then((res) => {
         console.log(res);
-        setFavourites(res.data.products);
+        setFavourites(res.data.wishlist);
         toastMessages(res.data.message, successType);
       })
       .catch((err) => {
@@ -27,7 +28,7 @@ function page() {
       });
   }, []);
 
-  const addToWishlist = (e, id) => {
+  const addToWishlist = (e, id,status) => {
     console.log(id, "iddd");
     e.stopPropagation();
     const token = localStorage.getItem("token");
@@ -36,7 +37,7 @@ function page() {
     } else {
       setSelectedId(id);
       setLike(!like);
-      if (!like) {
+      if (!like && status !== "added") {
         callApi({
           endPoint: WISHLIST,
           method: METHODS.post,
@@ -61,10 +62,6 @@ function page() {
           endPoint: WISHLIST,
           method: METHODS.delete,
           instanceType: INSTANCE.authorize,
-          payload: {
-            products: [id],
-            baskets: [0],
-          },
         })
           .then((res) => {
             toastMessages(res.data.message, successType);
@@ -118,7 +115,7 @@ function page() {
         {favourites?.map((item, idx) => (
           <Fragment key={idx}>
             <ProductCard
-              page={"products"}
+              page={"favorites"}
               item={item}
               addToWishlist={addToWishlist}
               // like={like}

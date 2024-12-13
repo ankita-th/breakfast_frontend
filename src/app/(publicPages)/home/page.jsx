@@ -34,7 +34,7 @@ import { INSTANCE } from "@/app/_constant/UrlConstant";
 import { successType, toastMessages } from "@/_utils/toastMessage";
 import Button from "@/_components/_common/Button";
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DEFAULT_ERROR_MESSAGE, stripHtmlTags } from "@/_constants/constant";
 // import { StarFilledIcon, StarIcon } from "@/assets/Icons/Svg";
@@ -44,6 +44,7 @@ import ProductCard from "@/_components/_common/Card/ProductCard";
 import { setWishList } from "@/Redux/addToWishListSlice";
 import breadImg from "../../../../public/images/breadimg.jpg";
 import {
+  ADD_TO_CART,
   BASKETS,
   NEW_ARRIVAL_PRODUCTS,
   PREMIUM_PRODUCTS,
@@ -58,11 +59,6 @@ import SimpleSlider, {
 } from "@/_components/_common/Slider";
 import { baseURL } from "@/_utils/helpers";
 import Slider from "react-slick";
-// import Slider from "react-slick";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-
-// import BasketSection from "./BasketSection";
 
 const Page = () => {
   const router = useRouter();
@@ -75,21 +71,11 @@ const Page = () => {
   const [itemCount, setItemCount] = useState(0);
   const { selectedBasket } = useSelector((state) => state.addToBasket);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  // const token = localStorage.getItem("token");
-  // console.log(token, "token");
-  console.log(selectedBasket, "selectedBasket");
-  console.log(basketDetails, "basketDetails");
-  console.log(premiumProducts, "premiumProducts");
-
-  // const getDuration = (newDate) => {
-  //   const endDate = moment(newDate.slice(0, 10));
-  //   const duration = moment.duration(endDate.diff(date));
-  //   console.log(endDate, "endDate");
-  //   console.log(date, "date");
-  //   console.log(duration, "duration");
-  //   //   Start Date: Fri Nov 01 2024 00:00:00 GMT+0000
-  //   // End Date: Fri Nov 29 2024 00:00:00 GMT+0000
-  // };
+  const [cartItems, setCartItems] = useState();
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
   const settings = {
     dots: true,
@@ -122,14 +108,11 @@ const Page = () => {
     callApi({
       endPoint: PREMIUM_PRODUCTS,
       method: METHODS.get,
-      // params: {
-      //   page: "1",
-      // },
       instanceType: INSTANCE.authorize,
     })
       .then((res) => {
-        console.log(res.data.results, "premium_products");
-        setPremiumProducts(res.data.results);
+        console.log(res.data, "premium_products");
+        setPremiumProducts(res.data);
       })
       .catch((err) => {
         console.log(err, "error");
@@ -141,17 +124,12 @@ const Page = () => {
     callApi({
       endPoint: NEW_ARRIVAL_PRODUCTS,
       method: METHODS.get,
-      // params: {
-      //   page: "1",
-      // },
       instanceType: INSTANCE.authorize,
     })
       .then((res) => {
-        console.log(res.data.results, "arrival_goods");
-        setNewArrivals(res.data.results);
+        setNewArrivals(res.data);
       })
       .catch((err) => {
-        console.log(err, "error");
         toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
       });
   }, []);
@@ -159,75 +137,123 @@ const Page = () => {
   const handleViewAll = () => {
     router.push("/products");
   };
-  const handleDecrease = () => {
-    setItemCount((itemCount) => itemCount - 1);
-  };
-  const handleIncrease = () => {
-    setItemCount((itemCount) => itemCount + 1);
-  };
-  const addToWishlist = (e, id, status) => {
-    console.log(status, "status");
-    console.log(id, "iddd");
+
+  const addToWishlist = async (e, item, status) => {
+    console.log(item?.wishlist_id, "item");
     e.stopPropagation();
     const token = localStorage.getItem("token");
     if (!token) {
       setShowLoginModal(true);
     } else {
-      setSelectedId(id);
+      setSelectedId(item?.id);
       setLike(!like);
-      if (!like && status === false) {
-        callApi({
+      if (
+        // !like && 
+        status === "not_added") {
+        console.log(status, "status");
+        await callApi({
           endPoint: WISHLIST,
           method: METHODS.post,
           instanceType: INSTANCE.authorize,
           payload: {
-            product_id: id,
+            product_id: item?.id,
           },
-        })
-          .then((res) => {
-            console.log(res, "res");
-            dispatch(setWishList(res.data.products));
-            toastMessages("Added To Wishlist", successType);
-          })
-          .catch((err) => {
-            // toastMessages(
-            //   err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
-            // );
-          });
+        });
+        const res = await callApi({
+          endPoint: PREMIUM_PRODUCTS,
+          method: METHODS.get,
+          instanceType: INSTANCE.authorize,
+        });
+        dispatch(setWishList(res.data.products));
+        toastMessages("Added To Wishlist", successType);
       } else {
-        callApi({
-          endPoint: `wishlist/${id}/delete/`,
+        await callApi({
+          endPoint: `wishlist/${item?.wishlist_id}/delete/`,
           method: METHODS.delete,
           instanceType: INSTANCE.authorize,
         })
-          .then((res) => {
-            toastMessages(res.data.message, successType);
-          })
-          .catch((err) => {
-            console.log(err, "eror");
-            toastMessages(
-              err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
-            );
-          });
+            const res = await callApi({
+              endPoint: PREMIUM_PRODUCTS,
+              method: METHODS.get,
+              instanceType: INSTANCE.authorize,
+            });
+          toastMessages(res.data.message, successType);
+          // .catch((err) => {
+          //   toastMessages(
+          //     err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
+          //   )
+          // }
       }
     }
   };
 
+  const addToCart = (product) => {
+    console.log(product?.product_detail?.variants?.[0]?.id, "product");
+    callApi({
+      endPoint: ADD_TO_CART,
+      method: METHODS.post,
+      instanceType: INSTANCE.authorize,
+      payload: {
+        product_variants: [product?.product_detail?.variants?.[0]?.id],
+        // baskets: selectedBasket.id ? selectedBasket.id : undefined,
+      },
+    })
+      .then((res) => {
+        console.log(res.data, "response");
+        setCartItems(res.data);
+      })
+      .catch((err) => {
+        toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
+      });
+  };
+
+  const addToBasket = (product, quantity) => {
+    // const token = localStorage.getItem("token");
+    // if (token) {
+    callApi({
+      endPoint: `/user-basket/${selectedBasket.id}/`,
+      method: METHODS.post,
+      instanceType: INSTANCE.authorize,
+      payload: {
+        products: [
+          {
+            product_id: product.id,
+            quantity: quantity,
+          },
+        ],
+      },
+    })
+      .then((res) => {
+        toastMessages(res.data.message, successType);
+      })
+      .catch((err) => {
+        console.log(err, "eror");
+        toastMessages(
+          err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
+        );
+      });
+  };
+  // };
+
   const handleBasket = (item) => {
-    console.log(item, "item");
     dispatch(setSelectedBasket(item));
   };
 
-  console.log(selectedBasket, "selectedBasket");
-  console.log(basketDetails, "basketDetails");
   const handleChoose = () => {
-    console.log("choose");
-    // if(selectedBasket.length === 0 && basketDetails.length > 0){
-    //   setSelectedBasket(basketDetails[0]))
-    //   console.log("here")
-    // }
-
     router.push("/products");
+  };
+
+  const getDuration = (newDate) => {
+    const date = newDate?.slice(0, 10);
+    const moment = require("moment");
+    const currentDate = moment();
+    const targetDate = moment(date);
+    const duration = moment.duration(targetDate.diff(currentDate));
+    // return duration.days();
+    // setDays(duration.days());
+    // setHours(duration.hours());
+    // setMinutes(duration.minutes());
+    // setSeconds(duration.seconds());
   };
 
   return (
@@ -240,10 +266,9 @@ const Page = () => {
                 {T.your_perfect_morning_start}
               </h2>
               <h1 className="text-3xl md:text-4xl font-bold text-gray-800 text-center leading-tight font-spartan text-[50.6px] font-extrabold leading-[56.67px] max-w-[680px]">
-                <span className="text-green-600">{T.start_your_day} </span>
+                <span className="text-green-600">{T.start_your_day}</span>
                 {T.fresh},{T.healthy_breakfast_baskets}
                 <span className="text-green-600">
-                  {" "}
                   {T.delivered_to_your_door}
                 </span>
               </h1>
@@ -458,6 +483,7 @@ const Page = () => {
                         addToWishlist={addToWishlist}
                         like={like}
                         selectedId={selectedId}
+                        addToCart={addToCart}
                       />
                     </Fragment>
                   ))}
@@ -468,89 +494,103 @@ const Page = () => {
         </div>
 
         <Slider {...settings}>
-          <section className="healthy-breakfast py-[60px]">
-            <div className="max-w-screen-xl w-full px-4 mx-auto">
-              <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
-                <div className=" max-w-[400px] mx-auto ">
-                  <h2 className="text-[24px] font-bold text-black ">
-                    {T.healthy_breakfast_baskets}
-                  </h2>
-                  <p className="text-[#55B250] font-bold text-[20px]  mt-[10px]"></p>
-                  <p className="text-[#828282] text-[15px]  mt-[10px]">
-                    {T.bf_decription}
-                  </p>
-                  <div className="flex items-center gap-[10px] mt-[20px]">
-                    <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
-                      <span className="text-[12px]">
-                        <Image
-                          className="w-[16px] h-[16px]"
-                          src={gradientclockImg}
-                          alt="gradientImg"
-                        />
-                      </span>
-                      <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
-                        {T.grab_the_offer}
-                      </span>
-                    </div>
-                  </div>
+          {basketDetails?.length > 0 &&
+            basketDetails?.map(
+              (item, idx) =>
+                item?.offer && (
+                  <section className="healthy-breakfast py-[60px]" key={idx}>
+                    <div className="max-w-screen-xl w-full px-4 mx-auto">
+                      <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
+                        <div className=" max-w-[400px] mx-auto ">
+                          <h2 className="text-[24px] font-bold text-black ">
+                            {/* {T.healthy_breakfast_baskets} */}
+                            {item?.basket_name}
+                          </h2>
+                          <p className="text-[#55B250] font-bold text-[20px]  mt-[10px]">
+                            ${item?.offer?.offer_price}
+                          </p>
+                          <p className="text-[#828282] text-[15px]  mt-[10px]">
+                            {/* {T.bf_decription} */}
+                            {stripHtmlTags(item?.content)}
+                          </p>
+                          <div className="flex items-center gap-[10px] mt-[20px]">
+                            <div className="flex gap-[10px] font-bold rounded-full cursor-pointer items-center">
+                              <span className="text-[12px]">
+                                <Image
+                                  className="w-[16px] h-[16px]"
+                                  src={gradientclockImg}
+                                  alt="gradientImg"
+                                />
+                              </span>
+                              <span className="text-[15px] font-bold text-black text-[#51B150] mb-0">
+                                {T.grab_the_offer}
+                              </span>
+                            </div>
+                          </div>
 
-                  <div className="flex gap-[15px] mt-[20px]">
-                    <div className="text-center">
-                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                        31
+                          <div className="flex gap-[15px] mt-[20px]">
+                            <div className="text-center">
+                              <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                                {item?.offer
+                                  ? getDuration(item?.offer?.end_offer)
+                                  : null}
+                                {days}
+                              </div>
+                              <p className="text-[12px] text-[#828282] mt-[5px]">
+                                {T.days}
+                              </p>
+                            </div>
+                            <div className="text-center">
+                              <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                                {hours}
+                              </div>
+                              <p className="text-[12px] text-[#828282] mt-[5px]">
+                                {T.hours}
+                              </p>
+                            </div>
+                            <div className="text-center">
+                              <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                                {minutes}
+                              </div>
+                              <p className="text-[12px] text-[#828282] mt-[5px]">
+                                {T.mins}
+                              </p>
+                            </div>
+                            <div className="text-center">
+                              <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
+                                {seconds}
+                              </div>
+                              <p className="text-[12px] text-[#828282] mt-[5px]">
+                                {T.secs}
+                              </p>
+                            </div>
+                          </div>
+                          <Button
+                            btnType="button"
+                            className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
+                            btnText={T.add_to_cart}
+                            icon={
+                              <Image
+                                className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px] "
+                                src={arrowImg}
+                                alt="arrowImg"
+                              />
+                            }
+                            btnClick={() => addToCart(item)}
+                          />
+                        </div>
+                        <div>
+                          <Image
+                            className="max-w-[450px] w-full mx-auto"
+                            src={breakfastHeroImg}
+                            alt="breakfastImg"
+                          />
+                        </div>
                       </div>
-                      <p className="text-[12px] text-[#828282] mt-[5px]">
-                        {T.days}
-                      </p>
                     </div>
-                    <div className="text-center">
-                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                        12
-                      </div>
-                      <p className="text-[12px] text-[#828282] mt-[5px]">
-                        {T.hours}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                        10
-                      </div>
-                      <p className="text-[12px] text-[#828282] mt-[5px]">
-                        {T.mins}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-[50px] h-[50px] bg-[#F5F5F5] text-black rounded-full flex items-center justify-center text-[20px] font-bold">
-                        35
-                      </div>
-                      <p className="text-[12px] text-[#828282] mt-[5px]">
-                        {T.secs}
-                      </p>
-                    </div>
-                  </div>
-                  <Button
-                    btnType="button"
-                    className="flex gap-[10px] bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[10px_30px] rounded-full text-white font-semibold items-center mt-[30px]"
-                    btnText={T.add_to_cart}
-                    icon={
-                      <Image
-                        className="bg-gradient-to-r from-[#92C64E] to-[#4BAF50] p-[6px] rounded-full w-[25px] h-[25px]"
-                        src={arrowImg}
-                        alt="arrowImg"
-                      />
-                    }
-                  />
-                </div>
-                <div>
-                  <Image
-                    className="max-w-[450px] w-full mx-auto"
-                    src={breakfastHeroImg}
-                    alt="breakfastImg"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
+                  </section>
+                )
+            )}
           <section className="healthy-breakfast py-[60px]">
             <div className="max-w-screen-xl w-full px-4 mx-auto">
               <div className="grid-cols-2 lg:grid flex items-center bg-white rounded-[20px] py-[30px] px-[30px]">
@@ -689,18 +729,19 @@ const Page = () => {
                   </h3>
                   <h2 className="text-4xl font-bold">Breakfast Baskets</h2>
                 </div>
-
                 <div className="flex flex-col space-y-4 mb-12">
                   {basketDetails?.map((basket, idx) => (
-                    <span
-                      className={
-                        selectedBasket?.id === basket?.id
-                          ? "w-full text-left py-2 text-green-600 font-medium"
-                          : "w-full text-left py-2 text-gray-500 hover:text-gray-700"
-                      }
-                    >
-                      {idx + 1}. {basket?.basket_name}
-                    </span>
+                    <Fragment key={idx}>
+                      <span
+                        className={
+                          selectedBasket?.id === basket?.id
+                            ? "w-full text-left py-2 text-green-600 font-medium"
+                            : "w-full text-left py-2 text-gray-500 hover:text-gray-700"
+                        }
+                      >
+                        {idx + 1}. {basket?.basket_name}
+                      </span>
+                    </Fragment>
                   ))}
                 </div>
                 <div className="mb-8">
@@ -760,7 +801,7 @@ const Page = () => {
             </div>
             {/* Thumbnail Navigation */}
             {basketDetails?.map((item, idx) => (
-              <div className="bg-gray-50 p-6">
+              <div className="bg-gray-50 p-6" key={idx}>
                 <div className="flex justify-end items-center gap-4">
                   <button className="w-16 h-16 rounded-lg overflow-hidden border-2 border-transparent hover:border-green-600 transition-colors">
                     <img
@@ -802,11 +843,10 @@ const Page = () => {
                 <div className="pl-[200px] mb-10" key={index}>
                   <div className="bg-white rounded-lg shadow-md p-4 w-full relative pl-[120px]">
                     <img
-                      // src={item.product_images == [] ?   "/images/breadimg.jpg" :  `${baseURL}${item.product_images}`}
                       src={
-                        item.product_images.length == 0
-                          ? "/images/breadimg.jpg"
-                          : `${baseURL}${item.product_images}`
+                        item?.feature_image !== null
+                          ? `${baseURL}${item?.feature_image?.image}`
+                          : "/images/breadimg.jpg"
                       }
                       className="text-transparent absolute left-[-130px] max-w-[240px]"
                       alt="productImg"
@@ -837,10 +877,10 @@ const Page = () => {
                       </div>
                       <div className="flex items-center justify-between mt-4">
                         <ItemCounter
-                          idx={index}
-                          count={itemCount}
-                          handleDecrease={() => handleDecrease(index)}
-                          handleIncrease={() => handleIncrease(index)}
+                          item={item}
+                          // productQuantity={productQuantity}
+                          setItemCount={setItemCount}
+                          itemCount={itemCount}
                         />
                         <div className="flex space-x-2">
                           <a
@@ -851,7 +891,7 @@ const Page = () => {
                             <img
                               className="w-full h-full"
                               src={
-                                item?.is_in_wishlist === true ||
+                                item?.wishlist_status === "added" ||
                                 (like && item.id === selectedId)
                                   ? "/images/likedImg.svg"
                                   : "/images/heart.svg"
@@ -859,6 +899,7 @@ const Page = () => {
                               alt="heartImg"
                             />
                           </a>
+
                           <a
                             href="#"
                             className="w-10 h-10 bg-green-500 p-2 rounded-full flex items-center justify-center"

@@ -102,6 +102,15 @@ body {
   .exclusive-bg{
     @apply bg-[url(/images/offerbg.png)] bg-cover p-[40px] w-[40%] min-h-[230px] rounded-tl-[10px] rounded-bl-[10px] offer-sale-mob-padding
   }
+  .enabled-cart{
+    @apply text-black flex items-center justify-center
+  }
+  .enabled-basket{
+    @apply text-black flex items-center justify-center
+  }
+  .enabled-decreament{
+    @apply cursor-pointer text-2xl w-10 h-10 flex-none flex items-center justify-center bg-white rounded-full p-4 mob-minus
+  }
 }
 
 .second-head-flex {

@@ -5,6 +5,7 @@ import { addToBasketReducer } from "./addToBasketSlice";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
+import { addToCartReducer } from "./addToCartSlice";
 
 
 const persistConfig = {
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   product: productReducer,
   addToWishList: addToWishListReducer,
   addToBasket: addToBasketReducer,
+  addToCart: addToCartReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

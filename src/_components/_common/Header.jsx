@@ -17,6 +17,7 @@ import {
 } from "@/assets/Icons/Svg";
 import { LOGO } from "@/assets/Images";
 import { SwedenFlagIcon } from "@/assets/SVGIcons";
+import { setCartList } from "@/Redux/addToCartSlice";
 import { setWishList } from "@/Redux/addToWishListSlice";
 import moment from "moment";
 import Image from "next/image";
@@ -28,11 +29,14 @@ const Header = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const { wishList } = useSelector((state) => state.addToWishList);
+  const { cartList } = useSelector((state) => state.addToCart);
   const urlName = pathname.split("/")[1];
   const [profileStatus, setProfileStatus] = useState();
   const router = useRouter();
   const date = new Date();
-  const newDate = moment(date, 'ddd MMM DD YYYY HH:mm:ss [GMT]Z').format('MMMM DD, YYYY hh:mm A');
+  const newDate = moment(date, "ddd MMM DD YYYY HH:mm:ss [GMT]Z").format(
+    "MMMM DD, YYYY hh:mm A"
+  );
   
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -44,29 +48,32 @@ const Header = () => {
         instanceType: INSTANCE.authorize,
       })
         .then((res) => {
-          console.log(res.data.products, "dataInWishList");
-          dispatch(setWishList(res.data.products));
+          console.log(res.data.wishlist, "dataInWishList");
+          dispatch(setWishList(res.data.wishlist));
           toastMessages(res.data.message, successType);
         })
         .catch((err) => {
           toastMessages(err?.response?.data?.detail || DEFAULT_ERROR_MESSAGE);
         });
-        callApi({
-          endPoint: CART_LIST,
-          method: METHODS.get,
-          instanceType: INSTANCE.authorize,
-        })
-          .then((res) => {
-            console.log(res.data.products, "dataInWishList");
-            dispatch(setWishList(res.data.products));
-            toastMessages(res.data.message, successType);
-          })
-          .catch((err) => {
-            toastMessages(err?.response?.data?.detail || DEFAULT_ERROR_MESSAGE);
-          });
     } else {
       setProfileStatus("Login");
     }
+  }, []);
+
+  useEffect(() => {
+    callApi({
+      endPoint: CART_LIST,
+      method: METHODS.get,
+      instanceType: INSTANCE.authorize,
+    })
+      .then((res) => {
+        console.log(res.data.products, "dataInWishList");
+        dispatch(setCartList(res.data));
+        toastMessages(res.data.message, successType);
+      })
+      .catch((err) => {
+        toastMessages(err?.response?.data?.detail || DEFAULT_ERROR_MESSAGE);
+      });
   }, []);
 
   const handleAllCategories = () => {
@@ -74,23 +81,19 @@ const Header = () => {
   };
 
   const handleLogin = () => {
-    console.log("login");
     router.push("/login");
   };
   const handleLogout = () => {
-    console.log("logout");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("token");
     router.push("/login");
   };
 
   const handleMyAccount = () => {
-    console.log("my account");
     router.push("/user-profile");
   };
 
   const handleWishList = () => {
-    console.log("wish list");
     router.push("/favourites");
   };
   return (
@@ -197,7 +200,9 @@ const Header = () => {
                 <span>{DummyUser}</span>
                 <span
                   onClick={
-                    profileStatus === "My Account" ? handleMyAccount : handleLogin
+                    profileStatus === "My Account"
+                      ? handleMyAccount
+                      : handleLogin
                   }
                 >
                   {profileStatus}

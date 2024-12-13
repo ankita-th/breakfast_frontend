@@ -1,5 +1,5 @@
 "use client"
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Orders from "@/app/(publicPages)/user-profile/orders/page";
 import Favourites from "@/app/(publicPages)/favourites/page";
 import Payments from "@/app/(publicPages)/user-profile/payments/page";
@@ -9,12 +9,37 @@ import { HEART_ICON, ORDER_ICON, PAYMENT_ICON, SETTINGS_ICON } from "@/Assets/SV
 import { ADDRESS_ICON } from "../../../../public/images/SvgIcons";
 import EditProfile from "@/_components/_common/EditProfile";
 import OrderDetails from "@/_components/_common/OrderDetails";
+import { UPDATE_PROFILE } from "@/_Api-Handlers/APIUrls";
+import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
+import { INSTANCE } from "@/app/_constant/UrlConstant";
+import { successType, toastMessages } from "@/_utils/toastMessage";
+import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 
 
 function page() {
   const [currentCategory, setCurrentCategory] = useState("orders");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+  const [user, setUser] = useState();
+  console.log(isEditProfileOpen, "isEditProfileOpen");
+  console.log(user, "user");
+
+
+  useEffect(() => {
+    callApi({
+      endPoint: UPDATE_PROFILE,
+      method: METHODS.get,
+      instanceType: INSTANCE.authorize,
+    })
+      .then((res) => {
+        console.log(res.data, "response");
+        setUser(res.data);
+        toastMessages(res.data.message, successType);
+      })
+      .catch((err) => {
+        toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
+      });
+  }, []);
 
   const handleCategoryChange = (category) => {
     console.log(category);
@@ -79,11 +104,11 @@ const handleSubmit = () => {
       <div className="flex justify-between">
         <div>
           <h2 className="text-black text-xl font-semibold mb-2">
-            David Williams
+            {user?.first_name} {user?.last_name}
           </h2>
           <div className="flex gap-4">
-            <p className="text-black"> +46 123 456 7890 </p>
-            <p className="text-black">davidwilliams@gmail.com</p>
+            <p className="text-black"> {user?.phone_number} </p>
+            <p className="text-black">{user?.email}</p>
           </div>
         </div>
         <div>
@@ -120,7 +145,7 @@ const handleSubmit = () => {
       </div>
     </div>
     <OrderDetails isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar}/>
-    <EditProfile isSidebarOpen={isEditProfileOpen} toggleSidebar={handleEditProfile}/>
+    <EditProfile isSidebarOpen={isEditProfileOpen} toggleSidebar={handleEditProfile} user={user}/>
     </>
   );
 }

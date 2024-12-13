@@ -11,6 +11,8 @@ import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 import { useSelector } from "react-redux";
 import { CART, CART1 } from "@/Assets/Icons/Svg";
 import { baseURL } from "@/_utils/helpers";
+import ToolTips from "../ToolTips";
+import Dropdown from "../Dropdown";
 
 const ProductCard = ({
   page,
@@ -27,8 +29,9 @@ const ProductCard = ({
   const { selectedBasket } = useSelector((state) => state.addToBasket);
   const [productQuantity, setProductQuantity] = useState(0);
   const [itemCount, setItemCount] = useState(0);
+  console.log(like, "like");
+  console.log(selectedId, "selectedId");
 
-  console.log(item, "item");
   const eligibleForBasket = selectedBasket.products_detail
     ?.map((item) => item.id)
     .includes(item.id);
@@ -55,10 +58,10 @@ const ProductCard = ({
           //   ? 
             
             
-            page === "products"
+            page === "products" || "home"
               ? `${baseURL}${item?.feature_image?.image}`
-            //   : `${baseURL}${item?.feature_image}`
-            : "/images/breadimg.jpg"
+              : `${baseURL}${item?.feature_image}`
+            // : "/images/breadimg.jpg"
         }
         width={250}
         height={250}
@@ -66,36 +69,36 @@ const ProductCard = ({
       />
 
       <h2 className="text-[18px] font-bold text-center text-black mt-[15px]">
-        {item.name}
+        {page === "favorites" ? item?.product?.name : item?.name}
       </h2>
+      {/* <Dropdown /> */}
 
       <p className="text-3 text-[#9299A3] font-bold py-[15px] text-center md:pt-[0px]">
         $
         <del>
           {item.product_detail?.variants !== null
-            ? item.product_detail?.variants[0]?.inventory?.regular_price
+            ? item.product_detail?.variants?.[0]?.inventory?.regular_price
             : "70.00"}
         </del>
         <span className="text-[#55B250] font-bold ">
           $
           {item.product_detail?.variants !== null
-            ? item.product_detail?.variants[0]?.inventory?.sale_price
+            ? item.product_detail?.variants?.[0]?.inventory?.sale_price
             : "50.00"}
           unit
-          {/* {stripHtmlTags(item.description)} */}
         </span>
       </p>
       <div className="flex items-center justify-end gap-[10px] mb-[30px] absolute top-[14px] right-[14px]">
-        {/* <a href="#" > */}
         <img
           className="text-transparent w-[50px] h-[50px] bg-[#F5F5F5] p-[13px] rounded-full"
           src={
-            item?.is_in_wishlist || (like && item?.id === selectedId)
+            item?.wishlist_status == "added" 
+            // && (like && item?.id === selectedId)
               ? "/images/likedImg.svg"
               : "/images/heart.svg"
           }
           alt="heartLogo"
-          onClick={(e) => addToWishlist(e, item?.id, item?.is_in_wishlist)}
+          onClick={(e) => addToWishlist(e, item, item?.wishlist_status)}
           width={20}
           height={20}
         />
@@ -110,18 +113,22 @@ const ProductCard = ({
           />
         </div>
         <div className="flex gap-2.5">
+          <ToolTips text="Add to cart">
           <span
-            className="text-black flex items-center justify-center"
+            className={itemCount > 0 ? "enabled-cart" : "enabled-cart opacity-50 cursor-not-allowed"}
             onClick={() => addToCart(item, itemCount)}
           >
             {CART}
           </span>
+          </ToolTips>
+          <ToolTips text="Add to basket">
           <span
-            className="text-black flex items-center justify-center"
-            onClick={() => addToBasket(item, itemCount)}
+            className={itemCount > 0 ? "enabled-basket" : "enabled-basket opacity-50 cursor-not-allowed"}
+            onClick={eligibleForBasket ? () => addToBasket(item, itemCount): undefined}
           >
-            {eligibleForBasket ? CART1 : undefined}
-          </span>
+            { CART1 }
+            </span>
+          </ToolTips>
         </div>
       </div>
 

@@ -25,6 +25,7 @@ import {
 import { eligibleForBasket } from "@/_utils/helpers";
 import { useSelector } from "react-redux";
 import AddLoginModal from "@/_components/_common/Modals/AddLoginModal";
+import Dropdown from "@/_components/_common/Dropdown";
 
 const Page = () => {
   const router = useRouter();
@@ -32,12 +33,14 @@ const Page = () => {
   const [like, setLike] = useState(false);
   const [selectedId, setSelectedId] = useState();
   const [productDetails, setProductDetails] = useState();
+  const [cartItems, setCartItems] = useState();
   const [loader, setLoader] = useState(false);
   const [sideBarOptions, setSideBarOptions] = useState();
   const { selectedBasket } = useSelector((state) => state.addToBasket);
   const [showLoginModal, setShowLoginModal] = useState(false);
   console.log(selectedBasket, "newwwsBasket");
   console.log(productDetails, "productDetails");
+  console.log(cartItems, "cartItems");
 
   useEffect(() => {
     setLoader(true);
@@ -102,7 +105,7 @@ const Page = () => {
     router.push(`/products/${product_id}`);
   };
 
-  const addToCart = () => {
+  const addToCart = (product) => {
     callApi({
       endPoint: ADD_TO_CART,
       method: METHODS.post,
@@ -114,7 +117,7 @@ const Page = () => {
     })
       .then((res) => {
         console.log(res.data.results, "response");
-        setProductDetails(res.data.results);
+        setCartItems(res.data.results);
       })
       .catch((err) => {
         toastMessages(err.message || DEFAULT_ERROR_MESSAGE);
@@ -156,27 +159,24 @@ const Page = () => {
     }
   };
 
-  const addToWishlist = (e, id, status) => {
-    console.log(status, "status");
-    console.log(id, "iddd");
+  const addToWishlist = (e, item, status) => {
     e.stopPropagation();
     const token = localStorage.getItem("token");
     if (!token) {
       setShowLoginModal(true);
     } else {
-      setSelectedId(id);
+      setSelectedId(item?.id);
       setLike(!like);
-      if (!like && status === false) {
+      if (!like && status !== "added") {
         callApi({
           endPoint: WISHLIST,
           method: METHODS.post,
           instanceType: INSTANCE.authorize,
           payload: {
-            product_id: id,
+            product_id: item?.id,
           },
         })
           .then((res) => {
-            console.log(res, "res");
             dispatch(setWishList(res.data.products));
             toastMessages("Added To Wishlist", successType);
           })
@@ -187,7 +187,7 @@ const Page = () => {
           });
       } else {
         callApi({
-          endPoint: `wishlist/${id}/delete/`,
+          endPoint: `wishlist/${item?.wishlist_id}/delete/`,
           method: METHODS.delete,
           instanceType: INSTANCE.authorize,
         })
@@ -195,7 +195,6 @@ const Page = () => {
             toastMessages(res.data.message, successType);
           })
           .catch((err) => {
-            console.log(err, "eror");
             toastMessages(
               err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
             );
@@ -205,10 +204,8 @@ const Page = () => {
   };
 
   const addToBasket = (product ,quantity) => {
-    console.log(product, "product");
-    const token = localStorage.getItem("token");
-    console.log(product, "product");
-    if (token) {
+    // const token = localStorage.getItem("token");
+    // if (token) {
       callApi({
         endPoint: `/user-basket/${selectedBasket.id}/`,
         method: METHODS.post,
@@ -232,7 +229,7 @@ const Page = () => {
           );
         });
     }
-  };
+  // };
 
   return (
     <>

@@ -13,50 +13,34 @@ import { successType, toastMessages } from "@/_utils/toastMessage";
 import { CHANGE_PASSWORD, UPDATE_PROFILE } from "@/_Api-Handlers/APIUrls";
 import { INSTANCE } from "@/app/_constant/UrlConstant";
 
-function EditProfile({ isSidebarOpen, toggleSidebar }) {
+function EditProfile({ isSidebarOpen, toggleSidebar,user }) {
   const [showPassword, setShowPassword] = useState(false);
   const [loader, setLoader] = useState(false);
-  const [user, setUser] = useState();
+
   const formConfig = useForm();
-  const {  setValue,
+  const {
+    setValue,
     handleSubmit,
     setError,
     clearErrors,
     watch,
     register,
-    formState: { errors }} = formConfig;
+    formState: { errors },
+  } = formConfig;
   const [showPass, setShowPass] = useState({
     old_password: false,
     password: false,
     confirm_password: false,
   });
 
+  console.log(user, "user");
 
-
-
-  useEffect(() => {
-    callApi({
-      endPoint: UPDATE_PROFILE,
-      method: METHODS.get,
-      instanceType: INSTANCE.authorize,
-    })
-      .then((res) => {
-        console.log(res.data, "response");
-        setUser(res.data);
-        toastMessages(res.data.message, successType);
-        toggleSidebar();
-      })
-      .catch((err) => {
-        toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
-      });
-
-  }, []);
 
   useEffect(() => {
     setValue("first_name", user?.first_name);
     setValue("last_name", user?.last_name);
     setValue("email", user?.email);
-    setValue("phone_number", user?.phone_number);
+    setValue("phone_no", user?.phone_number);
   }, [user]);
 
   const handleToglePassword = (type) => {
@@ -64,7 +48,6 @@ function EditProfile({ isSidebarOpen, toggleSidebar }) {
   };
 
   const handleShowPassword = () => {
-    console.log("togglePassword");
     setShowPassword(!showPassword);
   };
 
@@ -89,37 +72,16 @@ function EditProfile({ isSidebarOpen, toggleSidebar }) {
   const onSubmit = (data) => {
     console.log(data, "data");
     setLoader(true);
-    if(showPassword){
-    callApi({
-      endPoint: CHANGE_PASSWORD,
-      method: METHODS.post,
-      instanceType: INSTANCE.authorize,
-      payload: {
-        "old_password": data.old_password,
-        "new_password": data.password,
-        "confirm_password": data.confirm_password
-      },
-    })
-      .then((res) => {
-        toastMessages(res.data.message, successType);
-        setLoader(false);
-        toggleSidebar();
-      })
-      .catch((err) => {
-        setLoader(false);
-        toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
-      });
-    }else{
+    if (showPassword) {
       callApi({
-        endPoint: UPDATE_PROFILE,
-        method: METHODS.put,
+        endPoint: CHANGE_PASSWORD,
+        method: METHODS.post,
         instanceType: INSTANCE.authorize,
         payload: {
-          "first_name": data.first_name,
-          "last_name": data.last_name,
-          "email": data.email,
-          "phone_number": data.phone_no
-      }
+          old_password: data.old_password,
+          new_password: data.password,
+          confirm_password: data.confirm_password,
+        },
       })
         .then((res) => {
           toastMessages(res.data.message, successType);
@@ -130,8 +92,30 @@ function EditProfile({ isSidebarOpen, toggleSidebar }) {
           setLoader(false);
           toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
         });
+    } else {
+      callApi({
+        endPoint: UPDATE_PROFILE,
+        method: METHODS.put,
+        instanceType: INSTANCE.authorize,
+        payload: {
+          first_name: data.first_name,
+          last_name: data.last_name,
+          email: data.email,
+          phone_number: data.phone_no,
+        },
+      })
+        .then((res) => {
+          toastMessages(res.data.message, successType);
+          setLoader(false);
+          toggleSidebar();
+        })
+        .catch((err) => {
+          setLoader(false);
+          toggleSidebar();
+          toastMessages(err?.response?.data?.error || DEFAULT_ERROR_MESSAGE);
+        });
     }
-  }
+  };
   return (
     <div
       className={`fixed top-0 right-0 w-full max-w-md h-screen bg-white shadow-lg  z-50 transform ${
@@ -277,11 +261,11 @@ function EditProfile({ isSidebarOpen, toggleSidebar }) {
                   />
                 </>
               )}
-              <CommonButton 
-              type={BUTTON_TYPE.submit}
-              text="Submit" 
-              loader={loader}
-              disabled={loader}
+              <CommonButton
+                type={BUTTON_TYPE.submit}
+                text="Submit"
+                loader={loader}
+                disabled={loader}
               />
             </div>
           </div>

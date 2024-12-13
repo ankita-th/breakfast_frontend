@@ -29,16 +29,16 @@ const ItemCounter = ({ item ,productQuantity ,setItemCount ,itemCount }) => {
   return (
     <div className="flex items-center bg-[#F2F2F2] border rounded-[50px] border-gray-100 w-32 justify-center gap-1 p-[5px] plus-minus-card">
       <span
-        className="cursor-pointer text-2xl w-10 h-10 flex-none flex items-center justify-center bg-white rounded-full p-4 mob-minus"
+        className={itemCount > 0 ? "enabled-decreament" : "enabled-decreament opacity-50 cursor-not-allowed"}
         onClick={(e) => handleDecrease(e, item.id)}
       >
         -
       </span>
-      <span className=" text-xl w-10 h-10 flex items-center justify-center mob-quantity">
+      <span className="text-xl w-10 h-10 flex items-center justify-center mob-quantity">
         {productId === item?.id ? itemCount : "0"}
       </span>
       <span
-        className="cursor-pointer text-2xl w-10 h-10 flex-none flex items-center justify-center bg-white rounded-full p-4 mob-plus"
+        className="enabled-decreament"
         onClick={(e) => handleIncrease(e, item.id)}
       >
         +
