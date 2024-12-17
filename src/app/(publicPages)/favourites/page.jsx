@@ -29,7 +29,6 @@ function page() {
   }, []);
 
   const addToWishlist = (e, id,status) => {
-    console.log(id, "iddd");
     e.stopPropagation();
     const token = localStorage.getItem("token");
     if (!token) {
@@ -37,7 +36,7 @@ function page() {
     } else {
       setSelectedId(id);
       setLike(!like);
-      if (!like && status !== "added") {
+      if (status !== "added") {
         callApi({
           endPoint: WISHLIST,
           method: METHODS.post,

@@ -9,7 +9,7 @@ import { callApi, METHODS } from "@/_Api-Handlers/apiFunctions";
 import { INSTANCE } from "@/app/_constant/UrlConstant";
 import ItemCategory from "@/_components/_common/ItemSubCategory";
 import { useRouter } from "next/navigation";
-import { toastMessages } from "@/_utils/toastMessage";
+import { successType, toastMessages } from "@/_utils/toastMessage";
 import ScreenLoader from "@/_components/_common/ScreenLoader";
 import ProductCard from "@/_components/_common/Card/ProductCard";
 import ItemSubCategory from "@/_components/_common/ItemSubCategory";
@@ -26,11 +26,13 @@ import { eligibleForBasket } from "@/_utils/helpers";
 import { useSelector } from "react-redux";
 import AddLoginModal from "@/_components/_common/Modals/AddLoginModal";
 import Dropdown from "@/_components/_common/Dropdown";
+import { DEFAULT_ERROR_MESSAGE } from "@/_constants/constant";
 
 const Page = () => {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState("");
   const [like, setLike] = useState(false);
+  const [likedProducts, setLikedProducts] = useState([]);
   const [selectedId, setSelectedId] = useState();
   const [productDetails, setProductDetails] = useState();
   const [cartItems, setCartItems] = useState();
@@ -38,9 +40,14 @@ const Page = () => {
   const [sideBarOptions, setSideBarOptions] = useState();
   const { selectedBasket } = useSelector((state) => state.addToBasket);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [wishListData, setWishListData] = useState();
+  const [userBasket, setUserBasket] = useState();
+
   console.log(selectedBasket, "newwwsBasket");
   console.log(productDetails, "productDetails");
   console.log(cartItems, "cartItems");
+  console.log(likedProducts, "likedProducts");
+  console.log(userBasket?.user_basket?.id, "userBasket");
 
   useEffect(() => {
     setLoader(true);
@@ -159,7 +166,7 @@ const Page = () => {
     }
   };
 
-  const addToWishlist = (e, item, status) => {
+  const addToWishlist = async (e, item, status) => {
     e.stopPropagation();
     const token = localStorage.getItem("token");
     if (!token) {
@@ -167,24 +174,32 @@ const Page = () => {
     } else {
       setSelectedId(item?.id);
       setLike(!like);
-      if (!like && status !== "added") {
-        callApi({
-          endPoint: WISHLIST,
-          method: METHODS.post,
-          instanceType: INSTANCE.authorize,
-          payload: {
-            product_id: item?.id,
-          },
-        })
-          .then((res) => {
-            dispatch(setWishList(res.data.products));
-            toastMessages("Added To Wishlist", successType);
-          })
-          .catch((err) => {
-            // toastMessages(
-            //   err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
-            // );
+      if (like == false) {
+        try {
+          const res = await callApi({
+            endPoint: WISHLIST,
+            method: METHODS.post,
+            instanceType: INSTANCE.authorize,
+            payload: {
+              product_id: item?.id,
+            },
           });
+          dispatch(setWishList(res.data.products));
+          toastMessages("Added To Wishlist", successType);
+        } catch (err) {
+          console.log(err, "err");
+          
+        }
+        const res = await callApi({
+          endPoint: PRODUCT_DETAILS,
+          method: METHODS.get,
+          instanceType: INSTANCE.authorize,
+          params: {
+            page: "1", 
+          },
+        });
+        console.log(res.data, "product_details");
+        setWishListData(res.data);
       } else {
         callApi({
           endPoint: `wishlist/${item?.wishlist_id}/delete/`,
@@ -195,44 +210,54 @@ const Page = () => {
             toastMessages(res.data.message, successType);
           })
           .catch((err) => {
-            toastMessages(
-              err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
-            );
+            console.log(err, "err");
+          });
+          const res = await callApi({
+            endPoint: PRODUCT_DETAILS,
+            method: METHODS.get,
+            instanceType: INSTANCE.authorize,
+            params: {
+              page: "1", 
+            },
           });
       }
     }
   };
 
-  const addToBasket = (product ,quantity) => {
+  const addToBasket = (selectedVariant, quantity) => {
+    console.log(selectedVariant,"selectedVariant")
     // const token = localStorage.getItem("token");
     // if (token) {
-      callApi({
-        endPoint: `/user-basket/${selectedBasket.id}/`,
-        method: METHODS.post,
-        instanceType: INSTANCE.authorize,
-        payload: {
-          products: [
-            {
-              product_id: product.id,
-              quantity: quantity,
-            },
-          ],
-        },
+    callApi({
+      endPoint: `/user-basket/${selectedBasket.id}/`,
+      method: METHODS.post,
+      instanceType: INSTANCE.authorize,
+      payload: {
+        products: [
+          {
+            product_variant_id: selectedVariant?.id,
+            quantity: quantity,
+          },
+        ],
+      },
+    })
+      .then((res) => {
+        console.log(res.data, "response");
+        setUserBasket(res.data);
+        toastMessages(res.data.message, successType);
       })
-        .then((res) => {
-          toastMessages(res.data.message, successType);
-        })
-        .catch((err) => {
-          console.log(err, "eror");
-          toastMessages(
-            err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
-          );
-        });
-    }
+      .catch((err) => {
+        console.log(err, "eror");
+        // toastMessages(
+        //   err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
+        // );
+      });
+  };
   // };
 
   return (
     <>
+      {/* <Cart /> */}
       <div className="bg-gray-50">
         <div className="flex">
           <Sidebar
@@ -287,7 +312,7 @@ const Page = () => {
               />
             )}
           </main>
-          <Basket />
+          <Basket userBasket ={userBasket}/>
         </div>
         <ExclusiveOfferBanner />
       </div>

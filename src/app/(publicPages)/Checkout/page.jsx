@@ -3,6 +3,7 @@ import React from "react";
 import { ADDRESS_CARD_DATA } from "../../_constant/Constant";
 import Button from "@/_components/_common/Button";
 import Summary from "@/_components/_common/Summary";
+import Cart from "@/_components/Cart";
 
 const Page = () => {
   return (
@@ -88,7 +89,7 @@ const Page = () => {
       </div>
       <div className="ml-auto mt-8">
         <h1>Summary</h1>
-        <Summary />
+       <Cart/>
       </div>
     </div>
   );

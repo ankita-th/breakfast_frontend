@@ -9,9 +9,9 @@ import { addToCartReducer } from "./addToCartSlice";
 
 
 const persistConfig = {
-  key: 'root', // The key used to store the Redux state
-  storage,     // LocalStorage will be used
-  whitelist: ['addToBasket'], // Define which reducers should be persisted
+  key: 'basket', 
+  storage,     
+  whitelist: ['addToBasket'], 
 };
 
 
@@ -34,4 +34,4 @@ export const store = configureStore({
       }),
   });
 
-  export const persistor = persistStore(store);
+export const persistor = persistStore(store);

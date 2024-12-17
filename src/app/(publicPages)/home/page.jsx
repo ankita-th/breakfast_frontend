@@ -59,6 +59,9 @@ import SimpleSlider, {
 } from "@/_components/_common/Slider";
 import { baseURL } from "@/_utils/helpers";
 import Slider from "react-slick";
+import Cart from "@/_components/Cart";
+// import Summary from "@/_components/_common/Summary";
+// import Cart from "@/_components/Cart";
 
 const Page = () => {
   const router = useRouter();
@@ -111,8 +114,8 @@ const Page = () => {
       instanceType: INSTANCE.authorize,
     })
       .then((res) => {
-        console.log(res.data, "premium_products");
-        setPremiumProducts(res.data);
+        // console.log(res.data, "premium_products");
+        // setPremiumProducts(res.data);
       })
       .catch((err) => {
         console.log(err, "error");
@@ -148,8 +151,9 @@ const Page = () => {
       setSelectedId(item?.id);
       setLike(!like);
       if (
-        // !like && 
-        status === "not_added") {
+        // !like &&
+        status === "not_added"
+      ) {
         console.log(status, "status");
         await callApi({
           endPoint: WISHLIST,
@@ -171,21 +175,22 @@ const Page = () => {
           endPoint: `wishlist/${item?.wishlist_id}/delete/`,
           method: METHODS.delete,
           instanceType: INSTANCE.authorize,
-        })
-            const res = await callApi({
-              endPoint: PREMIUM_PRODUCTS,
-              method: METHODS.get,
-              instanceType: INSTANCE.authorize,
-            });
-          toastMessages(res.data.message, successType);
-          // .catch((err) => {
-          //   toastMessages(
-          //     err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
-          //   )
-          // }
+        });
+        const res = await callApi({
+          endPoint: PREMIUM_PRODUCTS,
+          method: METHODS.get,
+          instanceType: INSTANCE.authorize,
+        });
+        toastMessages(res.data.message, successType);
+        // .catch((err) => {
+        //   toastMessages(
+        //     err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
+        //   )
+        // }
       }
     }
   };
+  console.log(selectedBasket, "selectedBasket");
 
   const addToCart = (product) => {
     console.log(product?.product_detail?.variants?.[0]?.id, "product");
@@ -224,13 +229,15 @@ const Page = () => {
       },
     })
       .then((res) => {
+        console.log(res.data, "response");
+
         toastMessages(res.data.message, successType);
       })
       .catch((err) => {
         console.log(err, "eror");
-        toastMessages(
-          err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
-        );
+        // toastMessages(
+        //   err?.response?.data?.non_field_errors[0] || DEFAULT_ERROR_MESSAGE
+        // );
       });
   };
   // };
@@ -255,6 +262,9 @@ const Page = () => {
     // setMinutes(duration.minutes());
     // setSeconds(duration.seconds());
   };
+  console.log(selectedBasket, "selectedBasket");
+
+  console.log(basketDetails, "basketDetails");
 
   return (
     <div className="hero-bg-img">
@@ -402,7 +412,6 @@ const Page = () => {
               </div>
             </div>
           </section>
-          {/* Premium Product Section */}
           <section className="premium_product_section">
             <div className="max-w-screen-xl w-full px-4 mx-auto">
               <div className="premium-product py-[60px]">
@@ -492,7 +501,6 @@ const Page = () => {
             </div>
           </section>
         </div>
-
         <Slider {...settings}>
           {basketDetails?.length > 0 &&
             basketDetails?.map(
@@ -675,13 +683,6 @@ const Page = () => {
             </div>
           </section>
         </Slider>
-
-        {/* {basketDetails?.map((item,idx)=>(
-           <CategoryCarousel image_url={item?.offer?.featured_image} key={idx} />
-
-
-        ))} */}
-
         <section className="py-[60px]">
           <div className="max-w-screen-xl w-full px-4 mx-auto">
             <div>
@@ -789,8 +790,8 @@ const Page = () => {
                     src={
                       selectedBasket?.featured_image
                         ? `${baseURL}${selectedBasket?.featured_image}`
-                        : basketDetails && basketDetails[1]
-                        ? `${baseURL}${basketDetails[1].featured_image}`
+                        : basketDetails && basketDetails[0]
+                        ? `${baseURL}${basketDetails[0].featured_image}`
                         : "/images/basket.png" // Add a default image path
                     }
                     alt="Gourmet Breakfast Basket"
